@@ -1,5 +1,13 @@
 # CITS3200-ECC-WebUI
 
+<h2>Initialisation</h2>
+<ol>
+  <li><code>npm install vue</code></li>
+  <li><code>npm install yarn</code></li>
+  <li><code>npm install buefy</code></li>
+  <li><code> npm install --save vue-router</code></li>
+</ol>
+
 <h2>Github Standards of Procedure (SOP)</h2>
 <ol>
   <li>Remote: Before starting <code>git rebase main</code></li>
