@@ -2,12 +2,12 @@
   <div class="hello">
     <b-navbar>
         <template #brand>
-            <b-navbar-brand tag="router-link" :to="{ path: '/' }" id="brand" class="image is-16by9">
-                <img src="../assets/navbar-thales-logo.png" alt="Thales Logo">
+            <b-navbar-brand tag="router-link" :to="{ path: '/' }" id="brand">
+                <a href="/"><img src="../assets/navbar-thales-logo.png" alt="Thales Logo"></a>
             </b-navbar-brand>
         </template>
         <template #start>
-            <b-navbar-item href="/">
+            <b-navbar-item href="/videowall">
                 <p id="navbar">Video Wall</p>
             </b-navbar-item>
             <b-navbar-item href="#">
