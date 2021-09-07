@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- Imports Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- Imports Colour Wheel -->
+    <script src="https://unpkg.com/vue-color-picker-wheel"></script>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <style>
+        /* Brings border to show div for testing */
+        #room {
+            border: 5px solid black;
+        }
+        /* Style for lights being on when roomStateOn == true */
+        .LightOn {
+            height: 44px;
+            width: 44px;
+            background-color: teal;
+            border: 3px solid black;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        /* Style for lights being off when roomStateOn == false */
+        .LightOff {
+            height: 44px;
+            width: 44px;
+            background-color: white;
+            border: 3px solid black;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        /* Style for lights being selected */
+        .selected {
+            height: 44px;
+            width: 44px;
+            border-radius: 50%;
+            border: 3px solid red;
+            display: inline-block;
+        }
+        .center * {
+            text-align: center;
+        }
+        /* Style Colour Wheel */
+        #color-wheel {
+        margin-left: auto;
+        margin-right: auto;
+        }
+        
+        .selected-color-info {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 15px 0;
+        }
+        
+        .selected-color-info p {
+        margin: 0 5px 0 0;
+        }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="room">
+        <!-- Find way to seperate lights, likely to be recording positioning arguements in Vue data profile -->
+
+        <!-- For loop that creates the lights and attached styles, classes and functionality as defined -->
+        <span v-bind:class="[roomStateOn ? 'LightOn' : 'LightOff', light.selected ? 'selected' : '']"  v-for="light in lights" v-bind:style="[roomStateOn ? {'background-color': light.colour} : {'background-color': 'white'}]" v-bind:title="light.userlabel" v-on:click="toggleSelected(light)"><br> <br> <br> <center> {{light.label}}</center> </span>
+        <!-- Button to change room state from On to off -->
+        <br> <button class="btn btn-primary" v-on:click="toggleRoomState">Change Room State</button>
+        <!-- Text field to enter a colour to change selected lights when button pressed later or 'enter' is pressed  -->
+        <input v-model="newColour" type="text" placeholder="Add new light colour" v-on:keyup.enter="changeLight(newColour)">
+        <!-- Button to change selected lights to the colour entered previously -->
+        <button class="btn btn-primary" v-bind:disabled="newColour.length === 0" v-on:click="changeLight(newColour)">Save Colour</button>
+        <!-- Change selected lights to colour currently presented in colour wheel -->
+        <button class="btn btn-primary" v-on:click="changeLightWheel">Colour Wheel Select</button>
+    </div>
+    <!-- Div for colour wheel -->
+    <div class="center">
+        <div id="app">
+        </div>
+    </div>
+    <script>
+        //Template for Colour WHeel structure
+        const template = `
+        <div>
+        <color-picker :width=150 :height=150 v-model="colour">
+        </color-picker>
+        <div class="selected-color-info">
+            <p>Selected color:</p>
+            <svg height="24" width="24">
+            <circle cx="12" cy="12" r="11.25" :fill="colour" />
+            </svg>
+        </div>
+        <p>{{ colour }}</p>
+        </div>
+        `;
+        // Assigns Colour Wheel template to appropriate div and records current colour of the Colour Wheel
+        const ColourWheel = new Vue({
+        template: template,
+        el: "#app",
+        data: {
+            colour: '#4c3434',
+        },
+        });
+
+        const lightControl = new Vue ({
+            el: "#room",
+            data: {
+                //If room is On/ Off (true/ false)
+                roomStateOn: true,
+                newColour: '',
+                //Lights data stored as array
+                lights: [
+                {
+                    //Descriptive label of light for user
+                    userlabel: "Light Top Left",
+                    //Abbreviated label of light for ease of use
+                    label: "LTL",
+                    //If Light is on/ off
+                    state: "On",
+                    //Current colour of light
+                    colour: "red",
+                    //If the light has been selected
+                    selected: false,
+                },
+                {
+                    userlabel: "Light Top Right",
+                    label: "LTR",
+                    state: "On",
+                    colour: "blue",
+                    selected: false,
+                },
+                {
+                    userlabel: "Light Middle",
+                    label: "LM",
+                    state: "On",
+                    colour: "purple",
+                    selected: false,
+                },
+                {
+                    userlabel: "Light Bottom Left",
+                    label: "LBL",
+                    state: "On",
+                    colour: "green",
+                    selected: false,
+                },
+                {
+                    userlabel: "Light Bottom Right",
+                    label: "LBR",
+                    state: "On",
+                    colour: "brown",
+                    selected: false,
+                },   
+                ]
+            },
+            methods: {
+                //Update light array to reflect if a specific light has been selected
+                toggleSelected: function(light) {
+                    //Inverts the value of 'light.selected' (true -> false, false -> true)
+                    light.selected = !light.selected;
+                },
+                // Same as above, but for room state instead
+                toggleRoomState: function() {
+                    this.roomStateOn = !this.roomStateOn;
+                },
+                // Loops through light array to see which lights are selected, update the light's colour
+                // to the new colour, and then unselect it. (For entering a colour manually, through name or code)
+                changeLight: function(newColour) {
+                    for (light in lightControl.lights) {
+                        if (lightControl.lights[light].selected == true) {
+                            lightControl.lights[light].colour = newColour;
+                            lightControl.lights[light].selected = false;
+                        }
+                    }
+                    // Clears input field
+                    this.newColour = '';
+                },
+                // Same as above, but for colour wheel selection. I couldn't figure out how to do both in one function,
+                // so I did it seperately.
+                changeLightWheel: function() {
+                    for (light in lightControl.lights) {
+                        if (lightControl.lights[light].selected == true) {
+                            lightControl.lights[light].colour = ColourWheel.colour;
+                            lightControl.lights[light].selected = false;
+                        }
+                    }
+                },
+            },
+        });
+    </script>
+  </body>
+</html>

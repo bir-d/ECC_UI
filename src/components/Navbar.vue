@@ -2,8 +2,8 @@
   <div class="hello">
     <b-navbar>
         <template #brand>
-            <b-navbar-brand tag="router-link" :to="{ path: '/' }" id="brand" class="image">
-                <img src="../assets/navbar-thales-logo.png" alt="Thales Logo">
+            <b-navbar-brand tag="router-link" :to="{ path: '/' }" id="brand">
+                <a href="/"><img src="../assets/navbar-thales-logo.png" alt="Thales Logo"></a>
             </b-navbar-brand>
         </template>
         <template #start>
