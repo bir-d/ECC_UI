@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-color-picker-wheel": "^0.4.3",
+    "vue-nice-scrollbar": "^2.0.1",
     "vue-router": "^3.5.2"
   },
   "devDependencies": {
