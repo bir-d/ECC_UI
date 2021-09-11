@@ -22,7 +22,7 @@
         </a>
       </div>
       <div class="column">
-        <a href="#">
+        <a href="/lights">
           <figure class="image is-16by9">
             <img src="../assets/home-lights.png">
           </figure>
