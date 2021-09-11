@@ -13,7 +13,7 @@
             <b-navbar-item href="#">
                 <p id="navbar">Workstations</p>
             </b-navbar-item>
-            <b-navbar-item href="#">
+            <b-navbar-item href="/lights">
                 <p id="navbar">Lights</p>
             </b-navbar-item>
             <b-navbar-item href="#">
