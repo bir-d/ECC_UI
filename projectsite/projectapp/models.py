@@ -1,12 +1,12 @@
 from django.db import models
 from django.db.models.base import Model
 
-# Create your models here.
+# # Create your models here.
 
-# example model
-class testEntry(models.Model):
-    title = models.CharField(max_length=100)
-    line1 = models.CharField(max_length=100)
+# # example model
+# class testEntry(models.Model):
+#     title = models.CharField(max_length=100)
+#     line1 = models.CharField(max_length=100)
 
 class Lights(models.Model):
     light_id = models.PositiveIntegerField(max_length=100)
