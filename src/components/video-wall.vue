@@ -82,58 +82,58 @@
                 <section class="media-wall">
                     <div class="columns">
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </div>
-                        <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </div>
-                        <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </div>
-                        <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <b-icon pack="fas" icon="video"></b-icon>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <b-icon pack="fas" icon="video"></b-icon>
+                        </div>
+                        <div class="column">
+                            <b-icon pack="fas" icon="video"></b-icon>
+                        </div>
+                        <div class="column">
+                            <b-icon pack="fas" icon="video"></b-icon>
+                        </div>
+                        <div class="column">
+                            <b-icon pack="fas" icon="video"></b-icon>
                         </div>
                     </div>
                 </section>
