@@ -16,7 +16,7 @@
             <b-navbar-item href="/lights">
                 <p id="navbar">Lights</p>
             </b-navbar-item>
-            <b-navbar-item href="#">
+            <b-navbar-item href="display">
                 <p id="navbar">Displays</p>
             </b-navbar-item>
         </template>
