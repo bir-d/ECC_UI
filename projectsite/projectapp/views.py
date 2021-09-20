@@ -8,17 +8,17 @@ from rest_framework.views import APIView
 from rest_framework.response import  Response
 from rest_framework import status
 
-from projectapp.models import Lights_Group
-from projectapp.models import Lights
+from projectapp.models import Light_Group
+from projectapp.models import Light
 from projectapp.models import Video_Wall_Panel_Group
 from projectapp.models import Video_Wall_Panel
-from projectapp.models import Workstations
+from projectapp.models import Workstation
 
-from projectapp.serialisers import Lights_GroupSerializer
-from projectapp.serialisers import LightsSerializer
+from projectapp.serialisers import Light_GroupSerializer
+from projectapp.serialisers import LightSerializer
 from projectapp.serialisers import Video_Wall_Panel_GroupSerializer
 from projectapp.serialisers import Video_Wall_PanelSerializer
-from projectapp.serialisers import WorkstationsSerializer
+from projectapp.serialisers import WorkstationSerializer
 
 # Create your views here.
 def index(request):
@@ -26,8 +26,8 @@ def index(request):
 
 class Lights_GroupList(APIView):
     def get(self, request):
-        Lights_Groups = Lights_Group.objects.all()
-        serializer= Lights_GroupSerializer(Lights_Groups, many=True)
+        Light_Groups = Light_Group.objects.all()
+        serializer= Light_GroupSerializer(Light_Groups, many=True)
         return Response(serializer.data)
         
     def post(self):
@@ -35,8 +35,8 @@ class Lights_GroupList(APIView):
 
 class LightsList(APIView):
     def get(self, request):
-        Lights1 = Lights.objects.all()
-        serializer= LightsSerializer(Lights1, many=True)
+        Lights1 = Light.objects.all()
+        serializer= LightSerializer(Lights1, many=True)
         return Response(serializer.data)
         
     def post(self):
@@ -62,8 +62,8 @@ class Video_Wall_PanelList(APIView):
 
 class WorkstationsList(APIView):
     def get(self, request):
-        Workstations1 = Workstations.objects.all()
-        serializer= WorkstationsSerializer(Workstations1, many=True)
+        Workstations1 = Workstation.objects.all()
+        serializer= WorkstationSerializer(Workstations1, many=True)
         return Response(serializer.data)
         
     def post(self):

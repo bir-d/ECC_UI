@@ -1,14 +1,14 @@
 from django.contrib import admin
-from projectapp.models import Lights
-from projectapp.models import Lights_Group
+from projectapp.models import Light
+from projectapp.models import Light_Group
 from projectapp.models import Video_Wall_Panel
 from projectapp.models import Video_Wall_Panel_Group
-from projectapp.models import Workstations
+from projectapp.models import Workstation
 
 # Register your models here.
 
-admin.site.register(Lights_Group) 
-admin.site.register(Lights)
+admin.site.register(Light_Group) 
+admin.site.register(Light)
 admin.site.register(Video_Wall_Panel)
 admin.site.register(Video_Wall_Panel_Group)
-admin.site.register(Workstations)
+admin.site.register(Workstation)
