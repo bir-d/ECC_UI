@@ -5,7 +5,7 @@ import 'buefy/dist/buefy.css'
 import VueRouter from 'vue-router'
 import Routes from './routes'
 
-// Font Awesome icons. Usage: https://buefy.org/documentation/icon/#custom-icon-pack
+// Font Awesome icons. Usage: https://buefy.org/documentation/icon/#custom-icon-pack , specify `pack` as "fas"
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
