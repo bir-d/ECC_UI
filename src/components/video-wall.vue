@@ -79,7 +79,7 @@
                 </div>
             </div>
             <div class="column is-narrow">
-                <section class="media-wall">
+                <section class="media-wall files">
                     <div class="columns">
                         <div class="column">
                             <figure class="image is-128x128">
@@ -208,6 +208,14 @@
 
 .filename{
     opacity: 75%;
+}
+
+.files{
+    border-style: dashed;
+    border-radius: 5px;
+    /* RGB "fake transparency" will be used by browsers which dont support rgba's "real transparency" */
+    border-color: rgb(183, 183, 183);
+    border-color: rgba(0, 0, 0, .5);
 }
 </style>
 
