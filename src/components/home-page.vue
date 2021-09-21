@@ -32,7 +32,7 @@
         </a>
       </div>
       <div class="column">
-        <a href="#">
+        <a href="/display">
           <figure class="image is-16by9">
             <img src="../assets/home-displays.png">
           </figure>
