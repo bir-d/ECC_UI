@@ -80,6 +80,7 @@
             </div>
             <div class="column is-narrow">
                 <section class="media-wall files">
+                    <h1 class="title">File Browser</h1>
                     <div class="columns">
                         <div class="column">
                             <figure class="image is-128x128">
