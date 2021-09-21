@@ -82,58 +82,106 @@
                 <section class="media-wall">
                     <div class="columns">
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
-                        </div>
-                        <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
-                        </div>
-                        <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
-                        </div>
-                        <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <b-icon pack="fas" icon="video"></b-icon>
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                     </div>
                 </section>
@@ -156,6 +204,10 @@
     flex-direction: column;
     margin-top: 3em;
     margin-left: 7em;
+}
+
+.filename{
+    opacity: 75%;
 }
 </style>
 
