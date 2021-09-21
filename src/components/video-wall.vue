@@ -79,61 +79,110 @@
                 </div>
             </div>
             <div class="column is-narrow">
-                <section class="media-wall">
+                <section class="media-wall files">
+                    <h1 class="title">File Browser</h1>
                     <div class="columns">
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </div>
-                        <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </div>
-                        <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </div>
-                        <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                     </div>
                     <div class="columns">
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                         <div class="column">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
+                        </div>
+                        <div class="column">
+                            <figure class="image is-128x128">
+                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
+                            <p class="filename"> filename </p>
+                            </figure>
                         </div>
                     </div>
                 </section>
@@ -156,6 +205,18 @@
     flex-direction: column;
     margin-top: 3em;
     margin-left: 7em;
+}
+
+.filename{
+    opacity: 75%;
+}
+
+.files{
+    border-style: dashed;
+    border-radius: 5px;
+    /* RGB "fake transparency" will be used by browsers which dont support rgba's "real transparency" */
+    border-color: rgb(183, 183, 183);
+    border-color: rgba(0, 0, 0, .5);
 }
 </style>
 
