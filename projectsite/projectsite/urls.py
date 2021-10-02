@@ -23,14 +23,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('projectapp.urls')),
 
-    #API Endpoints
-    path('api/light_groups/', views.Lights_GroupView.as_view()),
+    #API Endpoints (GET,POST)
+    # path('api/light_groups/', views.Lights_GroupView.as_view()),
     path('api/lights/', views.LightsView.as_view()),
     path('api/video_wall_groups/', views.Video_Wall_Panel_GroupView.as_view()),
     path('api/video_wall_panels/', views.Video_Wall_PanelView.as_view()),
     path('api/workstations/', views.WorkstationView.as_view()),
 
-    path('api/light_groups/<int:pk>', views.SingleLightGroupView.as_view()),
+    #Indiviudal API Endpoints (GET,POST,PUT, Delete)
+    # path('api/light_groups/<int:pk>', views.SingleLightGroupView.as_view()),
     path('api/lights/<int:pk>', views.SingleLightView.as_view()),
     path('api/video_wall_groups/<int:pk>', views.SingleVideoWallPanelGroupView.as_view()),
     path('api/video_wall_panels/<int:pk>', views.SingleVideoWallPanelView.as_view()),

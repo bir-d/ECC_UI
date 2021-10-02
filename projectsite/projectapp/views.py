@@ -9,13 +9,13 @@ from rest_framework.response import  Response
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-from projectapp.models import Light_Group
+# from projectapp.models import Light_Group
 from projectapp.models import Light
 from projectapp.models import Video_Wall_Panel_Group
 from projectapp.models import Video_Wall_Panel
 from projectapp.models import Workstation
 
-from projectapp.serialisers import Light_GroupSerializer
+# from projectapp.serialisers import Light_GroupSerializer
 from projectapp.serialisers import LightSerializer
 from projectapp.serialisers import Video_Wall_Panel_GroupSerializer
 from projectapp.serialisers import Video_Wall_PanelSerializer
@@ -27,17 +27,17 @@ def index(request):
 
 #API Endpoint Views
 
-#Light Groups Endpoint
-class Lights_GroupView(ListCreateAPIView):
-    queryset = Light_Group.objects.all()
-    serializer_class = Light_GroupSerializer
+# #Light Groups Endpoint
+# class Lights_GroupView(ListCreateAPIView):
+#     queryset = Light_Group.objects.all()
+#     serializer_class = Light_GroupSerializer
 
-    def perform_create(self, serializer):
-        return serializer.save()
+#     def perform_create(self, serializer):
+#         return serializer.save()
 
-class SingleLightGroupView(RetrieveUpdateDestroyAPIView):
-    queryset = Light_Group.objects.all()
-    serializer_class = Light_GroupSerializer
+# class SingleLightGroupView(RetrieveUpdateDestroyAPIView):
+#     queryset = Light_Group.objects.all()
+#     serializer_class = Light_GroupSerializer
 
 #Lights Endpoint
 class LightsView(ListCreateAPIView):
