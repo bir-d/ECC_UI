@@ -5,10 +5,14 @@
             <div class="LightsBox">
                 <!-- Attempt to dynamically style boz to match window size changes, needs work -->
                 <div class="RoomLight" v-bind:style="[{'width': '40%'}, {'height': '40%'}]">
+                    <!-- For loops through lights and displays them within mock room box -->
                     <span v-bind:class="[roomStateOn ? 'LightOn' : 'LightOff', light.selected ? 'selected' : '']" v-for="light in lights" :key="light" v-bind:style="[roomStateOn ? {'background-color': (light.colour + light.brightness + ')')} : {'background-color': 'white'}, {'left': light.positionX}, {'top': light.positionY}, {'position': 'absolute'}]" v-bind:title="light.userlabel" v-on:click="toggleSelected(light)"> </span>
                 </div>
+                <!-- Div that contains colour wheel and respective content -->
                 <div class="ColourWheel">
+                    <!-- Attempt to dynamically style colour wheel to match window size changes, needs work -->
                     <colour-picker :width=(windowHeight*0.2) :height=(windowHeight*0.2) v-model="colour"> </colour-picker>
+                    <!-- Display currently selected colour -->
                     <div class="selected-color-info">
                         <p>Selected color:</p>
                         <svg height="24" width="24">
@@ -20,27 +24,25 @@
                     <button class="btn btn-primary" v-on:click="changeLight(colour)">Select Colour</button>
                 </div>
                 <div>
+                    <!-- 0-100 scale input for brightness, to be changed into a sliding bar -->
                     <input v-model="newBrightness" type="text" placeholder="Enter Brightness Level" v-on:keyup.enter="changeBrightness(newBrightness)">
                     <br>
+                    <!-- Select all Lights -->
                     <button class="btn btn-primary" v-on:click="SelectAll()">Select All Lights</button>
                     <br>
+                    <!-- Unselect all Lights -->
                     <button class="btn btn-primary" v-on:click="UnselectAll()">Unselect All Lights</button>
                     <br>
+                    <!-- Mock preset creation for testing purposes -->
                     <input v-model="newPresetName" type="text" placeholder="Enter Preset Name" v-on:keyup.enter="AddPreset(newPresetName)">
                     <br>
                     <input v-model="PresetName" type="text" placeholder="Enter Preset To Use" v-on:keyup.enter="SyncPresets(PresetName)">
+                    <!-- List presets made on page -->
                      <ul>
                         <li v-for="preset in presets" :key="preset" v-on:click="SyncPresets(preset.name)"> {{ preset.name }}</li>
                     </ul>
                 </div>
             </div>
-            <!-- <br> <button class="btn btn-primary" v-on:click="toggleRoomState">Change Room State</button> -->
-            <!-- Text field to enter a colour to change selected lights when button pressed later or 'enter' is pressed  -->
-            <!-- <input v-model="newColour" type="text" placeholder="Add new light colour" v-on:keyup.enter="changeLight(newColour)"> -->
-            <!-- Button to change selected lights to the colour entered previously -->
-            <!-- <button class="btn btn-primary" v-bind:disabled="newColour.length === 0" v-on:click="changeLight(newColour)">Save Colour</button> -->
-            <!-- Change selected lights to colour currently presented in colour wheel -->
-            <!-- <button class="btn btn-primary" v-on:click="changeLight(colour)">Colour Wheel Select</button> -->
         </div>
     </div>
 </template>
@@ -84,7 +86,17 @@
         text-align: center;
     }
 
-    
+    /* Scale and display mock room */
+    .RoomLight {
+        float: left;
+        border: 1px solid black;
+        left: 2.5%;
+        height: 40%;
+        width: 40%;
+        position: relative;
+    }
+
+    /* Colour Wheel library css */
     .selected-color-info {
     display: flex;
     justify-content: center;
@@ -94,15 +106,6 @@
     
     .selected-color-info p {
     margin: 0 5px 0 0;
-    }
-    
-    .RoomLight {
-        float: left;
-        border: 1px solid black;
-        left: 2.5%;
-        height: 40%;
-        width: 40%;
-        position: relative;
     }
 
     .ColourWheel {
@@ -124,11 +127,12 @@
 <script>
     
     
-    
+    // Imports ColourWheel library
     import ColourPicker from 'vue-color-picker-wheel';
 
     export default {
         name: 'App',
+        // Imports ColourWheel library
         components: {
             ColourPicker
         },
@@ -136,7 +140,7 @@
         },
         data() {
             return {
-                //Sets up all variables used within page
+                // Sets up all variables used within page
                 colour: '#000000',
                 roomStateOn: true,
                 newColour: '',
@@ -144,23 +148,25 @@
                 PresetName: '',
                 windowHeight: window.innerHeight,
                 windowWidth: window.innerWidth,
-                //Lights data stored as array
+                // Lights data stored as array
                 lights: [
                 {
-                    //Descriptive label of light for user
+                    // Descriptive label of light for user
                     userlabel: "Light Top Left",
-                    //Abbreviated label of light for ease of use
+                    // Abbreviated label of light for ease of use
                     label: "LTL",
-                    //If Light is on/ off
+                    // If Light is on/ off
                     state: "On",
-                    //Current colour of light
+                    // Current colour of light
                     colour: "rgba(255, 0, 0, ",
                     hexColour: "#ff0000",
-                    //colour: "rgb(255, 0, 0 ," + this.opacity + ")",
-                    //If the light has been selected
+                    // If the light has been selected
                     selected: false,
+                    // Default position of light in horizontal of room
                     positionX: '5%',
+                    // Default position of light in vertical of room
                     positionY: '5%',
+                    // How bright light is on scale 0-1
                     brightness: 1,
                 },
                 {
@@ -210,9 +216,10 @@
                 ],
                 // Array within array is used to store presets
                 presets: [ {
-                    name: "Test",
+                    name: "Default",
                     presetinfo: [
                     {
+                        // label acts as a mock db scheme Foreign Key to primary Key relationship
                         label: "LTL",
                         state: "On",
                         colour: "rgba(255, 0, 0, ",
@@ -287,12 +294,12 @@
                     newColour = coloursName[newColour.toLowerCase()];
                 // hexcode is changed to rgba
                 var RGBAHex = this.HexToRGBA(newColour)
-                var newColourRGBA = RGBAHex[0]
-                var hexValue = RGBAHex[1]
+                // Loops through lights and updates selected lights colour and hex value to new input colour
+                // Unselects light when updated
                 for (this.changelight in this.lights) {
                     if (this.lights[this.changelight].selected == true) {
-                        this.lights[this.changelight].colour = newColourRGBA;
-                        this.lights[this.changelight].hexColour = hexValue;
+                        this.lights[this.changelight].colour = RGBAHex;
+                        this.lights[this.changelight].hexColour = newColour;
                         this.lights[this.changelight].selected = false;
                     }
                 }
@@ -306,18 +313,25 @@
             },
             //Hex to RGBA converter part 1
             HexToRGBA: function(hexValue) {
+                // Splits hex code into R, G and B hex value sections
+                // e.g. #ff55a9 is split into R = ff, G = 55, B = a9
                 var hexR = [hexValue[1], hexValue[2]];
                 var hexG = [hexValue[3], hexValue[4]];
                 var hexB = [hexValue[5], hexValue[6]];
+                // parses hex code into value converter
                 var R = this.HexToRGBAFilter(hexR)
                 var G = this.HexToRGBAFilter(hexG)
                 var B = this.HexToRGBAFilter(hexB)
-                return ["rgba(" + R + ", " + G + ", " + B + ", ", hexValue]
+                // returns converted hex in rbga format minus the brightness value, which 
+                // is dynamically added in rendering code (line 9 as time of writing)
+                return ("rgba(" + R + ", " + G + ", " + B + ", ")
 
 
             },
             //Hex to RGBA converter part 2
             HexToRGBAFilter: function(hexDouble) {
+                // define libraries that convert first and second position letters into respective
+                // numeric value
                 var HexLetterCon1 = {
                 "a":160, "b":176, "c":192, "d":208, "e":224,  "f":240
                 }
@@ -325,31 +339,47 @@
                 "a":10, "b":11, "c":12, "d":13, "e":14,  "f":15
                 }
                 var hex = 0
+                // Checks if hex value has letter in first position
                 if (typeof HexLetterCon1[hexDouble[0].toLowerCase()] != 'undefined'){
+                    // Checks if hex value has letter in second position
                     if (typeof HexLetterCon2[hexDouble[1].toLowerCase()] != 'undefined') {
+                        // Converts hex based on respective letter dictionary values from above for both positions
                         hex = HexLetterCon1[hexDouble[0].toLowerCase()] + HexLetterCon2[hexDouble[1].toLowerCase()];
                     }
+                    // If hex value isn't a letter in second position
                     else {
+                        // Converts hex based on respective letter dictionary values from above for first positions and adds second position number
                         hex = HexLetterCon1[hexDouble[0].toLowerCase()] + parseInt(hexDouble[1]);
                     } 
                 }
+                // If hex value isn't a letter in first position
                 else {
+                    // Checks if hex value has letter in second position
                     if (typeof HexLetterCon2[hexDouble[1].toLowerCase()] != 'undefined') {
+                        // Converts hex based on respective letter dictionary values from above for second positions and adds that to first position with the position 1 numeric multiplied by 10
                         hex = (parseInt(hexDouble[0]) * 10) + HexLetterCon2[hexDouble[1].toLowerCase()];
                     }
+                    // If hex value isn't a letter in second position
                     else {
+                        // Adds the two numeric values of hex together with the position 1 numeric multiplied by 10
                         hex = (parseInt(hexDouble[0]) * 10) + parseInt(hexDouble[1])
                     }
                 }
                 return hex
             },
+            // Change light Brightness 
             changeBrightness: function(Brightness) {
+                // Changes brightness for lights selected
                 for (this.changebrightness in this.lights) {
                     if (this.lights[this.changebrightness].selected == true) {
+                        // update selected lights brighness value and convert brightness from 0-100 scale to 0-1 scale
                         this.lights[this.changebrightness].brightness = Brightness/100;
+                        // Note light is not unselected, as when a bar is added it will need to be a sliding change
+                        // which will not work if a light is unselected as soon as the bar is moved
                     }
                 }
             },
+            // Select all lights that aren't currently selected
             SelectAll: function() {
                 for (this.select in this.lights) {
                     if (this.lights[this.select].selected == false) {
@@ -357,6 +387,7 @@
                     }
                 }
             },
+            // Unselect all lights that are currently selected
             UnselectAll: function() {
                 for (this.select in this.lights) {
                     if (this.lights[this.select].selected == true) {
@@ -364,6 +395,7 @@
                     }
                 }
             },
+            // Adds array to presets array that contains info for storing preset
             AddPreset: function(PresetName){
             this.presets.push({
                 name: PresetName,
@@ -406,6 +438,7 @@
             })
             this.newPresetName = ''
             },
+            // loops through presets, for preset with inputted name and updates all lights with their preset values
             SyncPresets: function(PresetName){
                 for (this.element in this.presets) {
                     if (this.presets[this.element].name == PresetName) {
