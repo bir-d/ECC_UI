@@ -16,7 +16,8 @@ from django.core.validators import MaxValueValidator
 class Light(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=255)
-    colour = models.CharField(max_length=6)
+    colour = models.CharField(max_length=20)
+    hexcolour = models.CharField(max_length=7)
     brightness = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
     light_on = models.BooleanField()
     selected = models.BooleanField()
@@ -42,9 +43,9 @@ class Video_Wall_Panel(models.Model):
 
 class Workstation(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
-    # workstation_name = models.CharField(max_length=255)
+    workstation_name = models.CharField(max_length=255)
     station_on = models.BooleanField()
     
-    # def __str__(self):
-    #     return self.workstation_name
+    def __str__(self):
+        return self.workstation_name
     
