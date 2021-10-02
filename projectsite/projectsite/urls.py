@@ -22,9 +22,18 @@ from projectapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('projectapp.urls')),
-    url(r'^light_groups/', views.Lights_GroupList.as_view()),
-    url(r'^lights/', views.LightsList.as_view()),
-    url(r'^video_wall_groups/', views.Video_Wall_Panel_GroupList.as_view()),
-    url(r'^video_wall_panels/', views.Video_Wall_PanelList.as_view()),
-    url(r'^workstations/', views.WorkstationsList.as_view()),
+
+    #API Endpoints
+    path('api/light_groups/', views.Lights_GroupView.as_view()),
+    path('api/lights/', views.LightsView.as_view()),
+    path('api/video_wall_groups/', views.Video_Wall_Panel_GroupView.as_view()),
+    path('api/video_wall_panels/', views.Video_Wall_PanelView.as_view()),
+    path('api/workstations/', views.WorkstationView.as_view()),
+
+    path('api/light_groups/<int:pk>', views.SingleLightGroupView.as_view()),
+    path('api/lights/<int:pk>', views.SingleLightView.as_view()),
+    path('api/video_wall_groups/<int:pk>', views.SingleVideoWallPanelGroupView.as_view()),
+    path('api/video_wall_panels/<int:pk>', views.SingleVideoWallPanelView.as_view()),
+    path('api/workstations/<int:pk>', views.SingleWorkstationView.as_view()),
+
 ]

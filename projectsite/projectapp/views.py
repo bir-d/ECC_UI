@@ -7,6 +7,7 @@ from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 from rest_framework.response import  Response
 from rest_framework import status
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from projectapp.models import Light_Group
 from projectapp.models import Light
@@ -24,73 +25,146 @@ from projectapp.serialisers import WorkstationSerializer
 def index(request):
     return HttpResponse("This page can be used to test app functionality")
 
-class Lights_GroupList(APIView):
-    def get(self, request):
-        Light_Groups = Light_Group.objects.all()
-        serializer= Light_GroupSerializer(Light_Groups, many=True)
-        return Response({"Light Groups": serializer.data})
-        
-    def post(self, request):
-        light_group = request.data.get('light_group')
+#API Endpoint Views
 
-        serializer = Light_GroupSerializer(data=light_group)
-        if serializer.is_valid(raise_exception=True):
-            light_group_saved = serializer.save()
-        return Response({"Success": "Light Group '{}' added successfully".format(light_group_saved.group_name)})
+#Light Groups Endpoint
+class Lights_GroupView(ListCreateAPIView):
+    queryset = Light_Group.objects.all()
+    serializer_class = Light_GroupSerializer
 
-class LightsList(APIView):
-    def get(self, request):
-        Lights1 = Light.objects.all()
-        serializer= LightSerializer(Lights1, many=True)
-        return Response({"Lights": serializer.data})
-        
-    def post(self, request):
-        light = request.data.get('light')
+    def perform_create(self, serializer):
+        return serializer.save()
 
-        serializer = LightSerializer(data=light)
-        if serializer.is_valid(raise_exception=True):
-            light_saved = serializer.save()
-        return Response({"Success": "Light '{}' added successfully".format(light_saved.name)})
+class SingleLightGroupView(RetrieveUpdateDestroyAPIView):
+    queryset = Light_Group.objects.all()
+    serializer_class = Light_GroupSerializer
 
-class Video_Wall_Panel_GroupList(APIView):
-    def get(self, request):
-        Video_Wall_Groups = Video_Wall_Panel_Group.objects.all()
-        serializer= Video_Wall_Panel_GroupSerializer(Video_Wall_Groups, many=True)
-        return Response({"Video Wall Panel Groups": serializer.data})
-        
-    def post(self, request):
-        video_wall_panel_group = request.data.get('video_wall_panel_group')
+#Lights Endpoint
+class LightsView(ListCreateAPIView):
+    queryset = Light.objects.all()
+    serializer_class = LightSerializer
 
-        serializer = Video_Wall_Panel_GroupSerializer(data=video_wall_panel_group)
-        if serializer.is_valid(raise_exception=True):
-            video_wall_panel_group_saved = serializer.save()
-        return Response({"Success": "Video Wall Panel Group '{}' added successfully".format(video_wall_panel_group_saved.id)})
+    def perform_create(self, serializer):
+        return serializer.save()
 
-class Video_Wall_PanelList(APIView):
-    def get(self, request):
-        Video_Wall_Panels = Video_Wall_Panel.objects.all()
-        serializer= Video_Wall_PanelSerializer(Video_Wall_Panels, many=True)
-        return Response({"Video Wall Panels": serializer.data})
-        
-    def post(self, request):
-        video_wall_panel = request.data.get('video_wall_panel')
+class SingleLightView(RetrieveUpdateDestroyAPIView):
+    queryset = Light.objects.all()
+    serializer_class = LightSerializer
 
-        serializer = Video_Wall_PanelSerializer(data=video_wall_panel)
-        if serializer.is_valid(raise_exception=True):
-            video_wall_panel_saved = serializer.save()
-        return Response({"Success": "Video Wall Panel'{}' added successfully".format(video_wall_panel_saved.id)})
+#Video Wall Panel Groups Endpoint
+class Video_Wall_Panel_GroupView(ListCreateAPIView):
+    queryset = Video_Wall_Panel_Group.objects.all()
+    serializer_class = Video_Wall_Panel_GroupSerializer
 
-class WorkstationsList(APIView):
-    def get(self, request):
-        Workstations1 = Workstation.objects.all()
-        serializer= WorkstationSerializer(Workstations1, many=True)
-        return Response({"Workstations": serializer.data})
-        
-    def post(self, request):
-        workstation = request.data.get('workstation')
+    def perform_create(self, serializer):
+        return serializer.save()
 
-        serializer = WorkstationSerializer(data=workstation)
-        if serializer.is_valid(raise_exception=True):
-            workstation_saved = serializer.save()
-        return Response({"Success": "Workstation '{}' added successfully".format(workstation_saved.id)})
+class SingleVideoWallPanelGroupView(RetrieveUpdateDestroyAPIView):
+    queryset = Video_Wall_Panel_Group.objects.all()
+    serializer_class = Video_Wall_Panel_GroupSerializer
+
+#Video Wall Panels Endpoint
+class Video_Wall_PanelView(ListCreateAPIView):
+    queryset = Video_Wall_Panel.objects.all()
+    serializer_class = Video_Wall_PanelSerializer
+
+    def perform_create(self, serializer):
+        return serializer.save()
+
+class SingleVideoWallPanelView(RetrieveUpdateDestroyAPIView):
+    queryset = Video_Wall_Panel.objects.all()
+    serializer_class = Video_Wall_PanelSerializer
+
+#Workstations Endpoint
+class WorkstationView(ListCreateAPIView):
+    queryset = Workstation.objects.all()
+    serializer_class = WorkstationSerializer
+
+    def perform_create(self, serializer):
+        return serializer.save()
+
+class SingleWorkstationView(RetrieveUpdateDestroyAPIView):
+    queryset = Workstation.objects.all()
+    serializer_class = WorkstationSerializer
+
+
+# # GET request in Django API view for light groups
+# class Lights_GroupList(APIView):
+#     def get(self, request):
+#         Light_Groups = Light_Group.objects.all()
+#         serializer= Light_GroupSerializer(Light_Groups, many=True)
+#         return Response({"Light Groups": serializer.data})
+
+#  # POST request in Django API view for light groups       
+#     def post(self, request):
+#         light_group = request.data.get('light_group')
+
+#         serializer = Light_GroupSerializer(data=light_group)
+#         if serializer.is_valid(raise_exception=True):
+#             light_group_saved = serializer.save()
+#         return Response({"Success": "Light Group '{}' added successfully".format(light_group_saved.group_name)})
+
+# # GET request in Django API view for lights
+# class LightsList(APIView):
+#     def get(self, request):
+#         Lights1 = Light.objects.all()
+#         serializer= LightSerializer(Lights1, many=True)
+#         return Response({"Lights": serializer.data})
+
+#  # POST request in Django API view for lights       
+#     def post(self, request):
+#         light = request.data.get('light')
+
+#         serializer = LightSerializer(data=light)
+#         if serializer.is_valid(raise_exception=True):
+#             light_saved = serializer.save()
+#         return Response({"Success": "Light '{}' added successfully".format(light_saved.name)})
+
+# # GET request in Django API view for video wall panel groups     
+# class Video_Wall_Panel_GroupList(APIView):
+#     def get(self, request):
+#         Video_Wall_Groups = Video_Wall_Panel_Group.objects.all()
+#         serializer= Video_Wall_Panel_GroupSerializer(Video_Wall_Groups, many=True)
+#         return Response({"Video Wall Panel Groups": serializer.data})
+
+# # POST request in Django API view for video wall panel groups           
+#     def post(self, request):
+#         video_wall_panel_group = request.data.get('video_wall_panel_group')
+
+#         serializer = Video_Wall_Panel_GroupSerializer(data=video_wall_panel_group)
+#         if serializer.is_valid(raise_exception=True):
+#             video_wall_panel_group_saved = serializer.save()
+#         return Response({"Success": "Video Wall Panel Group '{}' added successfully".format(video_wall_panel_group_saved.id)})
+
+# # GET request in Django API view for video wall panels
+# class Video_Wall_PanelList(APIView):
+#     def get(self, request):
+#         Video_Wall_Panels = Video_Wall_Panel.objects.all()
+#         serializer= Video_Wall_PanelSerializer(Video_Wall_Panels, many=True)
+#         return Response({"Video Wall Panels": serializer.data})
+
+# # POST request in Django API view for video wall panel groups     
+#     def post(self, request):
+#         video_wall_panel = request.data.get('video_wall_panel')
+
+#         serializer = Video_Wall_PanelSerializer(data=video_wall_panel)
+#         if serializer.is_valid(raise_exception=True):
+#             video_wall_panel_saved = serializer.save()
+#         return Response({"Success": "Video Wall Panel'{}' added successfully".format(video_wall_panel_saved.id)})
+
+# # GET request in Django API view for workstations
+# class WorkstationsList(APIView):
+#     def get(self, request):
+#         Workstations1 = Workstation.objects.all()
+#         serializer= WorkstationSerializer(Workstations1, many=True)
+#         return Response({"Workstations": serializer.data})
+
+# # POST request in Django API view for workstations
+#     def post(self, request):
+#         workstation = request.data.get('workstation')
+
+#         serializer = WorkstationSerializer(data=workstation)
+#         if serializer.is_valid(raise_exception=True):
+#             workstation_saved = serializer.save()
+#         return Response({"Success": "Workstation '{}' added successfully".format(workstation_saved.id)})
 
