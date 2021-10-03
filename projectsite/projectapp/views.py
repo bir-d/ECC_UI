@@ -14,12 +14,14 @@ from projectapp.models import Light
 from projectapp.models import Video_Wall_Panel_Group
 from projectapp.models import Video_Wall_Panel
 from projectapp.models import Workstation
+from projectapp.models import Display
 
 # from projectapp.serialisers import Light_GroupSerializer
 from projectapp.serialisers import LightSerializer
 from projectapp.serialisers import Video_Wall_Panel_GroupSerializer
 from projectapp.serialisers import Video_Wall_PanelSerializer
 from projectapp.serialisers import WorkstationSerializer
+from projectapp.serialisers import DisplaySerializer
 
 # Create your views here.
 def index(request):
@@ -87,6 +89,17 @@ class SingleWorkstationView(RetrieveUpdateDestroyAPIView):
     queryset = Workstation.objects.all()
     serializer_class = WorkstationSerializer
 
+#Displays Endpoint
+class DisplayView(ListCreateAPIView):
+    queryset = Display.objects.all()
+    serializer_class = DisplaySerializer
+
+    def perform_create(self, serializer):
+        return serializer.save()
+
+class SingleDisplayView(RetrieveUpdateDestroyAPIView):
+    queryset = Display.objects.all()
+    serializer_class = DisplaySerializer
 
 # # GET request in Django API view for light groups
 # class Lights_GroupList(APIView):
