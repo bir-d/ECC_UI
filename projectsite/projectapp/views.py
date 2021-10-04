@@ -49,6 +49,7 @@ class LightsView(ListCreateAPIView):
     def perform_create(self, serializer):
         return serializer.save()
 
+#Individual Lights Endpoint
 class SingleLightView(RetrieveUpdateDestroyAPIView):
     queryset = Light.objects.all()
     serializer_class = LightSerializer
@@ -61,6 +62,7 @@ class Video_Wall_Panel_GroupView(ListCreateAPIView):
     def perform_create(self, serializer):
         return serializer.save()
 
+#Individual Video Wall Groups Endpoint
 class SingleVideoWallPanelGroupView(RetrieveUpdateDestroyAPIView):
     queryset = Video_Wall_Panel_Group.objects.all()
     serializer_class = Video_Wall_Panel_GroupSerializer
@@ -73,6 +75,7 @@ class Video_Wall_PanelView(ListCreateAPIView):
     def perform_create(self, serializer):
         return serializer.save()
 
+#Individual Video Wall Panels Endpoint
 class SingleVideoWallPanelView(RetrieveUpdateDestroyAPIView):
     queryset = Video_Wall_Panel.objects.all()
     serializer_class = Video_Wall_PanelSerializer
@@ -85,6 +88,7 @@ class WorkstationView(ListCreateAPIView):
     def perform_create(self, serializer):
         return serializer.save()
 
+#Individual Workstations Endpoint
 class SingleWorkstationView(RetrieveUpdateDestroyAPIView):
     queryset = Workstation.objects.all()
     serializer_class = WorkstationSerializer
@@ -97,6 +101,7 @@ class DisplayView(ListCreateAPIView):
     def perform_create(self, serializer):
         return serializer.save()
 
+#Individual Displays Endpoint
 class SingleDisplayView(RetrieveUpdateDestroyAPIView):
     queryset = Display.objects.all()
     serializer_class = DisplaySerializer

@@ -17,7 +17,6 @@ class Light(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=255)
     colour = models.CharField(max_length=20)
-    hexcolour = models.CharField(max_length=7)
     brightness = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
     light_on = models.BooleanField()
     selected = models.BooleanField()
