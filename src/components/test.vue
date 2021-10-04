@@ -1,6 +1,5 @@
 <template>
-    <!-- Waits until lights are loaded to render -->
-    <div class="Page" v-if="lights[0].colour != 'undef'">
+    <div class="Page">
         <div id="app">
             <!-- Div used to organise everything onto on plane -->
             <div class="LightsBox">
@@ -138,12 +137,7 @@
         components: {
             ColourPicker
         },
-        // Runs as instance is generated
         created() {
-            // Creates lights array earlier than would normally be rendered
-            this.pushLights();
-            // Extracts light information stored in db
-            this.getLights();
         },
         data() {
             return {
@@ -155,11 +149,74 @@
                 PresetName: '',
                 windowHeight: window.innerHeight,
                 windowWidth: window.innerWidth,
-                // Lights info from db stored as array
                 dblights: [],
                 // Lights data stored as array
-                lights: [],
-                // Array within array is used to store presets (Probs just ignore at this point)
+                lights: [
+                {
+                    // Descriptive label of light for user
+                    userlabel: "Light Top Left",
+                    // Abbreviated label of light for ease of use
+                    label: "LTL",
+                    // If Light is on/ off
+                    state: true,
+                    // Current colour of light
+                    colour: "rgba(255, 0, 0, ",
+                    hexColour: "#ff0000",
+                    // If the light has been selected
+                    selected: false,
+                    // Default position of light in horizontal of room
+                    positionX: '5%',
+                    // Default position of light in vertical of room
+                    positionY: '5%',
+                    // How bright light is on scale 0-1
+                    brightness: 1,
+                },
+                {
+                    userlabel: "Light Top Right",
+                    label: "LTR",
+                    state: true,
+                    colour: "rgba(0, 0, 255, ",
+                    hexColour: "#0000ff",
+                    selected: false,
+                    positionX: '87.5%',
+                    positionY: '5%',
+                    brightness: 1,
+                },
+                {
+                    userlabel: "Light Middle",
+                    label: "LM",
+                    state: true,
+                    colour: "rgba(255, 0, 255, ",
+                    hexColour: "#ff00ff",
+                    selected: false,
+                    positionX: '46.25%',
+                    positionY: '42.5%',
+                    brightness: 1,
+                },
+                {
+                    userlabel: "Light Bottom Left",
+                    label: "LBL",
+                    state: true,
+                    colour: "rgba(0, 255, 0, ",
+                    hexColour: "#00ff00",
+                    selected: false,
+                    positionX: '5%',
+                    positionY: '80%',
+                    brightness: 1,
+                },
+                {
+                    userlabel: "Light Bottom Right",
+                    label: "LBR",
+                    state: true,
+                    colour: "rgba(0, 255, 255, ",
+                    hexColour: "#00ffff",
+                    selected: false,
+                    positionX: '87.5%',
+                    positionY: '80%',
+                    brightness: 1,
+                },   
+                ],
+                // Array within array is used to store presets
                 presets: [ {
                     name: "Default",
                     presetinfo: [
@@ -209,115 +266,33 @@
             this.$nextTick(() => {
                 window.addEventListener('resize', this.onResize);
             })
+            this.getLights();
         },
         // Part of dynamic function to style with changing window size, needs work
         beforeDestroy() { 
             window.removeEventListener('resize', this.onResize); 
         },
         methods: {
-            // Lights array information is generated earlier than deafualt rendering in data.
-            // This is done beacuse otherwise the generation of lights overwrites the db values
-            pushLights() {
-                // Each light is pushed onto lights array
-                this.lights.push({
-                    // Descriptive label of light for user
-                    userlabel: "Light Top Left",
-                    // Abbreviated label of light for ease of use
-                    label: "LTL",
-                    // If Light is on/ off
-                    state: true,
-                    // Current colour of light
-                    colour: "undef",
-                    hexColour: "#ff0000",
-                    // If the light has been selected
-                    selected: false,
-                    // Default position of light in horizontal of room
-                    positionX: '5%',
-                    // Default position of light in vertical of room
-                    positionY: '5%',
-                    // How bright light is on scale 0-1
-                    brightness: 1,
-                })
-                this.lights.push({
-                    userlabel: "Light Top Right",
-                    label: "LTR",
-                    state: true,
-                    colour: "undef",
-                    hexColour: "#0000ff",
-                    selected: false,
-                    positionX: '87.5%',
-                    positionY: '5%',
-                    brightness: 1,
-                })
-                this.lights.push({
-                    userlabel: "Light Middle",
-                    label: "LM",
-                    state: true,
-                    colour: "undef",
-                    hexColour: "#ff00ff",
-                    selected: false,
-                    positionX: '46.25%',
-                    positionY: '42.5%',
-                    brightness: 1,
-                })
-                this.lights.push({
-                    userlabel: "Light Bottom Left",
-                    label: "LBL",
-                    state: true,
-                    colour: "undef",
-                    hexColour: "#00ff00",
-                    selected: false,
-                    positionX: '5%',
-                    positionY: '80%',
-                    brightness: 1,
-                })
-                this.lights.push({
-                    userlabel: "Light Bottom Right",
-                    label: "LBR",
-                    state: true,
-                    colour: "undef",
-                    hexColour: "#00ffff",
-                    selected: false,
-                    positionX: '87.5%',
-                    positionY: '80%',
-                    brightness: 1,
-                })
-            },
-            // Lights infomration stored in db is extracted
             getLights() {
-                axios({
-                    method:'get',
-                    // Url of backend location of data
-                    url: 'http://127.0.0.1:8000/api/lights/',
-                    auth: {
-                        username: 'admin',
-                        password: 'eccadmin123'
-                    }
-                // This section tells code to wait until lights have been rendered to extract db lights info
-                }).then((response) => {
-
-                    this.isLoaded = true;
-
-                    // Check the response was a success
-                    if(response.data != 'undefined')
-                    {
-                        this.dblights = response.data;
-                        // Calls function to update lights values with db values
-                        this.updateLights();
-                    }
-                });
+              axios({
+                  method:'get',
+                  url: 'http://127.0.0.1:8000/api/lights/',
+                  auth: {
+                      username: 'admin',
+                      password: 'eccadmin123'
+                  }
+              }).then(response => this.dblights = response.data)
+              this.updateLights();
             },
-            // Update lights values with db values
             updateLights() {
                 for (this.vuelight in this.lights) {
                     for (this.djangolight in this.dblights) {
-                        // Matches db values and instance values on mock PK label
                         if(this.lights[this.vuelight].label == this.dblights[this.djangolight].name) {
-                            this.lights[this.vuelight].colour = this.HexToRGBA(this.dblights[this.djangolight].colour);
-                            this.lights[this.vuelight].hexColour = this.dblights[this.djangolight].colour;
-                            // Brightness stored as whole number in db, so it is converted from floar to percent
-                            this.lights[this.vuelight].brightness = this.dblights[this.djangolight].brightness/100;
-                            this.lights[this.vuelight].state = this.dblights[this.djangolight].light_on;
+                            //console.log(this.lights[this.vuelight].colour)
+                            //console.log(this.dblights[this.djangolight].colour)
+                            this.lights[this.vuelight].colour = this.dblights[this.djangolight].colour;
+                            this.lights[this.vuelight].brightness = this.dblights[this.djangolight].brightness;
+                            this.lights[this.vuelight].state = this.dblights[this.djangolight].light_On;
                             this.lights[this.vuelight].selected = this.dblights[this.djangolight].selected;
                         }
                         
@@ -327,21 +302,20 @@
             //Update light array to reflect if a specific light has been selected
             toggleSelected: function(Selectedlight) {
                 //Inverts the value of 'light.selected' (true -> false, false -> true)
+                console.log("Selectedlight.label")
                 Selectedlight.selected = !Selectedlight.selected
                 this.colour = Selectedlight.hexColour
-                // Dictionary defines a light's id from its label
                 var PutLabelIds = {
                 "LTL":1, "LTR":2, "LM":3, "LBL":4, "LBR":5
                 }
-                // Load non-changed data on light
                 var name = Selectedlight.label;
-                var colour = Selectedlight.hexColour;
-                var brightness = Selectedlight.brightness * 100;
+                var colour = Selectedlight.colour;
+                var brightness = Selectedlight.brightness;
                 var light_on = Selectedlight.state;
-                // Get light id from label
+                console.log("Selectedlight.label")
                 if (typeof PutLabelIds[Selectedlight.label] != 'undefined')
                     var lightId = PutLabelIds[Selectedlight.label];
-                    // Updates light with new value/s
+                    console.log("hi")
                     axios({
                         method:'put',
                         url: 'http://127.0.0.1:8000/api/lights/' + lightId,
@@ -356,7 +330,6 @@
                         light_on: light_on,
                         selected: Selectedlight.selected,
                         },
-                        // Login to allow db updates/ edits
                         auth: {
                         username: 'admin',
                         password: 'eccadmin123'
@@ -393,7 +366,7 @@
                         }
                         var name = this.lights[this.changelight].label;
                         var selected = this.lights[this.changelight].selected;
-                        var brightness = this.lights[this.changelight].brightness  * 100;
+                        var brightness = this.lights[this.changelight].brightness;
                         var light_on = this.lights[this.changelight].state;
                         if (typeof PutLabelIds[this.lights[this.changelight].label] != 'undefined')
                             var lightId = PutLabelIds[this.lights[this.changelight].label];
@@ -492,35 +465,6 @@
                         this.lights[this.changebrightness].brightness = Brightness/100;
                         // Note light is not unselected, as when a bar is added it will need to be a sliding change
                         // which will not work if a light is unselected as soon as the bar is moved
-                        var PutLabelIds = {
-                        "LTL":1, "LTR":2, "LM":3, "LBL":4, "LBR":5
-                        }
-                        var name = this.lights[this.changebrightness].label;
-                        var selected = this.lights[this.changebrightness].selected;
-                        var colour = this.lights[this.changebrightness].hexColour;
-                        var light_on = this.lights[this.changebrightness].state;
-                        
-                        if (typeof PutLabelIds[this.lights[this.changebrightness].label] != 'undefined')
-                            var lightId = PutLabelIds[this.lights[this.changebrightness].label];
-                            axios({
-                                method:'put',
-                                url: 'http://127.0.0.1:8000/api/lights/' + lightId,
-                                headers: {
-                                'Content-Type': 'application/json'
-                                },
-                                data: {
-                                id: lightId,
-                                name: name,
-                                colour: colour,
-                                brightness: Brightness, 
-                                light_on: light_on,
-                                selected: selected,
-                                },
-                                auth: {
-                                username: 'admin',
-                                password: 'eccadmin123'
-                                }
-                            })
                     }
                 }
             },
@@ -528,7 +472,7 @@
             SelectAll: function() {
                 for (this.select in this.lights) {
                     if (this.lights[this.select].selected == false) {
-                        this.toggleSelected(this.lights[this.select])
+                        this.lights[this.select].selected = true;
                     }
                 }
             },
@@ -536,7 +480,7 @@
             UnselectAll: function() {
                 for (this.select in this.lights) {
                     if (this.lights[this.select].selected == true) {
-                        this.toggleSelected(this.lights[this.select])
+                        this.lights[this.select].selected = false;
                     }
                 }
             },

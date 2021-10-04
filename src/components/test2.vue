@@ -1,6 +1,5 @@
 <template>
-    <!-- Waits until lights are loaded to render -->
-    <div class="Page" v-if="lights[0].colour != 'undef'">
+    <div class="Page" v-if="lights[0].colour != 'rgba(236, 231, 231, '">
         <div id="app">
             <!-- Div used to organise everything onto on plane -->
             <div class="LightsBox">
@@ -138,11 +137,8 @@
         components: {
             ColourPicker
         },
-        // Runs as instance is generated
         created() {
-            // Creates lights array earlier than would normally be rendered
             this.pushLights();
-            // Extracts light information stored in db
             this.getLights();
         },
         data() {
@@ -155,11 +151,10 @@
                 PresetName: '',
                 windowHeight: window.innerHeight,
                 windowWidth: window.innerWidth,
-                // Lights info from db stored as array
                 dblights: [],
                 // Lights data stored as array
                 lights: [],
-                // Array within array is used to store presets (Probs just ignore at this point)
+                // Array within array is used to store presets
                 presets: [ {
                     name: "Default",
                     presetinfo: [
@@ -215,34 +210,23 @@
             window.removeEventListener('resize', this.onResize); 
         },
         methods: {
-            // Lights array information is generated earlier than deafualt rendering in data.
-            // This is done beacuse otherwise the generation of lights overwrites the db values
             pushLights() {
-                // Each light is pushed onto lights array
                 this.lights.push({
-                    // Descriptive label of light for user
                     userlabel: "Light Top Left",
-                    // Abbreviated label of light for ease of use
                     label: "LTL",
-                    // If Light is on/ off
                     state: true,
-                    // Current colour of light
-                    colour: "undef",
+                    colour: "rgba(236, 231, 231, ",
                     hexColour: "#ff0000",
-                    // If the light has been selected
                     selected: false,
-                    // Default position of light in horizontal of room
                     positionX: '5%',
-                    // Default position of light in vertical of room
                     positionY: '5%',
-                    // How bright light is on scale 0-1
                     brightness: 1,
                 })
                 this.lights.push({
                     userlabel: "Light Top Right",
                     label: "LTR",
                     state: true,
-                    colour: "undef",
+                    colour: "rgba(236, 231, 231, ",
                     hexColour: "#0000ff",
                     selected: false,
                     positionX: '87.5%',
@@ -253,7 +237,7 @@
                     userlabel: "Light Middle",
                     label: "LM",
                     state: true,
-                    colour: "undef",
+                    colour: "rgba(236, 231, 231, ",
                     hexColour: "#ff00ff",
                     selected: false,
                     positionX: '46.25%',
@@ -264,7 +248,7 @@
                     userlabel: "Light Bottom Left",
                     label: "LBL",
                     state: true,
-                    colour: "undef",
+                    colour: "rgba(236, 231, 231, ",
                     hexColour: "#00ff00",
                     selected: false,
                     positionX: '5%',
@@ -275,7 +259,7 @@
                     userlabel: "Light Bottom Right",
                     label: "LBR",
                     state: true,
-                    colour: "undef",
+                    colour: "rgba(236, 231, 231, ",
                     hexColour: "#00ffff",
                     selected: false,
                     positionX: '87.5%',
@@ -283,18 +267,15 @@
                     brightness: 1,
                 })
             },
-            // Lights infomration stored in db is extracted
             getLights() {
-                axios({
-                    method:'get',
-                    // Url of backend location of data
-                    url: 'http://127.0.0.1:8000/api/lights/',
-                    auth: {
-                        username: 'admin',
-                        password: 'eccadmin123'
-                    }
-                // This section tells code to wait until lights have been rendered to extract db lights info
-                }).then((response) => {
+              axios({
+                  method:'get',
+                  url: 'http://127.0.0.1:8000/api/lights/',
+                  auth: {
+                      username: 'admin',
+                      password: 'eccadmin123'
+                  }
+              }).then((response) => {
 
                     this.isLoaded = true;
 
@@ -302,20 +283,16 @@
                     if(response.data != 'undefined')
                     {
                         this.dblights = response.data;
-                        // Calls function to update lights values with db values
                         this.updateLights();
                     }
                 });
             },
-            // Update lights values with db values
             updateLights() {
                 for (this.vuelight in this.lights) {
                     for (this.djangolight in this.dblights) {
-                        // Matches db values and instance values on mock PK label
                         if(this.lights[this.vuelight].label == this.dblights[this.djangolight].name) {
                             this.lights[this.vuelight].colour = this.HexToRGBA(this.dblights[this.djangolight].colour);
                             this.lights[this.vuelight].hexColour = this.dblights[this.djangolight].colour;
-                            // Brightness stored as whole number in db, so it is converted from floar to percent
                             this.lights[this.vuelight].brightness = this.dblights[this.djangolight].brightness/100;
                             this.lights[this.vuelight].state = this.dblights[this.djangolight].light_on;
                             this.lights[this.vuelight].selected = this.dblights[this.djangolight].selected;
@@ -329,19 +306,16 @@
                 //Inverts the value of 'light.selected' (true -> false, false -> true)
                 Selectedlight.selected = !Selectedlight.selected
                 this.colour = Selectedlight.hexColour
-                // Dictionary defines a light's id from its label
                 var PutLabelIds = {
                 "LTL":1, "LTR":2, "LM":3, "LBL":4, "LBR":5
                 }
-                // Load non-changed data on light
                 var name = Selectedlight.label;
                 var colour = Selectedlight.hexColour;
                 var brightness = Selectedlight.brightness * 100;
                 var light_on = Selectedlight.state;
-                // Get light id from label
                 if (typeof PutLabelIds[Selectedlight.label] != 'undefined')
                     var lightId = PutLabelIds[Selectedlight.label];
-                    // Updates light with new value/s
+                    console.log(name, colour, brightness, light_on, lightId)
                     axios({
                         method:'put',
                         url: 'http://127.0.0.1:8000/api/lights/' + lightId,
@@ -356,7 +330,6 @@
                         light_on: light_on,
                         selected: Selectedlight.selected,
                         },
-                        // Login to allow db updates/ edits
                         auth: {
                         username: 'admin',
                         password: 'eccadmin123'
@@ -502,6 +475,7 @@
                         
                         if (typeof PutLabelIds[this.lights[this.changebrightness].label] != 'undefined')
                             var lightId = PutLabelIds[this.lights[this.changebrightness].label];
+                            console.log(name, selected, colour, light_on, Brightness, lightId)
                             axios({
                                 method:'put',
                                 url: 'http://127.0.0.1:8000/api/lights/' + lightId,
