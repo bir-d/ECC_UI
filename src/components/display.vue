@@ -56,14 +56,14 @@
       <div >
         <h3 class="screen2">the images/videos for screen2</h3>
         <div class="imgBlock">
-          <img src='../views/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../views/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../views/rectangle.png' alt="grid1" class='grid2'>
+          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
+          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
+          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
         </div>
         <div class="imgBlock">
-          <img src='../views/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../views/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../views/rectangle.png' alt="grid1" class='grid2'>
+          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
+          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
+          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
         </div>
       </div>
     </div>
