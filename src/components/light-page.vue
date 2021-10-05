@@ -151,6 +151,7 @@
                 colour: '#000000',
                 roomStateOn: true,
                 newColour: '',
+                newBrightness: '',
                 newPresetName: '',
                 PresetName: '',
                 windowHeight: window.innerHeight,
@@ -315,7 +316,7 @@
                         if(this.lights[this.vuelight].label == this.dblights[this.djangolight].name) {
                             this.lights[this.vuelight].colour = this.HexToRGBA(this.dblights[this.djangolight].colour);
                             this.lights[this.vuelight].hexColour = this.dblights[this.djangolight].colour;
-                            // Brightness stored as whole number in db, so it is converted from floar to percent
+                            // Brightness stored as whole number in db, so it is converted from float to percent
                             this.lights[this.vuelight].brightness = this.dblights[this.djangolight].brightness/100;
                             this.lights[this.vuelight].state = this.dblights[this.djangolight].light_on;
                             this.lights[this.vuelight].selected = this.dblights[this.djangolight].selected;
