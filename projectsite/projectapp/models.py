@@ -72,3 +72,11 @@ class Media(models.Model):
 
     def __str__(self):
         return self.media_name
+
+class Preset(models.Model):
+    id = models.PositiveIntegerField(primary_key=True)
+    preset_name = models.CharField(max_length=255, null=True)
+    lights = models.JSONField(null=True)
+    video_Wall = models.JSONField(null=True)
+    workstations = models.JSONField(null=True)
+    displays = models.JSONField(null=True)

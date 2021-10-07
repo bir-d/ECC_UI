@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/workstations/', views.WorkstationView.as_view()),
     path('api/displays/', views.DisplayView.as_view()),
     path('api/media/', views.MediaView.as_view()),
+    path('api/preset/', views.PresetView.as_view()),
 
     #Indiviudal API Endpoints (GET,POST,PUT, Delete)
     # path('api/light_groups/<int:pk>', views.SingleLightGroupView.as_view()),
@@ -40,5 +41,6 @@ urlpatterns = [
     path('api/workstations/<int:pk>', views.SingleWorkstationView.as_view()),
     path('api/displays/<int:pk>', views.SingleDisplayView.as_view()),
     path('api/media/<int:pk>', views.SingleMediaView.as_view()),
+    path('api/preset/<int:pk>', views.SinglePresetView.as_view()),
 
 ]
