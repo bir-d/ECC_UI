@@ -65,3 +65,10 @@ class Display(models.Model):
     def __str__(self):
         return self.display_name
 
+class Media(models.Model):
+    id = models.PositiveIntegerField(primary_key=True)
+    media_name = models.CharField(max_length=255, null=True)
+    file_path = models.CharField(max_length=255, null=True)
+
+    def __str__(self):
+        return self.media_name

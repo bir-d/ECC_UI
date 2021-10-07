@@ -5,6 +5,7 @@ from .models import Video_Wall_Panel_Group
 from .models import Video_Wall_Panel 
 from .models import Workstation
 from .models import Display
+from .models import Media
 
 # class Light_GroupSerializer(serializers.ModelSerializer):
 
@@ -40,5 +41,11 @@ class DisplaySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Display
+        fields = '__all__'
+
+class MediaSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Media
         fields = '__all__'
 

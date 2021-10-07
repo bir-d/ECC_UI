@@ -15,6 +15,7 @@ from projectapp.models import Video_Wall_Panel_Group
 from projectapp.models import Video_Wall_Panel
 from projectapp.models import Workstation
 from projectapp.models import Display
+from projectapp.models import Media
 
 # from projectapp.serialisers import Light_GroupSerializer
 from projectapp.serialisers import LightSerializer
@@ -22,7 +23,7 @@ from projectapp.serialisers import Video_Wall_Panel_GroupSerializer
 from projectapp.serialisers import Video_Wall_PanelSerializer
 from projectapp.serialisers import WorkstationSerializer
 from projectapp.serialisers import DisplaySerializer
-
+from projectapp.serialisers import MediaSerializer
 # Create your views here.
 def index(request):
     return HttpResponse("This page can be used to test app functionality")
@@ -105,6 +106,19 @@ class DisplayView(ListCreateAPIView):
 class SingleDisplayView(RetrieveUpdateDestroyAPIView):
     queryset = Display.objects.all()
     serializer_class = DisplaySerializer
+
+#Media Endpoint
+class MediaView(ListCreateAPIView):
+    queryset = Media.objects.all()
+    serializer_class = MediaSerializer
+
+    def perform_create(self, serializer):
+        return serializer.save()
+
+#Individual Media Endpoint
+class SingleMediaView(RetrieveUpdateDestroyAPIView):
+    queryset = Media.objects.all()
+    serializer_class = MediaSerializer
 
 # # GET request in Django API view for light groups
 # class Lights_GroupList(APIView):
