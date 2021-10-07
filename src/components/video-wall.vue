@@ -6,10 +6,25 @@
                     <div class="upload">
                         <input type="file" @change="onFileChange">
                     </div>
-                    <div class="video-player">
-                        <video controls>
-                            <source type="video/mp4" v-for="(videos,index) in dropFiles" :key="index" class="tag is-primary" src=videos.address />
-                        </video>
+                    <div class="item">
+                        <div class="player">
+                        <video-player  class="vjs-custom-skin"
+                                        ref="videoPlayer"
+                                        :options="playerOptions"
+                                        :playsinline="true"
+                                        @play="onPlayerPlay($event)"
+                                        @pause="onPlayerPause($event)"
+                                        @ended="onPlayerEnded($event)"
+                                        @loadeddata="onPlayerLoadeddata($event)"
+                                        @waiting="onPlayerWaiting($event)"
+                                        @playing="onPlayerPlaying($event)"
+                                        @timeupdate="onPlayerTimeupdate($event)"
+                                        @canplay="onPlayerCanplay($event)"
+                                        @canplaythrough="onPlayerCanplaythrough($event)"
+                                        @ready="playerReadied"
+                                        @statechanged="playerStateChanged($event)">
+                        </video-player>
+                        </div>
                     </div>
                 </div>
                 <div class="tags">
@@ -171,6 +186,9 @@
 </style>
 
 <script>
+import 'video.js/dist/video-js.css'
+import { videoPlayer } from 'vue-video-player'
+
 export default {
   data() {
     return {
@@ -180,28 +198,45 @@ export default {
               label: String,
               address: String
           }
-      ]
-    };
+      ],
+      playerOptions: {
+          height: '360',
+          autoplay: true,
+          muted: true,
+          language: 'en',
+          playbackRates: [0.7, 1.0, 1.5, 2.0],
+          sources: [{
+            type: "video/mp4",
+            src: "http://vjs.zencdn.net/v/oceans.mp4",
+            }],
+        }
+      }
+    },
+  components:{
+      videoPlayer
   },
+  mounted() {
+      // console.log('this is current player instance object', this.player)
+      setTimeout(() => {
+        console.log('dynamic change options', this.player)
+        this.player.muted(false)
+      }, 5000)
+    },
+  computed: {
+      player() {
+        return this.$refs.videoPlayer.player
+      }
+    },
   methods: {
     deleteDropFile(index) {
       this.dropFiles.splice(index, 1);
     },
-    onFileChange(video) {
-        var files = video.target.files || video.dataTransfer.files;
-        if(!files.length){
-            return;
-        }
-        this.createImage(files[0])
-    },
-    createVideo(file) {
-        var reader = new FileReader();
-        var vm = this;
-        reader.onload = (video) => {
-            vm.image = video.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
+      // player is ready
+      playerReadied(player) {
+        // seek to 10s
+        console.log('example player 1 readied', player)
+        player.currentTime(10)
+      }
   }
 };
 </script>
