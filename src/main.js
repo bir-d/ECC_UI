@@ -6,6 +6,8 @@ import VueRouter from 'vue-router'
 import Routes from './routes'
 import VueVideoPlayer from 'vue-video-player'
 import 'video.js/dist/video-js.css'
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
 // Font Awesome icons. Usage: https://buefy.org/documentation/icon/#custom-icon-pack , specify `pack` as "fas"
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -33,7 +35,9 @@ Vue.use(Buefy, {
 
 Vue.use(VueRouter)
 
-Vue.use(VueVideoPlayer,)
+Vue.use(VueVideoPlayer)
+
+Vue.use(PerfectScrollbar)
 
 Vue.config.productionTip = false;
 

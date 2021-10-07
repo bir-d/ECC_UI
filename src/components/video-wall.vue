@@ -3,9 +3,6 @@
         <div class="columns">
             <div class="column is-half">
                 <div class="video-wall">
-                    <div class="upload">
-                        <input type="file" @change="onFileChange">
-                    </div>
                     <div class="item">
                         <div class="player">
                         <video-player  class="vjs-custom-skin"
@@ -27,121 +24,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="tags">
-                    <span v-for="(file, index) in dropFiles" :key="index" class="tag is-primary">
-                        {{file.name}}
-                        <button class="delete is-small" type="button" @click="deleteDropFile(index)"></button>
-                    </span>
-                </div>
             </div>
-            <div class="column is-narrow">
-                <section class="media-wall files">
-                    <h1 class="title">File Browser</h1>
-                    <div class="columns">
-                        <div class="column">
+            <div class="column">
+                <h1 class="title">File Browser</h1>
+                <perfect-scrollbar>
+                    <div class="columns is-multiline">
+                        <div class="column is-one-third"
+                        v-for="(element) in media" 
+                        :key="element">
+                            <button @click="load(element.id)">
                             <figure class="image is-128x128">
                             <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
+                            <p class="filename"> {{ element.name }}</p>
                             </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
+                            </button>
                         </div>
                     </div>
-                    <div class="columns">
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                        <div class="column">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> filename </p>
-                            </figure>
-                        </div>
-                    </div>
-                </section>
+                </perfect-scrollbar>
             </div>
         </div>
     </div>
@@ -156,87 +55,139 @@
     margin-top: 3em;
     margin-left: 2.5em;
 }
-.upload{
-    margin-bottom: 2.5em;
-}
-.video-player{
-    width: 100%;
-    height: 20%;
-}
-.wall-piece{
-    margin-left: 1em;
-}
-.media-wall{
-    height:100%;
-    display: flex;
-    overflow-y: auto;
-    flex-direction: column;
-    margin-top: 3em;
-    margin-left: 7em;
-}
 .filename{
     opacity: 75%;
 }
-.files{
-    border-radius: 5px;
-    /* RGB "fake transparency" will be used by browsers which dont support rgba's "real transparency" */
-    border-color: rgb(183, 183, 183);
-    border-color: rgba(0, 0, 0, .5);
+/* Controls the video player dimensions */
+.ps {
+  height: 600px;
 }
 </style>
 
 <script>
 import 'video.js/dist/video-js.css'
+import axios from 'axios'
 import { videoPlayer } from 'vue-video-player'
+import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 
 export default {
-  data() {
-    return {
-      file: {},
-      dropFiles: [
-          {
-              label: String,
-              address: String
-          }
-      ],
-      playerOptions: {
-          height: '360',
-          autoplay: true,
-          muted: true,
-          language: 'en',
-          playbackRates: [0.7, 1.0, 1.5, 2.0],
-          sources: [{
-            type: "video/mp4",
-            src: "http://vjs.zencdn.net/v/oceans.mp4",
-            }],
+    data() {
+        return {
+        // Media information stored here
+        media: [
+            {id:0, label:"Seaside1", type: "video/mp4", src: "http://vjs.zencdn.net/v/oceans.mp4"},
+            {id:1, label:"Boat Ride2", type: "video/mp4", src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"},
+            ],
+        // Functionality for the video player 
+        playerOptions: {
+            height: '360',
+            autoplay: false,
+            muted: true,
+            language: 'en',
+            playbackRates: [0.7, 1.0, 1.5, 2.0],
+            sources: [],
+            }
         }
-      }
     },
-  components:{
-      videoPlayer
-  },
-  mounted() {
-      // console.log('this is current player instance object', this.player)
-      setTimeout(() => {
-        console.log('dynamic change options', this.player)
-        this.player.muted(false)
-      }, 5000)
+    components:{
+        videoPlayer,
+        PerfectScrollbar
     },
-  computed: {
-      player() {
-        return this.$refs.videoPlayer.player
-      }
+    computed: {
+        player() {
+            return this.$refs.videoPlayer.player
+        }
     },
-  methods: {
-    deleteDropFile(index) {
-      this.dropFiles.splice(index, 1);
+    mounted() {
+        setTimeout(() => {
+            this.player.muted(false)
+        }, 5000)
     },
-      // player is ready
-      playerReadied(player) {
-        // seek to 10s
-        console.log('example player 1 readied', player)
-        player.currentTime(10)
-      }
-  }
+    created() {
+        this.getMedia();
+    },
+    methods: {
+        // Ensure Video Player is ready
+        playerReadied(player) {
+            // seek to 10s
+            console.log('example player 1 readied', player)
+            player.currentTime(10)
+        },
+        // Load the videos into Source list
+        load(id){
+            this.playerOptions.sources.unshift({
+                label: this.media[id].label, 
+                id: this.media[id].id, 
+                type: this.media[id].type, 
+                src: this.media[id].src})
+        },
+        getMedia() {
+            axios({
+                method:'get',
+                // Url of backend location of data
+                url: 'http://127.0.0.1:8000/api/videowall/',
+                auth: {
+                    username: 'admin',
+                    password: 'eccadmin123'
+                }
+            // This section tells code to wait until lights have been rendered to extract db lights info
+            }).then((response) => {
+
+                this.isLoaded = true;
+
+                // Check the response was a success
+                if(response.data != 'undefined')
+                {
+                    this.mediasrc = response.data;
+                    // Calls function to update media list with db values
+                    this.updateMedia();
+                }
+            });
+        },
+        updateMedia() {
+            for (this.vuemedia in this.media) {
+                for (this.djangomedia in this.dbmedia) {
+                    if(this.media[this.vuemedia].label == this.dbmedia[this.djangomedia].name) {
+                        this.media[this.vuemedia].label = this.dbmedia[this.djangomedia].name
+                        this.media[this.vuemedia].id = this.dbmedia[this.djangomedia].id
+                        this.media[this.vuemedia].type = this.dbmedia[this.djangomedia].type
+                        this.media[this.vuemedia].src = this.dbmedia[this.djangomedia].src
+                    }
+                }
+            }
+        },
+        // Adds array to presets array that contains info for storing preset
+        AddPreset: function(PresetName){
+            this.presets.push({
+                name: PresetName,
+                presetinfo: [ {
+                    label: this.playerOptions.sources[0].label,
+                    id: this.playerOptions.sources[0].id,
+                    type: this.playerOptions.sources[0].type,
+                    src: this.playerOptions.sources[0].src,
+                }
+                ]
+            })
+            this.newPresetName = ''
+            },
+            // loops through presets, for preset with inputted name and updates all lights with their preset values
+            SyncPresets: function(PresetName){
+                for (this.element in this.presets) {
+                    if (this.presets[this.element].name == PresetName) {
+                        for (this.presetconfig in this.presets[this.element].presetinfo) {
+                            for (this.mediaconfig in this.media) {
+                                if (this.presets[this.element].presetinfo[this.presetconfig].label == this.playerOptions.sources[this.mediaconfig].label) {
+                                    this.playerOptions.sources[this.mediaconfig].label = this.presets[this.element].presetinfo[this.presetconfig].label
+                                    this.playerOptions.sources[this.mediaconfig].id = this.presets[this.element].presetinfo[this.presetconfig].id
+                                    this.playerOptions.sources[this.mediaconfig].type = this.presets[this.element].presetinfo[this.presetconfig].type
+                                    this.playerOptions.sources[this.mediaconfig].src = this.presets[this.element].presetinfo[this.presetconfig].src
+                                }
+                            }
+                        }
+                    }
+                }
+                this.PresetName = '';
+            }
+    }
 };
 </script>
