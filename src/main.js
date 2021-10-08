@@ -9,6 +9,13 @@ import 'video.js/dist/video-js.css'
 import PerfectScrollbar from 'vue2-perfect-scrollbar'
 import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
+// add for display
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import VideoPlayer from 'vue-video-player'
+import 'vue-video-player/src/custom-theme.css'
+import 'video.js/dist/video-js.css'
+
 // Font Awesome icons. Usage: https://buefy.org/documentation/icon/#custom-icon-pack , specify `pack` as "fas"
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -39,6 +46,10 @@ Vue.use(VueVideoPlayer)
 
 Vue.use(PerfectScrollbar)
 
+// add for display
+Vue.use(ElementUI);
+Vue.use(VideoPlayer)
+
 Vue.config.productionTip = false;
 
 const router = new VueRouter({
@@ -50,3 +61,9 @@ new Vue({
   render: (h) => h(App),
   router: router
 }).$mount("#app");
+
+//
+// new Vue({
+//   el: '#app',
+//   render: h => h(App)
+// });

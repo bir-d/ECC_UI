@@ -1,72 +1,99 @@
-<template>
+<<template>
   <div class="content">
     <div class = 'left'>
       <section>
-
+        <!--    the screen 1 at the left side    -->
         <h1>Screen 1</h1>
-        <b-carousel :indicator-inside="false">
-          <b-carousel-item v-for="(item, i) in 6" :key="i">
-            <b-image class="image" :src="getImgUrl1(i)"></b-image>
-          </b-carousel-item>
-          <template #indicators="props">
-            <b-image class="al image" :src="getImgUrl1(props.i)" :title="props.i"></b-image>
-          </template>
-        </b-carousel>
-        <h1>Screen2</h1>
-        <video width=92% height="200px" controls  alt="screen2">
-          <source src="https://www.youtube.com/watch?v=Oi1BcouEmio"  type="video/mp4" class = 'grid1'>
-        </video>
-        <div class = 'frame'>
-          <b-field>
-            <b-upload v-model="dropFiles" multiple drag-drop expanded class ='uploadWindow2'>
-              <section class="section">
-                <p>Drop your files here or click to upload</p>
-              </section>
-            </b-upload>
-          </b-field>
-          <div class="tags">
-                    <span v-for="(file, index) in dropFiles" :key="index" class="tag is-primary" >
-                        {{file.name}}
-                        <button class="delete is-small" type="button" @click="deleteDropFile(index)">
-                        </button>
-                    </span>
-          </div>
+        <div class='screen1Left'>
+          <video-player class="video-player vjs-custom-skin"
+                        ref="videoPlayer"
+                        :playsinline="true"
+                        :options="playerOptions">
+          </video-player>
         </div>
 
+        <!--        the screen two at the left side-->
+        <h1>Screen2</h1>
+        <div class='screen2Left'>
+          <video-player class="video-player vjs-custom-skin"
+                        ref="videoPlayer"
+                        :playsinline="true"
+                        :options="playerOptions2"
+          >
+          </video-player>
+        </div>
       </section>
     </div>
 
+    <!--some preload img or video from the database?-->
     <div class = 'right'>
       <div>
-        <h3 class = screen1>the images/videos for screen1</h3>
+        <h3 class = screen1Right>the images/videos for screen1</h3>
         <div class="imgBlock">
-          <img src="https://picsum.photos/id/431/1230/500"  alt="grid1"
-               draggable="true"
-               class='grid1'>
-          <img src="https://picsum.photos/id/432/1230/500"  class='grid1'>
-          <img src="https://picsum.photos/id/433/1230/500"  class='grid1'>
+          <img src='https://picsum.photos/id/431/1230/500' alt ='img1' class='grid1'>
+          <img src='https://picsum.photos/id/432/1230/500' alt ='img2' class='grid1'>
+          <img src='https://picsum.photos/id/433/1230/500' alt ='img3' class='grid1'>
         </div>
         <div class="imgBlock">
-          <img src="https://picsum.photos/id/434/1230/500"  class='grid1'>
-          <img src="https://picsum.photos/id/435/1230/500"  class='grid1'>
-          <img src="https://picsum.photos/id/436/1230/500"  class='grid1'>
+          <img src='https://picsum.photos/id/434/1230/500' alt ='img4' class='grid1'>
+          <img src='https://picsum.photos/id/435/1230/500' alt ='img5' class='grid1'>
+          <img src='https://picsum.photos/id/436/1230/500' alt ='img6' class='grid1'>
         </div>
       </div>
 
       <div >
-        <h3 class="screen2">the images/videos for screen2</h3>
-        <div class="imgBlock">
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
+        <h3 class="screen2Right">the images/videos for screen2</h3>
+        <div>
+          <!--          the upload button for screen two, I use another UI framework, element UI for this task-->
+          <el-upload
+              action="#"
+              list-type="picture-card"
+              ref="upload"
+              class="colorSetting"
+              :auto-upload="false">
+            <i slot="default" class="el-icon-plus"></i>
+            <div slot="file" slot-scope="{file}">
+              <img
+                  class="el-upload-list__item-thumbnail"
+                  :src="file.url" alt=""
+              >
+              <span class="el-upload-list__item-actions">
+        <span
+            class="el-upload-list__item-preview"
+            @click="handlePictureCardPreview(file)"
+        >
+          <i class="el-icon-zoom-in"></i>
+        </span>
+        <span
+            v-if="!disabled"
+            class="el-upload-list__item-delete"
+            @click="handleDownload(file)"
+        >
+          <i class="el-icon-download"></i>
+        </span>
+        <span
+            v-if="!disabled"
+            class="el-upload-list__item-delete"
+            @click="handleRemove(file)"
+        >
+          <i class="el-icon-delete"></i>
+        </span>
+      </span>
+            </div>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible">
+            <img width="100%" height="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
         </div>
-        <div class="imgBlock">
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-        </div>
+
+
       </div>
     </div>
+
+    <div>
+
+    </div>
+
   </div>
 
 </template>
@@ -74,29 +101,14 @@
 
 
 <style scoped>
-.is-active .al img {
-  filter: grayscale(0%);
-}
-.al img {
-  filter: grayscale(100%);
-}
-.frame{
-  height:133px;
-  max-width: 100%;
-  border: 2px solid darkred;
-  border-radius: 5px ;
-  text-align-all: center;
-  /*left:20px*/
-}
-.screen1{
+.screen1Left{
   border-top: 2px solid darkred;
 }
-.screen2{
-  margin-top: 200px;
-  /*height: 300px;*/
+.screen2Left{
+  /*margin-top: 200px;*/
   border-top: 2px solid darkred;
-  /*border-radius: 5px ;*/
 }
+/*contents of two screens*/
 .content{
   height:1500px;
 }
@@ -111,14 +123,11 @@ div.right {
   height:1000px;
   float: left;
 }
+/* a single grid for the img in the left side of screen 1*/
 .grid1{
   margin:30px 35px;
 }
-.grid2{
-  margin:30px 35px;
-  filter: grayscale(100%);
-  filter: grayscale(0%);
-}
+/* img of three for one line*/
 .imgBlock{
   width:100px;
   height: 150px;
@@ -126,6 +135,16 @@ div.right {
   display:flex;
   flex-direction: row;
 }
+.screen1Right{
+  margin-top: 15px;
+  text-align: center;
+}
+.screen2Right{
+  margin-top: 400px;
+  text-align: center;
+}
+
+
 </style>
 
 
@@ -133,19 +152,82 @@ div.right {
 export default {
   data() {
     return {
-      file:{},
-      dropFiles: []
+      file: {},
+      dropFiles: [],
+      dialogImageUrl: '',
+      dialogVisible: false,
+      disabled: false,
+      playerOptions: {
+        playbackRates: [0.5, 1.0, 1.5, 2.0], // play speed
+        autoplay: false,
+        muted: false,     // default set as false
+        loop: false,      // restart the video or not
+        preload: 'auto',  // set to auto, check by the browser.
+        language: 'zh-CN',
+        aspectRatio: '16:9',  // "16:9" or "4:3"）
+        fluid: true,  // 当true时，Video.js player  will self-adapt the window size
+        sources: [{
+          type: "video/mp4",  // type
+          // url地址
+          src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' ,
+        }],
+        poster: '',
+        notSupportedMessage: 'This video is not able to play',  // display when video is not able to play
+        controlBar: {
+          timeDivider: true,           // divider for current time and remaining time
+          durationDisplay: true,       // duration timw
+          remainingTimeDisplay: false, // display the remaining time or not
+          fullscreenToggle: true       // full screen button
+        },
+
+      },
+      playerOptions2: {
+        playbackRates: [0.5, 1.0, 1.5, 2.0], // play speed
+        autoplay: false,
+        muted: false,     // default set as false
+        loop: false,      // restart the video or not
+        preload: 'auto',  // set to auto, check by the browser.
+        language: 'zh-CN',
+        aspectRatio: '16:9',  // "16:9" or "4:3"）
+        fluid: true,  // 当true时，Video.js player  will self-adapt the window size
+        sources: [{
+          type: "video/mp4",  // type
+          // url
+          src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+        }],
+        poster: '',
+        notSupportedMessage: 'This video is not able to play',  // display when video is not able to play
+        controlBar: {
+          timeDivider: true,           // divider for current time and remaining time
+          durationDisplay: true,       // duration timw
+          remainingTimeDisplay: false, // display the remaining time or not
+          fullscreenToggle: true       // full screen button
+        },
+
+      }
+
+
     }
   },
   methods: {
-    getImgUrl1(value) {
-      return `https://picsum.photos/id/43${value}/1230/500`
+    deleteDropFile(index) {
+      this.dropFiles.splice(index, 1)
     },
-    methods: {
-      deleteDropFile(index) {
-        this.dropFiles.splice(index, 1)
-      }
+    handleRemove(file) {
+      console.log(file);
+      let fileList = this.$refs.upload.uploadFiles;
+      let index = fileList.findIndex( fileItem => {return fileItem.uid === file.uid});
+      fileList.splice(index, 1);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleDownload(file) {
+      console.log(file);
     }
   }
+
 }
+
 </script>
