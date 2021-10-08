@@ -1,8 +1,8 @@
 from rest_framework import serializers
 # from .models import Light_Group
 from .models import Light
-from .models import Video_Wall_Panel_Group
-from .models import Video_Wall_Panel 
+# from .models import Video_Wall_Panel_Group
+from .models import Video_Wall
 from .models import Workstation
 from .models import Display
 from .models import Media
@@ -20,16 +20,16 @@ class LightSerializer(serializers.ModelSerializer):
         model = Light
         fields = '__all__'
 
-class Video_Wall_Panel_GroupSerializer(serializers.ModelSerializer):
+# class Video_Wall_Panel_GroupSerializer(serializers.ModelSerializer):
     
-    class Meta:
-        model = Video_Wall_Panel_Group
-        fields = '__all__'
+#     class Meta:
+#         model = Video_Wall_Panel_Group
+#         fields = '__all__'
 
-class Video_Wall_PanelSerializer(serializers.ModelSerializer):
+class Video_WallSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Video_Wall_Panel
+        model = Video_Wall
         fields = '__all__'
 
 class WorkstationSerializer(serializers.ModelSerializer):

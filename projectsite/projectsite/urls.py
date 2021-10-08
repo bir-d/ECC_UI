@@ -26,8 +26,8 @@ urlpatterns = [
     #API Endpoints (GET,POST)
     # path('api/light_groups/', views.Lights_GroupView.as_view()),
     path('api/lights/', views.LightsView.as_view()),
-    path('api/video_wall_groups/', views.Video_Wall_Panel_GroupView.as_view()),
-    path('api/video_wall_panels/', views.Video_Wall_PanelView.as_view()),
+    # path('api/video_wall_groups/', views.Video_Wall_Panel_GroupView.as_view()),
+    path('api/video_wall/', views.Video_WallView.as_view()),
     path('api/workstations/', views.WorkstationView.as_view()),
     path('api/displays/', views.DisplayView.as_view()),
     path('api/media/', views.MediaView.as_view()),
@@ -36,8 +36,8 @@ urlpatterns = [
     #Indiviudal API Endpoints (GET,POST,PUT, Delete)
     # path('api/light_groups/<int:pk>', views.SingleLightGroupView.as_view()),
     path('api/lights/<int:pk>', views.SingleLightView.as_view()),
-    path('api/video_wall_groups/<int:pk>', views.SingleVideoWallPanelGroupView.as_view()),
-    path('api/video_wall_panels/<int:pk>', views.SingleVideoWallPanelView.as_view()),
+    # path('api/video_wall_groups/<int:pk>', views.SingleVideoWallPanelGroupView.as_view()),
+    path('api/video_wall/<int:pk>', views.SingleVideoWallPanelView.as_view()),
     path('api/workstations/<int:pk>', views.SingleWorkstationView.as_view()),
     path('api/displays/<int:pk>', views.SingleDisplayView.as_view()),
     path('api/media/<int:pk>', views.SingleMediaView.as_view()),

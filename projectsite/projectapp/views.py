@@ -11,8 +11,8 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 
 # from projectapp.models import Light_Group
 from projectapp.models import Light
-from projectapp.models import Video_Wall_Panel_Group
-from projectapp.models import Video_Wall_Panel
+# from projectapp.models import Video_Wall_Panel_Group
+from projectapp.models import Video_Wall
 from projectapp.models import Workstation
 from projectapp.models import Display
 from projectapp.models import Media
@@ -20,8 +20,8 @@ from projectapp.models import Preset
 
 # from projectapp.serialisers import Light_GroupSerializer
 from projectapp.serialisers import LightSerializer
-from projectapp.serialisers import Video_Wall_Panel_GroupSerializer
-from projectapp.serialisers import Video_Wall_PanelSerializer
+# from projectapp.serialisers import Video_Wall_Panel_GroupSerializer
+from projectapp.serialisers import Video_WallSerializer
 from projectapp.serialisers import WorkstationSerializer
 from projectapp.serialisers import DisplaySerializer
 from projectapp.serialisers import MediaSerializer
@@ -57,31 +57,31 @@ class SingleLightView(RetrieveUpdateDestroyAPIView):
     queryset = Light.objects.all()
     serializer_class = LightSerializer
 
-#Video Wall Panel Groups Endpoint
-class Video_Wall_Panel_GroupView(ListCreateAPIView):
-    queryset = Video_Wall_Panel_Group.objects.all()
-    serializer_class = Video_Wall_Panel_GroupSerializer
+# #Video Wall Panel Groups Endpoint
+# class Video_Wall_Panel_GroupView(ListCreateAPIView):
+#     queryset = Video_Wall_Panel_Group.objects.all()
+#     serializer_class = Video_Wall_Panel_GroupSerializer
 
-    def perform_create(self, serializer):
-        return serializer.save()
+#     def perform_create(self, serializer):
+#         return serializer.save()
 
-#Individual Video Wall Groups Endpoint
-class SingleVideoWallPanelGroupView(RetrieveUpdateDestroyAPIView):
-    queryset = Video_Wall_Panel_Group.objects.all()
-    serializer_class = Video_Wall_Panel_GroupSerializer
+# #Individual Video Wall Groups Endpoint
+# class SingleVideoWallPanelGroupView(RetrieveUpdateDestroyAPIView):
+#     queryset = Video_Wall_Panel_Group.objects.all()
+#     serializer_class = Video_Wall_Panel_GroupSerializer
 
-#Video Wall Panels Endpoint
-class Video_Wall_PanelView(ListCreateAPIView):
-    queryset = Video_Wall_Panel.objects.all()
-    serializer_class = Video_Wall_PanelSerializer
+#Video Wall Endpoint
+class Video_WallView(ListCreateAPIView):
+    queryset = Video_Wall.objects.all()
+    serializer_class = Video_WallSerializer
 
     def perform_create(self, serializer):
         return serializer.save()
 
 #Individual Video Wall Panels Endpoint
 class SingleVideoWallPanelView(RetrieveUpdateDestroyAPIView):
-    queryset = Video_Wall_Panel.objects.all()
-    serializer_class = Video_Wall_PanelSerializer
+    queryset = Video_Wall.objects.all()
+    serializer_class = Video_WallSerializer
 
 #Workstations Endpoint
 class WorkstationView(ListCreateAPIView):
