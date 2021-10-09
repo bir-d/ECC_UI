@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="columns">
-            <div class="column is-half">
+        <div class="columns is-desktop">
+            <div class="column">
                 <div class="video-wall">
                     <div class="item">
                         <div class="player">
