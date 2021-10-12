@@ -1,4 +1,4 @@
-<<template>
+<template>
   <div class="content">
     <div class = 'left'>
       <section>
@@ -27,70 +27,28 @@
 
     <!--some preload img or video from the database?-->
     <div class = 'right'>
+
+<!--      </div>-->
+<!--      {{displayPreset}}-->
       <div>
-        <h3 class = screen1Right>the images/videos for screen1</h3>
-        <div class="imgBlock">
-          <img src='https://picsum.photos/id/431/1230/500' alt ='img1' class='grid1'>
-          <img src='https://picsum.photos/id/432/1230/500' alt ='img2' class='grid1'>
-          <img src='https://picsum.photos/id/433/1230/500' alt ='img3' class='grid1'>
-        </div>
-        <div class="imgBlock">
-          <img src='https://picsum.photos/id/434/1230/500' alt ='img4' class='grid1'>
-          <img src='https://picsum.photos/id/435/1230/500' alt ='img5' class='grid1'>
-          <img src='https://picsum.photos/id/436/1230/500' alt ='img6' class='grid1'>
-        </div>
+
+        <input type = 'file' accept = 'video/*' @change = 'loadFile'>
+        <video id="file" width="480" height="270" v-show="showVideo" controls/>
+      </div>
+      <div>
+        <section>
+          <b-button
+              label="Display the video"
+              class="block"
+              @click="isActive = !isActive" />
+          <b-notification v-model="isActive" aria-close-label="Close notification">
+            <span>chose the screens you want to display the video</span>
+            <b-button @click="clickScreen1" type="is-primary is-light" >Screen1</b-button>
+            <b-button @click="clickScreen2" type="is-success is-light">Screen2</b-button>
+          </b-notification>
+        </section>
       </div>
 
-      <div >
-        <h3 class="screen2Right">the images/videos for screen2</h3>
-        <div>
-          <!--          the upload button for screen two, I use another UI framework, element UI for this task-->
-          <el-upload
-              action="#"
-              list-type="picture-card"
-              ref="upload"
-              class="colorSetting"
-              :auto-upload="false">
-            <i slot="default" class="el-icon-plus"></i>
-            <div slot="file" slot-scope="{file}">
-              <img
-                  class="el-upload-list__item-thumbnail"
-                  :src="file.url" alt=""
-              >
-              <span class="el-upload-list__item-actions">
-        <span
-            class="el-upload-list__item-preview"
-            @click="handlePictureCardPreview(file)"
-        >
-          <i class="el-icon-zoom-in"></i>
-        </span>
-        <span
-            v-if="!disabled"
-            class="el-upload-list__item-delete"
-            @click="handleDownload(file)"
-        >
-          <i class="el-icon-download"></i>
-        </span>
-        <span
-            v-if="!disabled"
-            class="el-upload-list__item-delete"
-            @click="handleRemove(file)"
-        >
-          <i class="el-icon-delete"></i>
-        </span>
-      </span>
-            </div>
-          </el-upload>
-          <el-dialog :visible.sync="dialogVisible">
-            <img width="100%" height="100%" :src="dialogImageUrl" alt="">
-          </el-dialog>
-        </div>
-
-
-      </div>
-    </div>
-
-    <div>
 
     </div>
 
@@ -148,15 +106,30 @@ div.right {
 </style>
 
 
+
+
 <script>
+import axios from 'axios'
+// import VueAxios from 'vue-axios'
+// import { videoPlayer } from 'vue-video-player'
+// import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
+
 export default {
+
+
   data() {
     return {
       file: {},
       dropFiles: [],
-      dialogImageUrl: '',
-      dialogVisible: false,
+
+      // toggoleActive
+      isActive:true,
+
+      //el
+      // dialogImageUrl: '',
+      // dialogVisible: false,
       disabled: false,
+
       playerOptions: {
         playbackRates: [0.5, 1.0, 1.5, 2.0], // play speed
         autoplay: false,
@@ -165,17 +138,18 @@ export default {
         preload: 'auto',  // set to auto, check by the browser.
         language: 'zh-CN',
         aspectRatio: '16:9',  // "16:9" or "4:3"）
-        fluid: true,  // 当true时，Video.js player  will self-adapt the window size
+        fluid: true,  // when is true，Video.js player  will self-adapt the window size
         sources: [{
           type: "video/mp4",  // type
-          // url地址
+          // url location
           src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' ,
+          // src: ''   dynamically bind the value from db , need update from the DB
         }],
         poster: '',
         notSupportedMessage: 'This video is not able to play',  // display when video is not able to play
         controlBar: {
           timeDivider: true,           // divider for current time and remaining time
-          durationDisplay: true,       // duration timw
+          durationDisplay: true,
           remainingTimeDisplay: false, // display the remaining time or not
           fullscreenToggle: true       // full screen button
         },
@@ -189,45 +163,94 @@ export default {
         preload: 'auto',  // set to auto, check by the browser.
         language: 'zh-CN',
         aspectRatio: '16:9',  // "16:9" or "4:3"）
-        fluid: true,  // 当true时，Video.js player  will self-adapt the window size
+        fluid: true,  // when it is true，Video.js player  will self-adapt the window size
         sources: [{
-          type: "video/mp4",  // type
+          type: "video/mp4",
           // url
-          src: "https://media.w3.org/2010/05/sintel/trailer.mp4"
+          src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
+          // src: ''   dynamically bind the value from db , need update from the DB
+
         }],
         poster: '',
         notSupportedMessage: 'This video is not able to play',  // display when video is not able to play
         controlBar: {
           timeDivider: true,           // divider for current time and remaining time
-          durationDisplay: true,       // duration timw
+          durationDisplay: true,
           remainingTimeDisplay: false, // display the remaining time or not
           fullscreenToggle: true       // full screen button
         },
 
-      }
+      },
 
+
+      // data stored from the API
+      displayPreset:[],
+
+      // upload variable , video
+      showImg:false,
+      showVideo:false,
+
+      // // save the url from the preset, bind the value with axios
+      // screen1Url : '',
+      // screen2Url : '',
 
     }
   },
+  created(){
+    this.getData()
+  },
   methods: {
-    deleteDropFile(index) {
-      this.dropFiles.splice(index, 1)
-    },
-    handleRemove(file) {
-      console.log(file);
-      let fileList = this.$refs.upload.uploadFiles;
-      let index = fileList.findIndex( fileItem => {return fileItem.uid === file.uid});
-      fileList.splice(index, 1);
-    },
-    handlePictureCardPreview(file) {
-      this.dialogImageUrl = file.url;
-      this.dialogVisible = true;
-    },
-    handleDownload(file) {
-      console.log(file);
-    }
-  }
 
+    // ask for data from the DB
+    getData(){
+      axios({
+        method:'get',
+        // Url of backend location of data
+        url: 'http://127.0.0.1:8000/api/displays/',
+        auth: {
+          username: 'admin',
+          password: 'eccadmin123'
+        }
+        // This section tells code to wait until lights have been rendered to extract db lights info
+      }).then((response) => {
+        this.displayPreset = response.data
+
+        // bind the value of these two when read the value
+        // src? not in the DB yet, add to the preset?
+        // this.url1 = this.displayPreset[0].src
+        // this.url2 = this.displayPreset[0].src
+
+        console.log('data',this.displayPreset)
+        console.log('media_name',this.displayPreset[0].media)
+
+
+      });
+    },
+
+    // methods for loading the video and provide a url
+    loadFile(event){
+      const reader = new FileReader();
+      const that = this
+      if(!process.browser)return
+      reader.onload = function(){
+        const output = document.querySelector("#file")
+        that.showVideo = true;
+        output.src = URL.createObjectURL(new Blob([reader.result]))
+      }
+      reader.readAsArrayBuffer(event.target.files[0])
+
+    },
+
+    //pup up message when click the button
+    clickScreen1() {
+      this.$buefy.notification.open('reload the screen1 with the new src!, still needs work')
+    },
+    clickScreen2() {
+      this.$buefy.notification.open('reload the screen2 with the new src!, still needs work')
+    }
+
+
+    }
 }
 
 </script>
