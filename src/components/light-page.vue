@@ -5,14 +5,28 @@
             <!-- Div used to organise everything onto on plane -->
             <div class="LightsBox">
                 <!-- Attempt to dynamically style boz to match window size changes, needs work -->
-                <div class="RoomLight" v-bind:style="[{'width': '40%'}, {'height': '40%'}]">
+                <div 
+                    class="RoomLight" 
+                    v-bind:style="[{'width': '40%'}, {'height': '40%'}]"
+                >
                     <!-- For loops through lights and displays them within mock room box -->
-                    <span v-bind:class="[roomStateOn ? 'LightOn' : 'LightOff', light.selected ? 'selected' : '']" v-for="light in lights" :key="light" v-bind:style="[roomStateOn ? {'background-color': (light.colour + light.brightness + ')')} : {'background-color': 'white'}, {'left': light.positionX}, {'top': light.positionY}, {'position': 'absolute'}]" v-bind:title="light.userlabel" v-on:click="toggleSelected(light)"> </span>
+                    <span 
+                        v-bind:class="[roomStateOn ? 'LightOn' : 'LightOff', light.selected ? 'selected' : '']" 
+                        v-for="light in lights" 
+                        :key="light" 
+                        v-bind:style="[roomStateOn ? {'background-color': (light.colour + light.brightness + ')')} : {'background-color': 'white'}, {'left': light.positionX}, {'top': light.positionY}, {'position': 'absolute'}]" 
+                        v-bind:title="light.userlabel" 
+                        v-on:click="toggleSelected(light)"
+                    > </span>
                 </div>
                 <!-- Div that contains colour wheel and respective content -->
                 <div class="ColourWheel">
                     <!-- Attempt to dynamically style colour wheel to match window size changes, needs work -->
-                    <colour-picker :width=(windowHeight*0.2) :height=(windowHeight*0.2) v-model="colour"> </colour-picker>
+                    <colour-picker 
+                        :width=(windowHeight*0.2) 
+                        :height=(windowHeight*0.2) 
+                        v-model="colour"
+                    > </colour-picker>
                     <!-- Display currently selected colour -->
                     <div class="selected-color-info">
                         <p>Selected color:</p>
@@ -20,28 +34,72 @@
                             <circle cx="12" cy="12" r="11.25" :fill="colour" />
                         </svg>
                     </div>
-                    <input v-model="colour" type="text" placeholder="Add new light colour" v-on:keyup.enter="changeLight(colour)">
+                    <input 
+                        class="input is-rounded is-medium" 
+                        v-model="colour" 
+                        type="text" 
+                        placeholder="Add new light colour" 
+                        v-on:keyup.enter="changeLight(colour)"
+                    >
                     <br>
-                    <button class="btn btn-primary" v-on:click="changeLight(colour)">Select Colour</button>
+                    <button 
+                        class="button is-medium is-fullwidth is-rounded" 
+                        v-on:click="changeLight(colour)"
+                    >Select Colour</button>
                 </div>
-                <div>
-                    <!-- 0-100 scale input for brightness, to be changed into a sliding bar -->
-                    <input v-model="newBrightness" type="text" placeholder="Enter Brightness Level" v-on:keyup.enter="changeBrightness(newBrightness)">
-                    <br>
+                <div class="columns">
+                    <div 
+                        class="column" 
+                        id="Functions"
+                    >
                     <!-- Select all Lights -->
-                    <button class="btn btn-primary" v-on:click="SelectAll()">Select All Lights</button>
+                    <button 
+                        class="button is-medium is-fullwidth is-rounded is-success" 
+                        v-on:click="SelectAll()"
+                    >
+                    Select All Lights</button>
                     <br>
                     <!-- Unselect all Lights -->
-                    <button class="btn btn-primary" v-on:click="UnselectAll()">Unselect All Lights</button>
+                    <button 
+                        class="button is-medium is-fullwidth is-rounded is-danger" 
+                        v-on:click="UnselectAll()"
+                    >
+                    Unselect All Lights</button>
                     <br>
                     <!-- Mock preset creation for testing purposes -->
-                    <input v-model="newPresetName" type="text" placeholder="Enter Preset Name" v-on:keyup.enter="AddPreset(newPresetName)">
+                    <!-- 0-100 scale input for brightness, to be changed into a sliding bar -->
+                    <input 
+                        class="input is-rounded is-medium" 
+                        v-model="newBrightness" 
+                        type="text" 
+                        placeholder="Enter Brightness Level: 0 - 100" 
+                        v-on:keyup.enter="changeBrightness(newBrightness)"
+                    >
                     <br>
-                    <input v-model="PresetName" type="text" placeholder="Enter Preset To Use" v-on:keyup.enter="SyncPresets(PresetName)">
+                    <input
+                        class="input is-rounded is-medium" 
+                        v-model="newPresetName" 
+                        type="text" 
+                        placeholder="Enter Preset Name" 
+                        v-on:keyup.enter="AddPreset(newPresetName)"
+                    >
+                    <br>
+                    <input 
+                        class="input is-rounded is-medium" 
+                        v-model="PresetName" 
+                        type="text" 
+                        placeholder="Enter Preset To Use" 
+                        v-on:keyup.enter="SyncPresets(PresetName)"
+                    >
                     <!-- List presets made on page -->
                      <ul>
-                        <li v-for="preset in presets" :key="preset" v-on:click="SyncPresets(preset.name)"> {{ preset.name }}</li>
+                        <li 
+                            v-for="preset in presets" 
+                            :key="preset" 
+                            v-on:click="SyncPresets(preset.name)"
+                        > {{ preset.name }}</li>
                     </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -49,6 +107,10 @@
 </template>
 
 <style>
+
+    .Page{
+        margin-top: 6em;
+    }
     /* Keep sizes consistant */
     html, body, #app, .Page, .LightsBox {
         height: 100%;
@@ -113,7 +175,7 @@
         float: left;
         height: 40%;
         width: 20%;
-        margin-left: 2.5%;
+        margin-left: 5em;
         /*border: 1px solid black;*/
     }
 
@@ -123,6 +185,13 @@
         top: 5%;
     }
     
+    #Functions{
+        margin-left: 6em;
+        margin-right: 6em;
+    }
+    input{
+        margin-bottom: 1em;
+    }
 </style>
 
 <script>
