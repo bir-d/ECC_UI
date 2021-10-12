@@ -37,7 +37,9 @@ class Light(models.Model):
 
 class Video_Wall(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
-    media = models.CharField(max_length=255, null=True)
+    media_name = models.CharField(max_length=255, null=True)
+    media_type = models.CharField(max_length=255, null=True)
+    source = models.CharField(max_length=255, null=True)
     wall_on = models.BooleanField()
     # video_wall_panel_group_id = models.ForeignKey(Video_Wall_Panel_Group, on_delete=models.CASCADE)
     
@@ -49,7 +51,9 @@ class Workstation(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     workstation_name = models.CharField(max_length=255)
     station_on = models.BooleanField()
-    media = models.CharField(max_length=255, null=True)
+    media_name = models.CharField(max_length=255, null=True)
+    media_type = models.CharField(max_length=255, null=True)
+    source = models.CharField(max_length=255, null=True)
 
     #Function to display workstation name as placeholder on admin page
     def __str__(self):
@@ -59,7 +63,9 @@ class Display(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     display_name = models.CharField(max_length=255)
     display_on = models.BooleanField()
-    media = models.CharField(max_length=255, null=True)
+    media_name = models.CharField(max_length=255, null=True)
+    media_type = models.CharField(max_length=255, null=True)
+    source = models.CharField(max_length=255, null=True)
     
     #Function to display workstation name as placeholder on admin page
     def __str__(self):
@@ -68,7 +74,8 @@ class Display(models.Model):
 class Media(models.Model):
     id = models.PositiveIntegerField(primary_key=True)
     media_name = models.CharField(max_length=255, null=True)
-    file_path = models.CharField(max_length=255, null=True)
+    media_type = models.CharField(max_length=255, null=True)
+    source = models.CharField(max_length=255, null=True)
 
     def __str__(self):
         return self.media_name
