@@ -87,3 +87,6 @@ class Preset(models.Model):
     video_Wall = models.JSONField(null=True)
     workstations = models.JSONField(null=True)
     displays = models.JSONField(null=True)
+
+    def __str__(self):
+        return self.preset_name
