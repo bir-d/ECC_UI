@@ -44,6 +44,8 @@ def index(request):
 #     queryset = Light_Group.objects.all()
 #     serializer_class = Light_GroupSerializer
 
+#All endpoints to be shown in Django Restframework API Interface
+
 #Lights Endpoint
 class LightsView(ListCreateAPIView):
     queryset = Light.objects.all()

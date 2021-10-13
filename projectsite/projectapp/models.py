@@ -77,6 +77,7 @@ class Media(models.Model):
     media_type = models.CharField(max_length=255, null=True)
     source = models.CharField(max_length=255, null=True)
 
+    #Function to display media name as placeholder on admin page
     def __str__(self):
         return self.media_name
 
@@ -88,5 +89,6 @@ class Preset(models.Model):
     workstations = models.JSONField(null=True)
     displays = models.JSONField(null=True)
 
+    #Function to display preset name as placeholder on admin page
     def __str__(self):
         return self.preset_name
