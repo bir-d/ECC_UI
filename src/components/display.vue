@@ -4,6 +4,10 @@
       <section>
         <!--    the screen 1 at the left side    -->
         <h1>Screen 1</h1>
+<!--        load different preset?-->
+<!--        <button >change video</button>-->
+
+
         <div class='screen1Left'>
           <video-player class="video-player vjs-custom-skin"
                         ref="videoPlayer"
@@ -28,13 +32,18 @@
     <!--some preload img or video from the database?-->
     <div class = 'right'>
 
+<!--allow the user to upload the video-->
+<!--      <div>-->
+<!--        <input type = 'file' accept = 'video/*' @change = 'loadFile'>-->
+<!--        <video id="file" width="480" height="270" v-show="showVideo" controls/>-->
 <!--      </div>-->
-<!--      {{displayPreset}}-->
       <div>
-
-        <input type = 'file' accept = 'video/*' @change = 'loadFile'>
-        <video id="file" width="480" height="270" v-show="showVideo" controls/>
+<!--                // ask the user , which preset is loaded in page-->
+                  <b-field label="type the Url of the video">
+                    <b-input v-model="urlData"></b-input>
+                </b-field>
       </div>
+
       <div>
         <section>
           <b-button
@@ -111,7 +120,6 @@ div.right {
 <script>
 import axios from 'axios'
 // import VueAxios from 'vue-axios'
-// import { videoPlayer } from 'vue-video-player'
 // import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 
 export default {
@@ -194,6 +202,11 @@ export default {
       // screen1Url : '',
       // screen2Url : '',
 
+      // the Url information from the user
+      urlData: '',
+
+      // the preset value from the user
+      presetValue:'',
     }
   },
   created(){
@@ -217,8 +230,9 @@ export default {
 
         // bind the value of these two when read the value
         // src? not in the DB yet, add to the preset?
-        // this.url1 = this.displayPreset[0].src
-        // this.url2 = this.displayPreset[0].src
+        // add the url for the display screesn, implement to a for loop if there are more file is the db
+        this.playerOptions.sources[0].src = this.displayPreset[0].src
+        this.playerOptions2.source[0].src = this.displayPreset[1].src
 
         console.log('data',this.displayPreset)
         console.log('media_name',this.displayPreset[0].media)
@@ -236,6 +250,8 @@ export default {
         const output = document.querySelector("#file")
         that.showVideo = true;
         output.src = URL.createObjectURL(new Blob([reader.result]))
+        this.playerOptions2.sources[0].src = output.src
+
       }
       reader.readAsArrayBuffer(event.target.files[0])
 
@@ -243,10 +259,15 @@ export default {
 
     //pup up message when click the button
     clickScreen1() {
-      this.$buefy.notification.open('reload the screen1 with the new src!, still needs work')
+      if (this.urlData === '') return
+      this.$buefy.notification.open('reload the screen1 with the new src!, screen1 has been updated')
+      this.playerOptions.sources[0].src = this.urlData
     },
     clickScreen2() {
-      this.$buefy.notification.open('reload the screen2 with the new src!, still needs work')
+      if (this.urlData === '') return
+      this.$buefy.notification.open('reload the screen2 with the new src!, screen2 has been updated')
+      this.playerOptions2.sources[0].src = this.urlData
+
     }
 
 
