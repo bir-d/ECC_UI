@@ -290,7 +290,7 @@ export default {
       this.playerOptions2.sources[0].src = this.urlData
     },
 
-    //  ynamically select the value from selector
+    //  dynamically select the value from selector
     changePreset(event) {
       this.PresetActive = event.target.value; // get the corresponding value in options
       // console.log("load preset",this.PresetActive)
