@@ -4,7 +4,7 @@ import lightspage from './components/light-page.vue'
 import displays from './components/display'
 
 export default[
-    {path:'/', component: homepage},
+    {path:'/', component: homepage, name:"home"},
     {path:'/videowall', component: videowall},
     {path:'/lights', component: lightspage},
     {path:'/display',component: displays}

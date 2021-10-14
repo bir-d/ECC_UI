@@ -1,12 +1,17 @@
 <template>
   <div>
-    <b-navbar>
+    <b-navbar style="min-height:128px;">
         <template #brand>
-            <b-navbar-brand tag="router-link" :to="{ path: '/' }" id="brand">
+            <b-navbar-brand v-if="$route.name==='home'" tag="router-link" :to="{ path: '/' }" id="brand">
             <figure class="image is-128x128">
                 <a href="/"><img src="../assets/navbar-thales-logo.png" alt="Thales Logo"></a>
             </figure>
             </b-navbar-brand>
+            <b-navbar-item v-else tag="div">
+                <a href="/">
+                    <b-icon pack="fas" icon="arrow-left" size=is-large></b-icon>
+                </a>
+            </b-navbar-item>
         </template>
         <template #end>
             <b-navbar-item tag="div">
@@ -28,7 +33,7 @@ a {
 #navbar{
     font-size: 15px;
     font-family: monospace;
-    color: #6b705c;
+    color: #0a0a09;
 }
 #button-text{
     font-family: monospace;
