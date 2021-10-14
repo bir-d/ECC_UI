@@ -47,3 +47,48 @@ a {
     margin-right: 25px;
 }
 </style>
+
+<script>
+import axios from 'axios'
+
+
+
+
+export default ({
+    name: 'App',
+    data() {
+        return {
+        presetnum: 5,
+        }
+    },
+    methods: {
+        pushPreset(PresetName) {
+            axios({
+                method:'post',
+                url: 'http://127.0.0.1:8000/api/preset/',
+                data: { // Send description and status to the server
+                    id: this.presetnum + 1,
+                    preset_name: PresetName,
+                    lights: this.dblights,
+                    video_Wall: this.dbvideo,
+                    workstations: this.dbworkstations,
+                    displays: this.dbdisplays,
+                },
+                auth: { // Basic authentication
+                    username: 'admin',
+                    password: 'eccadmin123'
+                }
+                }).then((response) => {
+                let newPreset = {'id': response.data.id, 'preset_name': this.preset_name, 'lights': this.lights, 'video_Wall': this.video_Wall, 'workstations': this.workstations, 'displays': this.displays}
+                this.presetnum = this.presetnum + 1
+                this.test.push(newPreset)
+                })
+                .catch((error) => {
+                console.log(error.response);
+                console.log(error.request);
+                console.log(error.message);
+                });
+    }
+    }
+})
+</script>
