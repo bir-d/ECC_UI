@@ -2,71 +2,72 @@
   <div class="content">
     <div class = 'left'>
       <section>
+<!--         ask the user which preset should be load-->
+        <div>
+        <h5 class = 'moveRight'> Load preset </h5>
 
+        <select  class = 'moveRight' v-model="PresettActive" placeholder="Select a preset" @change="changePreset($event)" >
+          <option v-for="(item,index) in productList" :key="index" :value='item.id'>{{item.title}}</option>
+        </select>
+    </div>
+
+
+        <!--    the screen 1 at the left side    -->
         <h1>Screen 1</h1>
-        <b-carousel :indicator-inside="false">
-          <b-carousel-item v-for="(item, i) in 6" :key="i">
-            <b-image class="image" :src="getImgUrl1(i)"></b-image>
-          </b-carousel-item>
-          <template #indicators="props">
-            <b-image class="al image" :src="getImgUrl1(props.i)" :title="props.i"></b-image>
-          </template>
-        </b-carousel>
-        <h1>Screen2</h1>
-        <video width=92% height="200px" controls  alt="screen2">
-          <source src="https://www.youtube.com/watch?v=Oi1BcouEmio"  type="video/mp4" class = 'grid1'>
-        </video>
-        <div class = 'frame'>
-          <b-field>
-            <b-upload v-model="dropFiles" multiple drag-drop expanded class ='uploadWindow2'>
-              <section class="section">
-                <p>Drop your files here or click to upload</p>
-              </section>
-            </b-upload>
-          </b-field>
-          <div class="tags">
-                    <span v-for="(file, index) in dropFiles" :key="index" class="tag is-primary" >
-                        {{file.name}}
-                        <button class="delete is-small" type="button" @click="deleteDropFile(index)">
-                        </button>
-                    </span>
-          </div>
+
+        <div class='screen1Left'>
+          <video-player class="video-player vjs-custom-skin"
+                        ref="videoPlayer"
+                        :playsinline="true"
+                        :options="playerOptions">
+          </video-player>
         </div>
 
+        <!--        the screen two at the left side-->
+        <h1>Screen2</h1>
+        <div class='screen2Left'>
+          <video-player class="video-player vjs-custom-skin"
+                        ref="videoPlayer"
+                        :playsinline="true"
+                        :options="playerOptions2"
+          >
+          </video-player>
+        </div>
       </section>
     </div>
 
+    <!--some preload img or video from the database?-->
     <div class = 'right'>
+
+      <!--allow the user to upload the video-->
+      <!--      <div>-->
+      <!--        <input type = 'file' accept = 'video/*' @change = 'loadFile'>-->
+      <!--        <video id="file" width="480" height="270" v-show="showVideo" controls/>-->
+      <!--      </div>-->
       <div>
-        <h3 class = screen1>the images/videos for screen1</h3>
-        <div class="imgBlock">
-          <img src="https://picsum.photos/id/431/1230/500"  alt="grid1"
-               draggable="true"
-               class='grid1'>
-          <img src="https://picsum.photos/id/432/1230/500"  class='grid1'>
-          <img src="https://picsum.photos/id/433/1230/500"  class='grid1'>
-        </div>
-        <div class="imgBlock">
-          <img src="https://picsum.photos/id/434/1230/500"  class='grid1'>
-          <img src="https://picsum.photos/id/435/1230/500"  class='grid1'>
-          <img src="https://picsum.photos/id/436/1230/500"  class='grid1'>
-        </div>
+        <!--                // ask the user , which preset is loaded in page-->
+        <b-field label="type the Url of the video">
+          <b-input v-model="urlData"></b-input>
+        </b-field>
       </div>
 
-      <div >
-        <h3 class="screen2">the images/videos for screen2</h3>
-        <div class="imgBlock">
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-        </div>
-        <div class="imgBlock">
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-          <img src='../assets/rectangle.png' alt="grid1" class='grid2'>
-        </div>
+      <div>
+        <section>
+          <b-button
+              label="Display the video"
+              class="block"
+              @click="isActive = !isActive" />
+          <b-notification v-model="isActive" aria-close-label="Close notification">
+            <span>chose the screens you want to display the video</span>
+            <b-button @click="clickScreen1" type="is-primary is-light" >Screen1</b-button>
+            <b-button @click="clickScreen2" type="is-success is-light">Screen2</b-button>
+          </b-notification>
+        </section>
       </div>
+
+
     </div>
+
   </div>
 
 </template>
@@ -74,29 +75,20 @@
 
 
 <style scoped>
-.is-active .al img {
-  filter: grayscale(0%);
-}
-.al img {
-  filter: grayscale(100%);
-}
-.frame{
-  height:133px;
-  max-width: 100%;
-  border: 2px solid darkred;
-  border-radius: 5px ;
-  text-align-all: center;
-  /*left:20px*/
-}
-.screen1{
+.screen1Left{
   border-top: 2px solid darkred;
 }
-.screen2{
-  margin-top: 200px;
-  /*height: 300px;*/
+.screen2Left{
+  /*margin-top: 200px;*/
   border-top: 2px solid darkred;
-  /*border-radius: 5px ;*/
 }
+.moveRight{
+ float:left;
+  width:100px;
+}
+
+
+/*contents of two screens*/
 .content{
   height:1500px;
 }
@@ -111,14 +103,11 @@ div.right {
   height:1000px;
   float: left;
 }
+/* a single grid for the img in the left side of screen 1*/
 .grid1{
   margin:30px 35px;
 }
-.grid2{
-  margin:30px 35px;
-  filter: grayscale(100%);
-  filter: grayscale(0%);
-}
+/* img of three for one line*/
 .imgBlock{
   width:100px;
   height: 150px;
@@ -126,26 +115,193 @@ div.right {
   display:flex;
   flex-direction: row;
 }
+.screen1Right{
+  margin-top: 15px;
+  text-align: center;
+}
+.screen2Right{
+  margin-top: 400px;
+  text-align: center;
+}
+
+
 </style>
 
 
+
+
 <script>
+import axios from 'axios'
+// import VueAxios from 'vue-axios'
+// import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
+
 export default {
+
+
   data() {
     return {
-      file:{},
-      dropFiles: []
+      file: {},
+      dropFiles: [],
+
+      // toggoleActive
+      isActive:true,
+
+      //el
+      // dialogImageUrl: '',
+      // dialogVisible: false,
+      disabled: false,
+
+      playerOptions: {
+        playbackRates: [0.5, 1.0, 1.5, 2.0], // play speed
+        autoplay: false,
+        muted: false,
+        loop: false,      // restart the video or not
+        preload: 'auto',  // set to auto, check by the browser.
+        language: 'zh-CN',
+        aspectRatio: '16:9',
+        fluid: true,  // when is true，Video.js player  will self-adapt the window size
+        sources: [{
+          type: "video/mp4",  // type
+          // url location
+          src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
+          // src: ''   dynamically bind the value from db , need update from the DB
+        }],
+        poster: '',
+        notSupportedMessage: 'This video is not able to play',  // display when video is not able to play
+        controlBar: {
+          timeDivider: true,           // divider for current time and remaining time
+          durationDisplay: true,
+          remainingTimeDisplay: false, // display the remaining time or not
+          fullscreenToggle: true       // full screen button
+        },
+
+      },
+      playerOptions2: {
+        playbackRates: [0.5, 1.0, 1.5, 2.0], // play speed
+        autoplay: false,
+        muted: false,
+        loop: false,      // restart the video or not
+        preload: 'auto',  // set to auto, check by the browser.
+        language: 'zh-CN',
+        aspectRatio: '16:9',
+        fluid: true,  // when it is true，Video.js player  will self-adapt the window size
+        sources: [{
+          type: "video/mp4",
+          // url
+          src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
+          // src: ''   dynamically bind the value from db , need update from the DB
+
+        }],
+        poster: '',
+        notSupportedMessage: 'This video is not able to play',  // display when video is not able to play
+        controlBar: {
+          timeDivider: true,           // divider for current time and remaining time
+          durationDisplay: true,
+          remainingTimeDisplay: false, // display the remaining time or not
+          fullscreenToggle: true       // full screen button
+        },
+
+      },
+
+
+      // data stored from the API
+      displayPreset:[],
+
+      // upload variable , video
+      showImg:false,
+      showVideo:false,
+
+
+      // the Url information from the user
+      urlData: '',
+
+
+      // values in the selectors
+      productList:[{id:1,title:"Test1"},{id:2,title:"Test2"},
+        {id:3,title:"PresetNew1"},{id:4,title:"PresetNew2"},{id:5,title:"PresetNew3"}
+      ],
+      PresetActive:"1",// get the value of the Preset from user, default set as 1
+
     }
   },
+  created(){
+    this.getData()
+  },
   methods: {
-    getImgUrl1(value) {
-      return `https://picsum.photos/id/43${value}/1230/500`
+
+    // ask for data from the DB
+    getData(){
+      axios({
+        method:'get',
+        // Url of backend location of data
+        // load the preset instead of the endpoint of display
+        // url: 'http://127.0.0.1:8000/api/displays/',
+        url: 'http://127.0.0.1:8000/api/preset/',
+        auth: {
+          username: 'admin',
+          password: 'eccadmin123'
+        }
+        // This section tells code to wait until lights have been rendered to extract db lights info
+      }).then((response) => {
+        this.displayPreset = response.data
+
+        // bind the value of these two when read the value
+        // src? not in the DB yet, add to the preset?
+        // add the url for the display screesn
+
+        // this.playerOptions.sources[0].src = this.displayPreset[this.PresetActive].displays[0].source
+        // this.playerOptions2.sources[0].src = this.displayPreset[this.PresetActive].displays[1].source
+
+        // console.log('data',this.displayPreset)
+        // console.log('media_src',this.displayPreset[this.PresetActive].displays[0].source)
+        // console.log('media_sr2c',this.displayPreset[this.PresetActive].displays[1].source)
+
+
+      });
     },
-    methods: {
-      deleteDropFile(index) {
-        this.dropFiles.splice(index, 1)
+
+    // methods for loading the video and provide a url
+    loadFile(event){
+      const reader = new FileReader();
+      const that = this
+      if(!process.browser)return
+      reader.onload = function(){
+        const output = document.querySelector("#file")
+        that.showVideo = true;
+        output.src = URL.createObjectURL(new Blob([reader.result]))
+        this.playerOptions2.sources[0].src = output.src
+
       }
-    }
+      reader.readAsArrayBuffer(event.target.files[0])
+
+    },
+
+    //pup up message when click the button
+    clickScreen1() {
+      if (this.urlData === '') return
+      this.$buefy.notification.open('reload the screen1 with the new src!, screen1 has been updated')
+      this.playerOptions.sources[0].src = this.urlData
+
+      // console.log(this.presetNumber)
+    },
+    clickScreen2() {
+      if (this.urlData === '') return
+      this.$buefy.notification.open('reload the screen2 with the new src!, screen2 has been updated')
+      this.playerOptions2.sources[0].src = this.urlData
+    },
+
+    //  ynamically select the value from selector
+    changePreset(event) {
+      this.PresetActive = event.target.value; // get the corresponding value in options
+      // console.log("load preset",this.PresetActive)
+    },
+
+
   }
 }
+
 </script>
+
+
+
+
