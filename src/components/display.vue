@@ -4,22 +4,26 @@
       <section>
 <!--         ask the user which preset should be load-->
         <div>
-        <h5 class = 'moveRight'> Load preset </h5>
-
-        <select  class = 'moveRight' v-model="PresettActive" placeholder="Select a preset" @change="changePreset($event)" >
+        <h5 class = 'moveLeft'> Preset </h5>
+        <select  class = 'moveLeft' v-model="PresettActive" placeholder="Select a preset" @change="changePreset($event)" >
           <option v-for="(item,index) in productList" :key="index" :value='item.id'>{{item.title}}</option>
         </select>
-    </div>
+<!--          a button allow the user to change preset-->
+          <b-button type="is-info is-light" class = 'moveLeft' @click="loadPreset">Loading</b-button>
+
+        </div>
+
 
 
         <!--    the screen 1 at the left side    -->
-        <h1>Screen 1</h1>
+        <h1 id="screen1Title">Screen 1</h1>
 
         <div class='screen1Left'>
           <video-player class="video-player vjs-custom-skin"
                         ref="videoPlayer"
                         :playsinline="true"
-                        :options="playerOptions">
+                        :options="playerOptions"
+          >
           </video-player>
         </div>
 
@@ -36,29 +40,29 @@
       </section>
     </div>
 
-    <!--some preload img or video from the database?-->
     <div class = 'right'>
 
-      <!--allow the user to upload the video-->
-      <!--      <div>-->
-      <!--        <input type = 'file' accept = 'video/*' @change = 'loadFile'>-->
-      <!--        <video id="file" width="480" height="270" v-show="showVideo" controls/>-->
-      <!--      </div>-->
       <div>
-        <!--                // ask the user , which preset is loaded in page-->
+        <!--     ask the user , which preset is loaded in page-->
         <b-field label="type the Url of the video">
-          <b-input v-model="urlData"></b-input>
+
+          <b-input v-model="urlData">
+          </b-input>
+
         </b-field>
       </div>
 
       <div>
         <section>
+<!--           a delete button allow the user to delete the Url-->
+          <b-button type="is-warning is-light" @click="clearUrl">delete Url</b-button>
+
           <b-button
               label="Display the video"
               class="block"
               @click="isActive = !isActive" />
           <b-notification v-model="isActive" aria-close-label="Close notification">
-            <span>chose the screens you want to display the video</span>
+            <h5>chose the screens you want to display the video</h5>
             <b-button @click="clickScreen1" type="is-primary is-light" >Screen1</b-button>
             <b-button @click="clickScreen2" type="is-success is-light">Screen2</b-button>
           </b-notification>
@@ -74,15 +78,21 @@
 
 
 
+
 <style scoped>
+
 .screen1Left{
   border-top: 2px solid darkred;
+  margin-top: 1em;
+  margin-bottom: 1.5em;
 }
+
 .screen2Left{
   /*margin-top: 200px;*/
   border-top: 2px solid darkred;
 }
-.moveRight{
+/* set the preset, and loaing button to the left*/
+.moveLeft{
  float:left;
   width:100px;
 }
@@ -103,26 +113,6 @@ div.right {
   height:1000px;
   float: left;
 }
-/* a single grid for the img in the left side of screen 1*/
-.grid1{
-  margin:30px 35px;
-}
-/* img of three for one line*/
-.imgBlock{
-  width:100px;
-  height: 150px;
-  /*margin:0 50px;*/
-  display:flex;
-  flex-direction: row;
-}
-.screen1Right{
-  margin-top: 15px;
-  text-align: center;
-}
-.screen2Right{
-  margin-top: 400px;
-  text-align: center;
-}
 
 
 </style>
@@ -140,16 +130,7 @@ export default {
 
   data() {
     return {
-      file: {},
-      dropFiles: [],
 
-      // toggoleActive
-      isActive:true,
-
-      //el
-      // dialogImageUrl: '',
-      // dialogVisible: false,
-      disabled: false,
 
       playerOptions: {
         playbackRates: [0.5, 1.0, 1.5, 2.0], // play speed
@@ -163,7 +144,7 @@ export default {
         sources: [{
           type: "video/mp4",  // type
           // url location
-          src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
+          src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
           // src: ''   dynamically bind the value from db , need update from the DB
         }],
         poster: '',
@@ -188,7 +169,7 @@ export default {
         sources: [{
           type: "video/mp4",
           // url
-          src: "https://media.w3.org/2010/05/sintel/trailer.mp4",
+          src: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
           // src: ''   dynamically bind the value from db , need update from the DB
 
         }],
@@ -207,16 +188,12 @@ export default {
       // data stored from the API
       displayPreset:[],
 
-      // upload variable , video
-      showImg:false,
-      showVideo:false,
-
 
       // the Url information from the user
       urlData: '',
 
 
-      // values in the selectors
+      // values in the selectors , if more presets are add in the database, this list should also be update to allow user to load new preset
       productList:[{id:1,title:"Test1"},{id:2,title:"Test2"},
         {id:3,title:"PresetNew1"},{id:4,title:"PresetNew2"},{id:5,title:"PresetNew3"}
       ],
@@ -246,8 +223,7 @@ export default {
         this.displayPreset = response.data
 
         // bind the value of these two when read the value
-        // src? not in the DB yet, add to the preset?
-        // add the url for the display screesn
+        // add the correct url for the display screens , and comment out the next two lines
 
         // this.playerOptions.sources[0].src = this.displayPreset[this.PresetActive].displays[0].source
         // this.playerOptions2.sources[0].src = this.displayPreset[this.PresetActive].displays[1].source
@@ -261,20 +237,6 @@ export default {
     },
 
     // methods for loading the video and provide a url
-    loadFile(event){
-      const reader = new FileReader();
-      const that = this
-      if(!process.browser)return
-      reader.onload = function(){
-        const output = document.querySelector("#file")
-        that.showVideo = true;
-        output.src = URL.createObjectURL(new Blob([reader.result]))
-        this.playerOptions2.sources[0].src = output.src
-
-      }
-      reader.readAsArrayBuffer(event.target.files[0])
-
-    },
 
     //pup up message when click the button
     clickScreen1() {
@@ -295,6 +257,43 @@ export default {
       this.PresetActive = event.target.value; // get the corresponding value in options
       // console.log("load preset",this.PresetActive)
     },
+
+    // clear the url in the UrlData( from User)
+    clearUrl(){
+      this.urlData = ''
+      // this.
+    },
+
+    // reload the video base on the Preset Num
+    loadPreset(){
+      axios({
+        method:'get',
+        // Url of backend location of data
+        // load the preset instead of the endpoint of display
+        // url: 'http://127.0.0.1:8000/api/displays/',
+        url: 'http://127.0.0.1:8000/api/preset/',
+        auth: {
+          username: 'admin',
+          password: 'eccadmin123'
+        }
+        // This section tells code to wait until lights have been rendered to extract db lights info
+      }).then((response) => {
+        this.displayPreset = response.data
+
+        // bind the value of these two when read the value
+        // add the correct url for the display screens , and comment out the next two lines
+
+        // this.playerOptions.sources[0].src = this.displayPreset[this.PresetActive].displays[0].source
+        // this.playerOptions2.sources[0].src = this.displayPreset[this.PresetActive].displays[1].source
+
+        // console.log('data',this.displayPreset)
+        // console.log('media_src',this.displayPreset[this.PresetActive].displays[0].source)
+        // console.log('media_sr2c',this.displayPreset[this.PresetActive].displays[1].source)
+
+
+      });
+    },
+
 
 
   }

@@ -32,6 +32,11 @@ Vue.use(Buefy, {
     }
   }
 })
+// import the css for the video player in display page
+import './assets/video-player-css.css'
+require('video.js/dist/video-js.css')
+require('vue-video-player/src/custom-theme.css')
+
 
 Vue.use(VueRouter)
 
