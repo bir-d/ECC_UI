@@ -68,13 +68,18 @@
                     <br>
                     <!-- Mock preset creation for testing purposes -->
                     <!-- 0-100 scale input for brightness, to be changed into a sliding bar -->
-                    <input 
+                    <!-- <input 
                         class="input is-rounded is-medium" 
                         v-model="newBrightness" 
                         type="text" 
                         placeholder="Enter Brightness Level: 0 - 100" 
                         v-on:keyup.enter="changeBrightness(newBrightness)"
-                    >
+                    > -->
+                    <!-- Sliding Brightness Bar  -->
+                    <b-field label="Brightness">
+                        <b-slider size="is-large" type="is-info" v-model="newBrightness" rounded v-on:dragging="changeBrightness(newBrightness)" v-on:input="changeBrightness(newBrightness)">
+                        </b-slider>
+                    </b-field>
                     <br>
                     <input
                         class="input is-rounded is-medium" 
@@ -164,7 +169,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 15px 0;
+    margin: 30px 0;
     }
     
     .selected-color-info p {
