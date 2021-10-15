@@ -143,7 +143,7 @@ export default {
             axios({
                 method:'get',
                 // Url of backend location of data
-                url: 'http://127.0.0.1:8000/api/videowall/',
+                url: 'http://127.0.0.1:8000/api/video_wall/',
                 auth: {
                     username: 'admin',
                     password: 'eccadmin123'
