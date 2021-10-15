@@ -30,13 +30,13 @@
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
                         <div class="column is-one-third"
-                        v-for="(element) in media" 
-                        :key="element">
+                             v-for="(element) in media" 
+                             :key="element">
                             <button @click="load(element.id)">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> {{ element.name }}</p>
-                            </figure>
+                            <div class="box">
+                                <b-icon pack="fas" icon="play-circle" size="is-large"></b-icon>
+                                <p class="filename is-size-1"> {{ element.label }}</p>
+                            </div>
                             </button>
                         </div>
                     </div>
@@ -93,10 +93,14 @@ export default {
         // Functionality for the video player 
         playerOptions: {
             height: '360',
-            autoplay: false,
+            autoplay: true,
             muted: true,
             language: 'en',
             playbackRates: [0.7, 1.0, 1.5, 2.0],
+            notSupportedMessage: 'This video is not able to play',
+            aspectRatio: '16:9',
+            poster: '',
+            nativeControlsForTouch: true,
             sources: [],
             }
         }
