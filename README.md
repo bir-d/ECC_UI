@@ -6,6 +6,14 @@
   <li><code>npm install yarn</code></li>
   <li><code>npm install buefy</code></li>
   <li><code> npm install --save vue-router</code></li>
+  <li><code> pip install -r requirements.txt</code></li>
+</ol>
+
+
+<h2>Running</h2>
+<ol>
+  <li><code>npm run serve</code></li>
+  <li><code>cd projectsite && python manage.py runserver</code></li>
 </ol>
 
 <h2>Github Standards of Procedure (SOP)</h2>
