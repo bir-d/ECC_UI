@@ -1,139 +1,105 @@
 <template>
   <div class="content">
-    <div class = 'left'>
-      <section>
-<!--         ask the user which preset should be load-->
-        <div>
-        <h5 class = 'moveRight'> Load preset </h5>
+    <div class = "columns">
+      <div class="column is-three-fifths">
+      <div class="screens">
+          <!--    the screen 1 at the left side    -->
+          <h1 class="is-size-1">Screen 1</h1>
+          <div class='screen1Left'>
+            <video-player class="video-player vjs-custom-skin"
+                          ref="videoPlayer"
+                          :playsinline="true"
+                          :options="playerOptions">
+            </video-player>
+          </div>
 
-        <select  class = 'moveRight' v-model="PresettActive" placeholder="Select a preset" @change="changePreset($event)" >
-          <option v-for="(item,index) in productList" :key="index" :value='item.id'>{{item.title}}</option>
-        </select>
-    </div>
-
-
-        <!--    the screen 1 at the left side    -->
-        <h1>Screen 1</h1>
-
-        <div class='screen1Left'>
-          <video-player class="video-player vjs-custom-skin"
-                        ref="videoPlayer"
-                        :playsinline="true"
-                        :options="playerOptions">
-          </video-player>
+          <!--        the screen two at the left side-->
+          <h1 class="is-size-1">Screen2</h1>
+          <div class='screen2Left'>
+            <video-player class="video-player vjs-custom-skin"
+                          ref="videoPlayer"
+                          :playsinline="true"
+                          :options="playerOptions2"
+            >
+            </video-player>
+          </div>
         </div>
-
-        <!--        the screen two at the left side-->
-        <h1>Screen2</h1>
-        <div class='screen2Left'>
-          <video-player class="video-player vjs-custom-skin"
-                        ref="videoPlayer"
-                        :playsinline="true"
-                        :options="playerOptions2"
-          >
-          </video-player>
-        </div>
-      </section>
-    </div>
+      </div>
 
     <!--some preload img or video from the database?-->
-    <div class = 'right'>
+    <div class="column">
+      <div class="input_fields">
+        <!--  ask the user which preset should be load  -->
+          <div class="field is-horizontal">
+            <div class="field-label is-large">
+              <label class="label is-size-2 has-text-left">Preset: </label>
+            </div>
+            <div class="field-body">
+            <div class='select is-rounded is-large'>
+              <select class = 'moveRight' 
+                      v-model="PresettActive" 
+                      placeholder="Select a preset" 
+                      @change="changePreset($event)">
+                <option v-for="(item,index) in productList" 
+                        :key="index" 
+                        :value='item.id'>
+                  {{item.title}}
+                </option>
+              </select>
+            </div>
+            </div>
+          </div>
 
-      <!--allow the user to upload the video-->
-      <!--      <div>-->
-      <!--        <input type = 'file' accept = 'video/*' @change = 'loadFile'>-->
-      <!--        <video id="file" width="480" height="270" v-show="showVideo" controls/>-->
-      <!--      </div>-->
-      <div>
-        <!--                // ask the user , which preset is loaded in page-->
-        <b-field label="type the Url of the video">
-          <b-input v-model="urlData"></b-input>
-        </b-field>
+          <!-- ask the user , which preset is loaded in page  -->
+          <div class="field is-horizontal" id="url">
+            <div class="field-label is-large">
+              <label class="label is-size-2 has-text-left">URL: </label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <input class="input is-rounded is-large" type="text" v-model="urlData">
+              </div>
+            </div>
+          </div>
       </div>
-
-      <div>
-        <section>
-          <b-button
-              label="Display the video"
-              class="block"
-              @click="isActive = !isActive" />
-          <b-notification v-model="isActive" aria-close-label="Close notification">
-            <span>chose the screens you want to display the video</span>
-            <b-button @click="clickScreen1" type="is-primary is-light" >Screen1</b-button>
-            <b-button @click="clickScreen2" type="is-success is-light">Screen2</b-button>
-          </b-notification>
-        </section>
+        <div class="screen_select">
+          <button class="button is-rounded is-success is-light is-large is-size-2 has-text-weight-medium" 
+                  @click="clickScreen1(); isActive = !isActive" 
+                  type="is-primary is-light" 
+                  id="screen_1">Screen 1
+          </button>
+          <button class="button is-rounded is-danger is-light is-large is-size-2 has-text-weight-medium" 
+                  @click="clickScreen2(); isActive = !isActive" 
+                  type="is-success is-light"
+                  id="screen_2">Screen 2
+          </button>
+        </div>
       </div>
-
-
     </div>
-
   </div>
 
 </template>
 
-
-
 <style scoped>
-.screen1Left{
-  border-top: 2px solid darkred;
+.content, .screen_select, #url{
+  margin-top: 3.5em;
 }
-.screen2Left{
-  /*margin-top: 200px;*/
-  border-top: 2px solid darkred;
+.screens{
+  margin-left: 3.5em;
+  margin-right: 3.5em;
 }
-.moveRight{
- float:left;
-  width:100px;
+.input_fields{
+  margin-top: 5em;
+  margin-left: 2em;
+  margin-right: 5em;
 }
-
-
-/*contents of two screens*/
-.content{
-  height:1500px;
+#screen_1{
+  margin-right:3.5em;
 }
-div.left {
-  background-color:#eeeeee;
-  width: 65%;
-  height: 1500px;
-  float: left;
-}
-div.right {
-  width: 35%;
-  height:1000px;
-  float: left;
-}
-/* a single grid for the img in the left side of screen 1*/
-.grid1{
-  margin:30px 35px;
-}
-/* img of three for one line*/
-.imgBlock{
-  width:100px;
-  height: 150px;
-  /*margin:0 50px;*/
-  display:flex;
-  flex-direction: row;
-}
-.screen1Right{
-  margin-top: 15px;
-  text-align: center;
-}
-.screen2Right{
-  margin-top: 400px;
-  text-align: center;
-}
-
-
 </style>
-
-
-
 
 <script>
 import axios from 'axios'
-// import VueAxios from 'vue-axios'
-// import { PerfectScrollbar } from 'vue2-perfect-scrollbar'
 
 export default {
 
@@ -142,15 +108,8 @@ export default {
     return {
       file: {},
       dropFiles: [],
-
-      // toggoleActive
       isActive:true,
-
-      //el
-      // dialogImageUrl: '',
-      // dialogVisible: false,
       disabled: false,
-
       playerOptions: {
         playbackRates: [0.5, 1.0, 1.5, 2.0], // play speed
         autoplay: false,
@@ -203,7 +162,6 @@ export default {
 
       },
 
-
       // data stored from the API
       displayPreset:[],
 
@@ -211,24 +169,20 @@ export default {
       showImg:false,
       showVideo:false,
 
-
       // the Url information from the user
       urlData: '',
-
 
       // values in the selectors
       productList:[{id:1,title:"Test1"},{id:2,title:"Test2"},
         {id:3,title:"PresetNew1"},{id:4,title:"PresetNew2"},{id:5,title:"PresetNew3"}
       ],
       PresetActive:"1",// get the value of the Preset from user, default set as 1
-
     }
   },
   created(){
     this.getData()
   },
   methods: {
-
     // ask for data from the DB
     getData(){
       axios({
@@ -255,7 +209,6 @@ export default {
         // console.log('data',this.displayPreset)
         // console.log('media_src',this.displayPreset[this.PresetActive].displays[0].source)
         // console.log('media_sr2c',this.displayPreset[this.PresetActive].displays[1].source)
-
 
       });
     },
@@ -295,13 +248,6 @@ export default {
       this.PresetActive = event.target.value; // get the corresponding value in options
       // console.log("load preset",this.PresetActive)
     },
-
-
   }
 }
-
 </script>
-
-
-
-
