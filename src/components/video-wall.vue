@@ -75,9 +75,21 @@ export default {
         return {
         // Media information stored here
         media: [
-            {id:0, label:"Seaside1", type: "video/mp4", src: "http://vjs.zencdn.net/v/oceans.mp4"},
-            {id:1, label:"Boat Ride2", type: "video/mp4", src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"},
-            ],
+            {
+                id:0, 
+                label:"Seaside1", 
+                type: "video/mp4", 
+                src: "http://vjs.zencdn.net/v/oceans.mp4",
+                selected: true
+            },
+            {
+                id:1, 
+                label:"Boat Ride2", 
+                type: "video/mp4", 
+                src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm",
+                selected: true
+            },
+        ],
         // Functionality for the video player 
         playerOptions: {
             height: '360',
@@ -119,13 +131,15 @@ export default {
                 label: this.media[id].label, 
                 id: this.media[id].id, 
                 type: this.media[id].type, 
-                src: this.media[id].src})
+                src: this.media[id].src,
+                selected: this.media[id].selected,
+                })
         },
         getMedia() {
             axios({
                 method:'get',
                 // Url of backend location of data
-                url: 'http://127.0.0.1:8000/api/video_wall/',
+                url: 'http://127.0.0.1:8000/api/videowall/',
                 auth: {
                     username: 'admin',
                     password: 'eccadmin123'
@@ -147,11 +161,12 @@ export default {
         updateMedia() {
             for (this.vuemedia in this.media) {
                 for (this.djangomedia in this.dbmedia) {
-                    if(this.media[this.vuemedia].label == this.dbmedia[this.djangomedia].name) {
-                        this.media[this.vuemedia].label = this.dbmedia[this.djangomedia].name
+                    if(this.media[this.vuemedia].label == this.dbmedia[this.djangomedia].media_name) {
+                        this.media[this.vuemedia].label = this.dbmedia[this.djangomedia].media_name
                         this.media[this.vuemedia].id = this.dbmedia[this.djangomedia].id
-                        this.media[this.vuemedia].type = this.dbmedia[this.djangomedia].type
-                        this.media[this.vuemedia].src = this.dbmedia[this.djangomedia].src
+                        this.media[this.vuemedia].type = this.dbmedia[this.djangomedia].media_type
+                        this.media[this.vuemedia].src = this.dbmedia[this.djangomedia].source
+                        this.media[this.vuemedia].selected = this.dbmedia[this.djangomedia].selected
                     }
                 }
             }
@@ -165,6 +180,7 @@ export default {
                     id: this.playerOptions.sources[0].id,
                     type: this.playerOptions.sources[0].type,
                     src: this.playerOptions.sources[0].src,
+                    selected: this.playerOptions.sources[0].selected,
                 }
                 ]
             })
@@ -181,6 +197,7 @@ export default {
                                     this.playerOptions.sources[this.mediaconfig].id = this.presets[this.element].presetinfo[this.presetconfig].id
                                     this.playerOptions.sources[this.mediaconfig].type = this.presets[this.element].presetinfo[this.presetconfig].type
                                     this.playerOptions.sources[this.mediaconfig].src = this.presets[this.element].presetinfo[this.presetconfig].src
+                                    this.playerOptions.sources[this.mediaconfig].selected = this.presets[this.element].presetinfo[this.presetconfig].selected
                                 }
                             }
                         }

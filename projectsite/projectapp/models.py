@@ -14,7 +14,7 @@ from django.core.validators import MaxValueValidator
 #         return self.group_name
 
 class Light(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     name = models.CharField(max_length=255)
     colour = models.CharField(max_length=20)
     brightness = models.PositiveIntegerField(validators=[MaxValueValidator(100)])
@@ -36,7 +36,7 @@ class Light(models.Model):
 #         return self.id
 
 class Video_Wall(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     media_name = models.CharField(max_length=255, null=True)
     media_type = models.CharField(max_length=255, null=True)
     source = models.CharField(max_length=255, null=True)
@@ -48,7 +48,7 @@ class Video_Wall(models.Model):
     #     return self.id
 
 class Workstation(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     workstation_name = models.CharField(max_length=255)
     station_on = models.BooleanField()
     media_name = models.CharField(max_length=255, null=True)
@@ -60,7 +60,7 @@ class Workstation(models.Model):
         return self.workstation_name
 
 class Display(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     display_name = models.CharField(max_length=255)
     display_on = models.BooleanField()
     media_name = models.CharField(max_length=255, null=True)
@@ -72,7 +72,7 @@ class Display(models.Model):
         return self.display_name
 
 class Media(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     media_name = models.CharField(max_length=255, null=True)
     media_type = models.CharField(max_length=255, null=True)
     source = models.CharField(max_length=255, null=True)
@@ -82,7 +82,7 @@ class Media(models.Model):
         return self.media_name
 
 class Preset(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.PositiveIntegerField(primary_key=True)
     preset_name = models.CharField(max_length=255, null=True)
     lights = models.JSONField(null=True)
     video_Wall = models.JSONField(null=True)
