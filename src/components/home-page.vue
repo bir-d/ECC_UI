@@ -47,6 +47,8 @@
       <div class="content">
         <h2 class="is-size-3 is-underlined has-text-left">Recently Used</h2>
       </div>
+      <!-- aniamtion for presets -->
+      <sequential-entrance>
       <div class="columns" id="recent-section">
         <!-- Lists out presets in db in list -->
         <div class="column is-2" v-for="element in test.slice(0,5)" :key="element">
@@ -76,6 +78,7 @@
             </div>
         </div>
         </div>
+        </sequential-entrance>
     </div>
   </div>
 </template>
