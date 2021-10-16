@@ -8,6 +8,7 @@
         <select  class = 'moveLeft' v-model="PresettActive" placeholder="Select a preset" @change="changePreset($event)" >
           <option v-for="(item,index) in productList" :key="index" :value='item.id'>{{item.title}}</option>
         </select>
+    
 <!--          a button allow the user to change preset-->
           <b-button type="is-info is-light" class = 'moveLeft' @click="loadPreset">Loading</b-button>
 
@@ -37,7 +38,8 @@
           >
           </video-player>
         </div>
-      </div>
+      </section>
+    </div>
 
     <div class = 'right'>
 
@@ -50,7 +52,7 @@
 
         </b-field>
       </div>
-
+        
       <div>
         <section>
 <!--           a delete button allow the user to delete the Url-->
