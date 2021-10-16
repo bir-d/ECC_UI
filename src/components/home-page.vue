@@ -48,12 +48,14 @@
         <h2 class="is-size-3 is-underlined has-text-left">Recently Used</h2>
       </div>
       <div class="columns" id="recent-section">
+        <!-- Lists out presets in db in list -->
         <div class="column is-2" v-for="element in test" :key="element">
             <div class="level-item has-text-centered">
               <a>
                 <figure class="image is-128x128">
                   <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name)">
                 </figure>
+                
                 <div class="content has-text-centered is-size-5" id="title-label">
                   <p> {{ element.preset_name }}</p>
                 </div>
@@ -96,6 +98,7 @@ export default ({
   name: 'App',
   data() {
     return {
+      // create lists for db data to enter
       dblights: [],
       dbvideo: [],
       dbworkstations: [],
@@ -106,7 +109,7 @@ export default ({
 
   },
   created() {
-            // Extracts light information stored in db
+            // Extracts ECC information stored in db
             this.getLights();
             this.getVideoWall();
             this.getWorkStations();
@@ -123,7 +126,6 @@ export default ({
               username: 'admin',
               password: 'eccadmin123'
           }
-      // This section tells code to wait until lights have been rendered to extract db lights info
       }).then((response) => {
 
           this.isLoaded = true;
@@ -132,8 +134,6 @@ export default ({
           if(response.data != 'undefined')
           {
               this.dblights = response.data;
-              // Calls function to update lights values with db values
-              //this.updateLights();
           }
       });
     },
@@ -146,7 +146,7 @@ export default ({
               username: 'admin',
               password: 'eccadmin123'
           }
-      // This section tells code to wait until lights have been rendered to extract db lights info
+      
       }).then((response) => {
 
           this.isLoaded = true;
@@ -155,8 +155,7 @@ export default ({
           if(response.data != 'undefined')
           {
               this.dbvideo = response.data;
-              // Calls function to update lights values with db values
-              //this.updateLights();
+              
           }
       });
     },
@@ -169,7 +168,7 @@ export default ({
               username: 'admin',
               password: 'eccadmin123'
           }
-      // This section tells code to wait until lights have been rendered to extract db lights info
+      
       }).then((response) => {
 
           this.isLoaded = true;
@@ -178,8 +177,7 @@ export default ({
           if(response.data != 'undefined')
           {
               this.dbworkstations = response.data;
-              // Calls function to update lights values with db values
-              //this.updateLights();
+              
           }
       });
     },
@@ -192,7 +190,7 @@ export default ({
               username: 'admin',
               password: 'eccadmin123'
           }
-      // This section tells code to wait until lights have been rendered to extract db lights info
+      
       }).then((response) => {
 
           this.isLoaded = true;
@@ -201,8 +199,7 @@ export default ({
           if(response.data != 'undefined')
           {
               this.dbdisplays = response.data;
-              // Calls function to update lights values with db values
-              //this.updateLights();
+              
           }
       });
     },
@@ -215,7 +212,7 @@ export default ({
               username: 'admin',
               password: 'eccadmin123'
           }
-      // This section tells code to wait until lights have been rendered to extract db lights info
+      
       }).then((response) => {
 
           this.isLoaded = true;
@@ -227,24 +224,20 @@ export default ({
               if (PresetName != ""){
                 for(let i = 0; i < response.data.length; i++){
                   if(PresetName == response.data[i].preset_name) {
-                    //console.log(response.data[i].preset_name)
                     var temp = response.data[i]
-                    console.log(temp)
                     this.UpdateDB(temp)
                   }
               }
               }
               
               this.test = response.data;
-              // Calls function to update lights values with db values
-              //this.updateLights();
+              
           }
       });
     },
+    //Update db when a preset is called
     UpdateDB(data) {
-      //console.log(data.lights.length)
       for(let i = 0; i < data.lights.length; i++){
-        //console.log(data.lights[i])
         axios({
           method:'put',
           url: 'http://127.0.0.1:8000/api/lights/' + data.lights[i].id,
@@ -266,7 +259,6 @@ export default ({
         })
       }
       for(let i = 0; i < data.video_Wall.length; i++){
-        //console.log(data.lights[i])
         axios({
           method:'put',
           url: 'http://127.0.0.1:8000/api/video_wall/' + data.video_Wall[i].id,
@@ -288,7 +280,6 @@ export default ({
       }
       console.log(data.displays)
       for(let i = 0; i < data.displays.length; i++){
-        //console.log(data.lights[i])
         axios({
           method:'put',
           url: 'http://127.0.0.1:8000/api/displays/' + data.displays[i].id,
@@ -310,7 +301,6 @@ export default ({
         })
       }
       for(let i = 0; i < data.workstations.length; i++){
-        //console.log(data.lights[i])
         axios({
           method:'put',
           url: 'http://127.0.0.1:8000/api/workstations/' + data.workstations[i].id,

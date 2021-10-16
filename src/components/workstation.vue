@@ -5,7 +5,6 @@
                 <div class="video-wall" v-for="station in workstations" :key="station" >
                     <h1 id="heading" v-on:click="toggleSelected(station)"> Workstation {{station.id}} </h1>
                     <div class="item" v-bind:class="[station.selected ? 'selected2' : '']">
-                        
                         <div class="player" >
                         <video-player  class="vjs-custom-skin"
                                         ref="videoPlayer"
