@@ -49,7 +49,7 @@
       </div>
       <div class="columns" id="recent-section">
         <!-- Lists out presets in db in list -->
-        <div class="column is-2" v-for="element in test" :key="element">
+        <div class="column is-2" v-for="element in test.slice(0,5)" :key="element">
             <div class="level-item has-text-centered">
               <a>
                 <figure class="image is-128x128">
@@ -58,6 +58,19 @@
                 
                 <div class="content has-text-centered is-size-5" id="title-label">
                   <p> {{ element.preset_name }}</p>
+                </div>
+              </a>
+            </div>
+        </div>
+        <div class="column is-2">
+            <div class="level-item has-text-centered">
+              <a href="/presets">
+                <figure class="image is-128x128">
+                  <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name)">
+                </figure>
+                
+                <div class="content has-text-centered is-size-5" id="title-label">
+                  <p> View More</p>
                 </div>
               </a>
             </div>
@@ -89,6 +102,7 @@ figure{
 figure:hover{
   transform: scale(1.05);
 }
+
 </style>
 
 <script>
@@ -323,6 +337,33 @@ export default ({
       }
       
     },
+    pushPreset(PresetName) {
+    axios({
+        method:'post',
+        url: 'http://127.0.0.1:8000/api/preset/',
+        data: { // Send description and status to the server
+            id: this.presetnum + 1,
+            preset_name: PresetName,
+            lights: this.dblights,
+            video_Wall: this.dbvideo,
+            workstations: this.dbworkstations,
+            displays: this.dbdisplays,
+        },
+        auth: { // Basic authentication
+            username: 'admin',
+            password: 'eccadmin123'
+        }
+        }).then((response) => {
+        let newPreset = {'id': response.data.id, 'preset_name': PresetName, 'lights': this.dblights, 'video_Wall': this.dbvideo, 'workstations': this.dbworkstations, 'displays': this.dbdisplays}
+        this.presetnum = this.presetnum + 1
+        this.test.push(newPreset)
+        })
+        .catch((error) => {
+        console.log(error.response);
+        console.log(error.request);
+        console.log(error.message);
+        });
+    }
     
 
   },

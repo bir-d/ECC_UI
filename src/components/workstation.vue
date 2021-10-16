@@ -147,7 +147,7 @@ export default {
         }, 5000)
     },
     created() {
-        //this.getMedia();
+        this.getMedia();
     },
     methods: {
         toggleSelected: function(Selectedstation) {
