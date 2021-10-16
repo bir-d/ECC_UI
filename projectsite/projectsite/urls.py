@@ -18,11 +18,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 from projectapp import views
-# from rest_framework_swagger.views import get_swagger_view
-
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+
+#Create Swagger API Page and assign variables
 schema_view = get_schema_view(
     openapi.Info(
         title="ECC API",
@@ -32,20 +32,18 @@ schema_view = get_schema_view(
     permission_classes=(permissions.AllowAny,),
 )
 
-# schema_view = get_swagger_view(title='ECC API')
-
 urlpatterns = [
+    #URL paths for in-built swagger api documentation
     path('', schema_view.with_ui('swagger', cache_timeout=0),
          name='schema-swagger-ui'),  
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0),
          name='schema-redoc'),
+
     path('admin/', admin.site.urls),
     path('app/', include('projectapp.urls')),
 
     #API Endpoints (GET,POST)
-    # path('api/light_groups/', views.Lights_GroupView.as_view()),
     path('api/lights/', views.LightsView.as_view()),
-    # path('api/video_wall_groups/', views.Video_Wall_Panel_GroupView.as_view()),
     path('api/video_wall/', views.Video_WallView.as_view()),
     path('api/workstations/', views.WorkstationView.as_view()),
     path('api/displays/', views.DisplayView.as_view()),
@@ -53,9 +51,7 @@ urlpatterns = [
     path('api/preset/', views.PresetView.as_view()),
 
     #Indiviudal API Endpoints (GET,POST,PUT, Delete)
-    # path('api/light_groups/<int:pk>', views.SingleLightGroupView.as_view()),
     path('api/lights/<int:pk>', views.SingleLightView.as_view()),
-    # path('api/video_wall_groups/<int:pk>', views.SingleVideoWallPanelGroupView.as_view()),
     path('api/video_wall/<int:pk>', views.SingleVideoWallPanelView.as_view()),
     path('api/workstations/<int:pk>', views.SingleWorkstationView.as_view()),
     path('api/displays/<int:pk>', views.SingleDisplayView.as_view()),
