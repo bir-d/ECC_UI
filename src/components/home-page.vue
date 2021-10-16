@@ -12,7 +12,7 @@
         </a>
       </div>
       <div class="column">
-        <a href="#">
+        <a href="/workstation">
           <figure class="image is-16by9">
             <img src="../assets/home-workstation.png">
           </figure>
