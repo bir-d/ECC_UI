@@ -47,6 +47,7 @@
                 </option>
               </select>
             </div>
+            <button id="load" class="button is-large is-rounded is-success is-light has-text-weight-medium" @click="loadPreset">Load Preset</button>
             </div>
           </div>
 
@@ -95,6 +96,9 @@
 }
 #screen_1{
   margin-right:3.5em;
+}
+#load{
+  margin-left: 2em;
 }
 </style>
 
