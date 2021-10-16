@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="columns is-desktop">
-            <div class="column">
+            <div class="column is-7">
                 <div class="video-wall">
                     <div class="item">
                         <div class="player">
@@ -25,8 +25,10 @@
                     </div>
                 </div>
             </div>
+
+
             <div class="column">
-                <h1 class="title">File Browser</h1>
+                <h1 class="title is-size-1 is-family-sans-serif	has-text-weight-medium">File Browser</h1>
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
                         <div class="column is-one-third"
@@ -35,7 +37,7 @@
                             <button @click="load(element.id)">
                             <div class="box">
                                 <b-icon pack="fas" icon="play-circle" size="is-large"></b-icon>
-                                <p class="filename is-size-1"> {{ element.label }}</p>
+                                <p class="filename is-size-2 is-family-sans-serif"> {{ element.label }}</p>
                             </div>
                             </button>
                         </div>
