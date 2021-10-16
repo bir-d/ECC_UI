@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="columns is-desktop">
-            <div class="column">
-                <div class="video-wall" v-for="station in workstations" :key="station" >
-                    <h1 id="heading" v-on:click="toggleSelected(station)"> Workstation {{station.id}} </h1>
+            <div class="column is-7">
+                <div class="workstation" v-for="station in workstations" :key="station" >
+                    <h1 class="is-family-sans-serif has-text-weight-normal" id="heading" v-on:click="toggleSelected(station)"> Workstation {{station.id}} </h1>
                     <div class="item" v-bind:class="[station.selected ? 'selected2' : '']">
                         <div class="player" >
                         <video-player  class="vjs-custom-skin"
@@ -29,17 +29,17 @@
                 
             </div>
             <div class="column">
-                <h1 class="title">File Browser</h1>
+                <h1 class="title is-size-1 is-family-sans-serif	has-text-weight-medium" id="browser">File Browser</h1>
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
                         <div class="column is-one-third"
                         v-for="(element) in media" 
                         :key="element">
                             <button @click="load(element.id)">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> {{ element.name }}</p>
-                            </figure>
+                            <div class="box">
+                                <b-icon pack="fas" icon="play-circle" size="is-large"></b-icon>
+                                <p class="filename is-size-2 is-family-sans-serif"> {{ element.label }}</p>
+                            </div>
                             </button>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
     margin-top: 1em;
     margin-bottom: 1.5em;
 }
-.video-wall{
+.workstation{
     margin-top: 3em;
     margin-left: 2.5em;
 }
