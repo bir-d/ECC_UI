@@ -81,29 +81,7 @@
                         </b-slider>
                     </b-field>
                     <br>
-                    <input
-                        class="input is-rounded is-medium" 
-                        v-model="newPresetName" 
-                        type="text" 
-                        placeholder="Enter Preset Name" 
-                        v-on:keyup.enter="AddPreset(newPresetName)"
-                    >
-                    <br>
-                    <input 
-                        class="input is-rounded is-medium" 
-                        v-model="PresetName" 
-                        type="text" 
-                        placeholder="Enter Preset To Use" 
-                        v-on:keyup.enter="SyncPresets(PresetName)"
-                    >
-                    <!-- List presets made on page -->
-                     <ul>
-                        <li 
-                            v-for="preset in presets" 
-                            :key="preset" 
-                            v-on:click="SyncPresets(preset.name)"
-                        > {{ preset.name }}</li>
-                    </ul>
+                    
                     </div>
                 </div>
             </div>
@@ -234,49 +212,7 @@
                 dblights: [],
                 // Lights data stored as array
                 lights: [],
-                // Array within array is used to store presets (Probs just ignore at this point)
-                presets: [ {
-                    name: "Default",
-                    presetinfo: [
-                    {
-                        // label acts as a mock db scheme Foreign Key to primary Key relationship
-                        label: "LTL",
-                        state: true,
-                        colour: "rgba(255, 0, 0, ",
-                        hexColour: "#ff0000",
-                        brightness: 1,
-                    },
-                    {
-                        label: "LTR",
-                        state: true,
-                        colour: "rgba(0, 0, 255, ",
-                        hexColour: "#0000ff",
-                        brightness: 1,
-                    },
-                    {
-                        label: "LM",
-                        state: true,
-                        colour: "rgba(255, 0, 255, ",
-                        hexColour: "#ff00ff",
-                        brightness: 1,
-                    },
-                    {
-                        label: "LBL",
-                        state: true,
-                        colour: "rgba(0, 255, 0, ",
-                        hexColour: "#00ff00",
-                        brightness: 1,
-                    },
-                    {
-                        label: "LBR",
-                        state: true,
-                        colour: "rgba(0, 255, 255, ",
-                        hexColour: "#00ffff",
-                        brightness: 1,
-                    },
-                ]
-                },
-                ]
+                
             };
         },
         // Part of dynamic function to style with changing window size, needs work
@@ -615,67 +551,7 @@
                     }
                 }
             },
-            // Adds array to presets array that contains info for storing preset
-            AddPreset: function(PresetName){
-            this.presets.push({
-                name: PresetName,
-                presetinfo: [ {
-                    label: this.lights[0].label,
-                    state: this.lights[0].state,
-                    colour: this.lights[0].colour,
-                    hexColour: this.lights[0].hexColour,
-                    brightness: this.lights[0].brightness,
-                },
-                {
-                    label: this.lights[1].label,
-                    state: this.lights[1].state,
-                    colour: this.lights[1].colour,
-                    hexColour: this.lights[1].hexColour,
-                    brightness: this.lights[1].brightness,
-                },
-                {
-                    label: this.lights[2].label,
-                    state: this.lights[2].state,
-                    colour: this.lights[2].colour,
-                    hexColour: this.lights[2].hexColour,
-                    brightness: this.lights[2].brightness,
-                },
-                {
-                    label: this.lights[3].label,
-                    state: this.lights[3].state,
-                    colour: this.lights[3].colour,
-                    hexColour: this.lights[3].hexColour,
-                    brightness: this.lights[3].brightness,
-                },
-                {
-                    label: this.lights[4].label,
-                    state: this.lights[4].state,
-                    colour: this.lights[4].colour,
-                    hexColour: this.lights[4].hexColour,
-                    brightness: this.lights[4].brightness,
-                },
-                ]
-            })
-            this.newPresetName = ''
-            },
-            // loops through presets, for preset with inputted name and updates all lights with their preset values
-            SyncPresets: function(PresetName){
-                for (this.element in this.presets) {
-                    if (this.presets[this.element].name == PresetName) {
-                        for (this.presetconfig in this.presets[this.element].presetinfo) {
-                            for (this.lightconfig in this.lights) {
-                                if (this.presets[this.element].presetinfo[this.presetconfig].label == this.lights[this.lightconfig].label) {
-                                    this.lights[this.lightconfig].state = this.presets[this.element].presetinfo[this.presetconfig].state
-                                    this.lights[this.lightconfig].colour = this.presets[this.element].presetinfo[this.presetconfig].colour
-                                    this.lights[this.lightconfig].hexColour = this.presets[this.element].presetinfo[this.presetconfig].hexColour
-                                    this.lights[this.lightconfig].brightness = this.presets[this.element].presetinfo[this.presetconfig].brightness
-                                }
-                            }
-                        }
-                    }
-                }
-                this.PresetName = '';
-            }
+            
         }, 
     };
 
