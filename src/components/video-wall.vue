@@ -60,10 +60,6 @@
 .filename{
     opacity: 75%;
 }
-/* Controls the video player dimensions */
-.ps {
-  height: 600px;
-}
 </style>
 
 <script>
@@ -150,7 +146,6 @@ export default {
                     username: 'admin',
                     password: 'eccadmin123'
                 }
-            // This section tells code to wait until lights have been rendered to extract db lights info
             }).then((response) => {
 
                 this.isLoaded = true;

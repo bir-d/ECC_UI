@@ -61,10 +61,6 @@
 .filename{
     opacity: 75%;
 }
-/* Controls the video player dimensions */
-.ps {
-  height: 600px;
-}
 #heading {
     font-size:2cm;
     text-align:left;
@@ -193,7 +189,6 @@ export default {
                 {
                     this.workstations = response.data;
                     // Calls function to update lights values with db values
-                    //this.updateLights();
                 }
             });
             },
@@ -206,7 +201,6 @@ export default {
                     username: 'admin',
                     password: 'eccadmin123'
                 }
-            // This section tells code to wait until lights have been rendered to extract db lights info
             }).then((response) => {
 
                 this.isLoaded = true;
