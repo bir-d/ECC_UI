@@ -13,6 +13,22 @@ class Light(models.Model):
     #Function to display light name as placeholder on admin page
     def __str__(self):
         return self.name
+    
+    #Functions for testing
+    def getname(self):
+        return self.name
+
+    def getcolour(self):
+        return self.colour
+    
+    def getbrightness(self):
+        return self.brightness
+    
+    def getlight_on(self):
+        return self.light_on
+    
+    def getselected(self):
+        return self.selected
 
 class Video_Wall(models.Model):
     id = models.AutoField(primary_key=True)
@@ -20,6 +36,19 @@ class Video_Wall(models.Model):
     media_type = models.CharField(max_length=255, null=True)
     source = models.CharField(max_length=255, null=True)
     wall_on = models.BooleanField()
+
+    #Functions for testing
+    def getmedia_name(self):
+        return self.media_name
+
+    def getmedia_type(self):
+        return self.media_type
+
+    def getsource(self):
+        return self.source
+
+    def getwall_on(self):
+        return self.wall_on
    
 class Workstation(models.Model):
     id = models.AutoField(primary_key=True)
@@ -44,6 +73,8 @@ class Display(models.Model):
     #Function to display workstation name as placeholder on admin page
     def __str__(self):
         return self.display_name
+
+
 
 class Media(models.Model):
     id = models.AutoField(primary_key=True)
