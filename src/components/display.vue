@@ -30,10 +30,9 @@
     <div class="column">
 <!-- a section to store the videos information from  the DB-->
       <section>
-        <b-button
-            label="Video Sources"
-            class="fontSize button is is-rounded is-info is-light"
-            @click="isActive = !isActive" />
+        <button
+            class="fontSize button is-info is-light is-fullwidth has-text-weight-bold is-size-3"
+            @click="isActive = !isActive"> File Browser</button>
                 <b-notification v-model="isActive" aria-close-label="Close notification">
                   <ul>
                     <li v-for ="item in displayPreset"
@@ -52,32 +51,43 @@
 
 <!--        allow the user to select the video to display in screen base on the ID-->
         <div class = 'half'>
-      <h3>Screen1</h3>
-        <input class="input is-rounded is-medium"
+        <div class="field is-horizontal" id="url">
+            <div class="field-label is-large">
+              <label class="label is-size-3 has-text-left">Screen1: </label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <input class="input is-rounded is-large"
                placeholder="type the ID of videos"
                type="text"
                v-model="screen1Id"
                >
-          <button id="load"
+              </div>
+            <button id="load"
                   class="button is-large is-rounded is-success is-light has-text-weight-medium"
-                  @click="loadScreen1">Load screen1</button>
+                  @click="loadScreen1">Load</button>
+            </div>
+          </div>
 
 
 <!--       the video to be displayed in Screen2 from DB -->
-
-      <h3>Screen2</h3>
-          <input class="input is-rounded is-medium"
+      <div class="field is-horizontal" id="url">
+            <div class="field-label is-large">
+              <label class="label is-size-3 has-text-left">Screen2: </label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <input class="input is-rounded is-large"
                  placeholder="type the ID of videos"
                  type="text"
-          v-model="screen2Id"
-          >
-          <button id="load" class="button is-large is-rounded is-danger is-light has-text-weight-medium"
-                  @click="loadScreen2">Load screen2</button>
+                 v-model="screen2Id"
+                 >
+              </div>
+            <button id="load" class="button is-large is-rounded is-danger is-light has-text-weight-medium"
+                  @click="loadScreen2">Load</button>
+            </div>
+          </div>
         </div>
-
-
-
-
       </div>
       <div class="input_fields">
 
@@ -85,7 +95,7 @@
 <!--           Ask the User for the Url of the videl-->
           <div class="field is-horizontal" id="url">
             <div class="field-label is-large">
-              <label class="label is-size-2 has-text-left">URL: </label>
+              <label class="label is-size-3 has-text-left">URL: </label>
             </div>
             <div class="field-body">
               <div class="field">
@@ -100,12 +110,12 @@
 
 <!--two button indicate the two screens, click the button will change the video in the screen with the URl from user-->
         <div class="screen_select">
-          <button class="button is-rounded is-success is-light is-large is-size-2 has-text-weight-medium"
+          <button class="button is-rounded is-success is-light is-large has-text-weight-medium"
                   @click="clickScreen1(); "
                   type="is-primary is-light"
                   id="screen_1">Screen 1
           </button>
-          <button class="button is-rounded is-danger is-light is-large is-size-2 has-text-weight-medium"
+          <button class="button is-rounded is-danger is-light is-large has-text-weight-medium"
                   @click="clickScreen2(); "
                   type="is-success is-light"
                   id="screen_2">Screen 2
@@ -134,11 +144,6 @@
   margin-right:3.5em;
 }
 /*display the content in the middle*/
-.half{
- margin-left: 30%;
-  margin-right:30%;
-  margin-top: 5%;
-}
 .fontSize{
   font-size:20px;
   font-width: bold;
