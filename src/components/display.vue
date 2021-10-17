@@ -26,51 +26,87 @@
         </div>
       </div>
 
-    <!--some preload img or video from the database?-->
-    <div class="column">
-      <div class="input_fields">
-        <!--  ask the user which preset should be load  -->
-          <div class="field is-horizontal">
-            <div class="field-label is-large">
-              <label class="label is-size-2 has-text-left">Preset: </label>
-            </div>
-            <div class="field-body">
-            <div class='select is-rounded is-large'>
-              <select class = 'moveRight' 
-                      v-model="PresettActive" 
-                      placeholder="Select a preset" 
-                      @change="changePreset($event)">
-                <option v-for="(item,index) in productList" 
-                        :key="index" 
-                        :value='item.id'>
-                  {{item.title}}
-                </option>
-              </select>
-            </div>
-            <button id="load" class="button is-large is-rounded is-success is-light has-text-weight-medium" @click="loadPreset">Load Preset</button>
-            </div>
-          </div>
 
-          <!-- ask the user , which preset is loaded in page  -->
+    <div class="column">
+<!-- a section to store the videos information from  the DB-->
+      <section>
+        <b-button
+            label="Video Sources"
+            class="fontSize button is is-rounded is-info is-light"
+            @click="isActive = !isActive" />
+                <b-notification v-model="isActive" aria-close-label="Close notification">
+                  <ul>
+                    <li v-for ="item in displayPreset"
+                        :key = "item.id" class = 'fontSize'>
+                      {{ 'ID:  '+ item.id+ ","  }}
+                      {{ 'Name: '+item.media_name }}
+                    </li>
+                  </ul>
+                </b-notification>
+
+      </section>
+
+<!--      // the video to be displayed in Screen1 from DB-->
+
+      <div>
+
+<!--        allow the user to select the video to display in screen base on the ID-->
+        <div class = 'half'>
+      <h3>Screen1</h3>
+        <input class="input is-rounded is-medium"
+               placeholder="type the ID of videos"
+               type="text"
+               v-model="screen1Id"
+               >
+          <button id="load"
+                  class="button is-large is-rounded is-success is-light has-text-weight-medium"
+                  @click="loadScreen1">Load screen1</button>
+
+
+<!--       the video to be displayed in Screen2 from DB -->
+
+      <h3>Screen2</h3>
+          <input class="input is-rounded is-medium"
+                 placeholder="type the ID of videos"
+                 type="text"
+          v-model="screen2Id"
+          >
+          <button id="load" class="button is-large is-rounded is-danger is-light has-text-weight-medium"
+                  @click="loadScreen2">Load screen2</button>
+        </div>
+
+
+
+
+      </div>
+      <div class="input_fields">
+
+
+<!--           Ask the User for the Url of the videl-->
           <div class="field is-horizontal" id="url">
             <div class="field-label is-large">
               <label class="label is-size-2 has-text-left">URL: </label>
             </div>
             <div class="field-body">
               <div class="field">
-                <input class="input is-rounded is-large" type="text" v-model="urlData">
+                <input class="input is-rounded is-large"
+                       type="text" v-model="urlData"
+                placeholder="Or display the video with correct Url">
               </div>
             </div>
           </div>
       </div>
+
+
+<!--two button indicate the two screens, click the button will change the video in the screen with the URl from user-->
         <div class="screen_select">
-          <button class="button is-rounded is-success is-light is-large is-size-2 has-text-weight-medium" 
-                  @click="clickScreen1(); isActive = !isActive" 
-                  type="is-primary is-light" 
+          <button class="button is-rounded is-success is-light is-large is-size-2 has-text-weight-medium"
+                  @click="clickScreen1(); "
+                  type="is-primary is-light"
                   id="screen_1">Screen 1
           </button>
-          <button class="button is-rounded is-danger is-light is-large is-size-2 has-text-weight-medium" 
-                  @click="clickScreen2(); isActive = !isActive" 
+          <button class="button is-rounded is-danger is-light is-large is-size-2 has-text-weight-medium"
+                  @click="clickScreen2(); "
                   type="is-success is-light"
                   id="screen_2">Screen 2
           </button>
@@ -97,9 +133,17 @@
 #screen_1{
   margin-right:3.5em;
 }
-#load{
-  margin-left: 2em;
+/*display the content in the middle*/
+.half{
+ margin-left: 30%;
+  margin-right:30%;
+  margin-top: 5%;
 }
+.fontSize{
+  font-size:20px;
+  font-width: bold;
+}
+
 </style>
 
 <script>
@@ -165,113 +209,111 @@ export default {
       },
 
       // data stored from the API
-      displayPreset:[],
+      displayPreset: [],
 
 
       // the Url information from the user
       urlData: '',
 
 
-      // values in the selectors , if more presets are add in the database, this list should also be update to allow user to load new preset
-      productList:[{id:1,title:"Test1"},{id:2,title:"Test2"},
-        {id:3,title:"PresetNew1"},{id:4,title:"PresetNew2"},{id:5,title:"PresetNew3"}
-      ],
-      PresetActive:"1",// get the value of the Preset from user, default set as 1
+      //  the screen1 Id from the user
+      screen1Id: '',
+      screen2Id: '',
+
+      // change the activity of the button that show media information
+      isActive: true,
+
+      // the video List
+      productList: []
     }
+
+
   },
-  created(){
+  created() {
     this.getData()
   },
   methods: {
     // ask for data from the DB
-    getData(){
+    getData() {
       axios({
-        method:'get',
+        method: 'get',
         // Url of backend location of data
-        // load the preset instead of the endpoint of display
-        // url: 'http://127.0.0.1:8000/api/displays/',
-        url: 'http://127.0.0.1:8000/api/preset/',
+        url: 'http://127.0.0.1:8000/api/media',
         auth: {
           username: 'admin',
           password: 'eccadmin123'
         }
-        // This section tells code to wait until lights have been rendered to extract db lights info
       }).then((response) => {
         this.displayPreset = response.data
+        this.numPreset = this.displayPreset.length
+        // bind the value of two screens after reading the value
 
-        // bind the value of these two when read the value
-        // add the correct url for the display screens , and comment out the next two lines
-
-        // this.playerOptions.sources[0].src = this.displayPreset[this.PresetActive].displays[0].source
-        // this.playerOptions2.sources[0].src = this.displayPreset[this.PresetActive].displays[1].source
-
-        // console.log('data',this.displayPreset)
-        // console.log('media_src',this.displayPreset[this.PresetActive].displays[0].source)
-        // console.log('media_sr2c',this.displayPreset[this.PresetActive].displays[1].source)
+        this.playerOptions.sources[0].src = this.displayPreset[0].source
+        this.playerOptions2.sources[0].src = this.displayPreset[1].source
 
       });
     },
 
-    // methods for loading the video and provide a url
 
-    //pup up message when click the button
-    clickScreen1() {
-      if (this.urlData === '') return
+
+    // loading the video with the Url from the User,
+    clickScreen1: function () {
+//      check the format of Url
+// eslint-disable-next-line
+      let reUrl01 = /^((ht|f)tps?):\/\/([\w-]+(\.[\w-]+)*\/?)+(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?$/;
+
+      if ((this.urlData === '') || (reUrl01.test(this.urlData) == false)) {
+        this.$buefy.notification.open('please provide the correct Url of video')
+        return
+      }
       this.$buefy.notification.open('reload the screen1 with the new src!, screen1 has been updated')
       this.playerOptions.sources[0].src = this.urlData
-
-      // console.log(this.presetNumber)
     },
+
+
     clickScreen2() {
-      if (this.urlData === '') return
+      // eslint-disable-next-line
+      let reUrl01 = /^((ht|f)tps?):\/\/([\w-]+(\.[\w-]+)*\/?)+(\?([\w\-\.,@?^=%&:\/~\+#]*)+)?$/;
+      if ((this.urlData === '') || (reUrl01.test(this.urlData) == false)) {
+        this.$buefy.notification.open('please provide the correct Url of video')
+        return
+      }
       this.$buefy.notification.open('reload the screen2 with the new src!, screen2 has been updated')
       this.playerOptions2.sources[0].src = this.urlData
     },
 
-    //  dynamically select the value from selector
-    changePreset(event) {
-      this.PresetActive = event.target.value; // get the corresponding value in options
-      // console.log("load preset",this.PresetActive)
-    },
 
     // clear the url in the UrlData( from User)
-    clearUrl(){
+    clearUrl() {
       this.urlData = ''
       // this.
     },
 
-    // reload the video base on the Preset Num
-    loadPreset(){
-      axios({
-        method:'get',
-        // Url of backend location of data
-        // load the preset instead of the endpoint of display
-        // url: 'http://127.0.0.1:8000/api/displays/',
-        url: 'http://127.0.0.1:8000/api/preset/',
-        auth: {
-          username: 'admin',
-          password: 'eccadmin123'
-        }
-        // This section tells code to wait until lights have been rendered to extract db lights info
-      }).then((response) => {
-        this.displayPreset = response.data
+    // reload the video base on the Id
+    loadScreen1() {
 
-        // bind the value of these two when read the value
-        // add the correct url for the display screens , and comment out the next two lines
+      if ((this.screen1Id > this.displayPreset.length) || (this.screen2Id == 0)) {
+        // window.alert('please select a valid video Id')
+        this.$buefy.notification.open('please select a valid video Id for screen1')
+        return
+      }
+      this.playerOptions.sources[0].src = this.displayPreset[this.screen1Id - 1].source
 
-        // this.playerOptions.sources[0].src = this.displayPreset[this.PresetActive].displays[0].source
-        // this.playerOptions2.sources[0].src = this.displayPreset[this.PresetActive].displays[1].source
-
-        // console.log('data',this.displayPreset)
-        // console.log('media_src',this.displayPreset[this.PresetActive].displays[0].source)
-        // console.log('media_sr2c',this.displayPreset[this.PresetActive].displays[1].source)
-
-
-      });
     },
+    loadScreen2() {
+      if ((this.screen2Id > this.displayPreset.length) || (this.screen2Id == 0)) {
+        // window.alert('please select a valid video Id')
+        this.$buefy.notification.open('please select a valid video Id for screen2')
+        return
+      }
+      this.playerOptions2.sources[0].src = this.displayPreset[this.screen2Id - 1].source
 
+    },
 
 
   }
 }
+
+
+
 </script>
