@@ -21,9 +21,44 @@
             </b-navbar-button>
             <b-navbar-item tag="div">
                 <div class="buttons">
-                    <a class="button is-large">
+                    <a class="button is-large" @click="modalActive = true">
                         <p id="button-text">+ Preset</p>
                     </a>
+                    <!-- PRESET MODAL / DIALOG HTML STARTS HERE -->
+                    <b-modal v-model="modalActive">
+                      <template #default="props">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Save Preset</p>
+                            <button
+                              type="button"
+                              class="delete"
+                               @click="props.close"/>
+                        </header>
+
+                        <section class="modal-card-body">
+                        <b-field label="Preset name">
+                            <b-input
+                                type="text"
+                                
+                                v-model="PopUpPreset"
+                                placeholder="Preset name"
+                                required>
+                            </b-input>
+                        </b-field>
+                        </section>
+
+                        <footer class="modal-card-foot">
+                        <b-button
+                            label="Close"
+                             @click="props.close" />
+                        <b-button
+                            label="Save"
+                            v-on:click="pushPreset(PopUpPreset)"
+                            type="is-primary" />
+                    </footer>
+                    </template>
+                    </b-modal>
+                    <!-- PRESET MODAL / DIALOG HTML ENDS HERE -->
                 </div>
             </b-navbar-item>
         </template>
@@ -74,19 +109,113 @@ export default ({
     data() {
         return {
         
-        presetnum: 5,
+        dblights: [],
+        dbvideo: [],
+        dbworkstations: [],
+        dbdisplays: [],
         test:[],
+        modalActive: false,
+        PopUpPreset: "",
         }
         
     },
    
     created() {
             // Extracts ECC information stored in database
-            this.getPreset("");
+            this.getLights();
+            this.getVideoWall();
+            this.getWorkStations();
+            this.getDisplays();
+            
     },
 
     methods: {
+        getLights() {
+        axios({
+            method:'get',
+            // Url of backend location of data
+            url: 'http://127.0.0.1:8000/api/lights/',
+            auth: {
+                username: 'admin',
+                password: 'eccadmin123'
+            }
+        }).then((response) => {
 
+            this.isLoaded = true;
+
+            // Check the response was a success
+            if(response.data != 'undefined')
+            {
+                this.dblights = response.data;
+            }
+        });
+      },
+      getVideoWall() {
+        axios({
+            method:'get',
+            // Url of backend location of data
+            url: 'http://127.0.0.1:8000/api/video_wall/',
+            auth: {
+                username: 'admin',
+                password: 'eccadmin123'
+            }
+        
+        }).then((response) => {
+
+            this.isLoaded = true;
+
+            // Check the response was a success
+            if(response.data != 'undefined')
+            {
+                this.dbvideo = response.data;
+                
+            }
+        });
+      },
+      getWorkStations() {
+        axios({
+            method:'get',
+            // Url of backend location of data
+            url: 'http://127.0.0.1:8000/api/workstations/',
+            auth: {
+                username: 'admin',
+                password: 'eccadmin123'
+            }
+        
+        }).then((response) => {
+
+            this.isLoaded = true;
+
+            // Check the response was a success
+            if(response.data != 'undefined')
+            {
+                this.dbworkstations = response.data;
+                
+            }
+        });
+      },
+      getDisplays() {
+        axios({
+            method:'get',
+            // Url of backend location of data
+            url: 'http://127.0.0.1:8000/api/displays/',
+            auth: {
+                username: 'admin',
+                password: 'eccadmin123'
+            }
+        
+        }).then((response) => {
+
+            this.isLoaded = true;
+
+            // Check the response was a success
+            if(response.data != 'undefined')
+            {
+                this.dbdisplays = response.data;
+                
+            }
+        });
+      },
         // Change power state of room
         power() {
         
@@ -107,7 +236,8 @@ export default ({
 
         },
         pushPreset(PresetName) {
-            axios({
+            if(PresetName != '') {
+              axios({
                 method:'post',
                 url: 'http://127.0.0.1:8000/api/preset/',
                 data: { // Send description and status to the server
@@ -122,8 +252,8 @@ export default ({
                     password: 'eccadmin123'
                 }
                 }).then((response) => {
-                let newPreset = {'id': response.data.id, 'preset_name': this.preset_name, 'lights': this.lights, 'video_Wall': this.video_Wall, 'workstations': this.workstations, 'displays': this.displays}
-                this.presetnum = this.presetnum + 1
+                let newPreset = {'id': response.data.id, 'preset_name': PresetName, 'lights': this.lights, 'video_Wall': this.video_Wall, 'workstations': this.workstations, 'displays': this.displays}
+                
                 this.test.push(newPreset)
                 })
                 .catch((error) => {
@@ -131,6 +261,7 @@ export default ({
                 console.log(error.request);
                 console.log(error.message);
                 });
+            }
     },
     getPreset(PresetName) {
       axios({
