@@ -14,11 +14,11 @@
             </b-navbar-item>
         </template>
         <template #end>
-            <b-navbar-item tag="div">
+            <b-navbar-button v-if="$route.name==='home'" tag="div" :to="{ path: '/' }">
                 <a class="power-button">
-                    <img src="../assets/power-button.png" v-on:click="getPreset(28)"> 
-                </a>
-            </b-navbar-item>
+                    <img src="../assets/power-button.png" v-on:click="getPreset('Off')"> 
+                </a>   
+            </b-navbar-button>
             <b-navbar-item tag="div">
                 <div class="buttons">
                     <a class="button is-large">
@@ -51,6 +51,16 @@ a {
     margin-left: 25px;
     margin-right: 25px;
 }
+.power-button img {
+    width: 75px;
+    height: 75px;
+    margin-top: 25px;
+    margin-right: 25px;
+}
+.power-button img:active {
+    transform: scale(0.95);
+    transition: all 0.2s ease;
+}
 </style>
 
 <script>
@@ -63,16 +73,23 @@ export default ({
     name: 'App',
     data() {
         return {
+
         presetnum: 5,
+        test:[],
         }
+        
     },
+    created() {
+            // Extracts ECC information stored in database
+            this.getPreset("");
+    },
+
     methods: {
         pushPreset(PresetName) {
             axios({
                 method:'post',
                 url: 'http://127.0.0.1:8000/api/preset/',
                 data: { // Send description and status to the server
-                    id: this.presetnum + 1,
                     preset_name: PresetName,
                     lights: this.dblights,
                     video_Wall: this.dbvideo,
@@ -125,6 +142,7 @@ export default ({
               
           }
       });
+      
     },
     //Update database when a preset is called
     UpdateDB(data) {
