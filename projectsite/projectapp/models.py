@@ -62,6 +62,23 @@ class Workstation(models.Model):
     def __str__(self):
         return self.workstation_name
 
+    #Functions for testing
+    def getworkstation_name(self):
+        return self.workstation_name
+
+    def getstation_on(self):
+        return self.station_on
+
+    def getmedia_name(self):
+        return self.media_name
+
+    def getmedia_type(self):
+        return self.media_type
+
+    def getsource(self):
+        return self.source
+
+
 class Display(models.Model):
     id = models.AutoField(primary_key=True)
     display_name = models.CharField(max_length=255)
@@ -73,6 +90,22 @@ class Display(models.Model):
     #Function to display workstation name as placeholder on admin page
     def __str__(self):
         return self.display_name
+
+    #Functions for testing
+    def getdisplay_name(self):
+        return self.display_name
+
+    def getdisplay_on(self):
+        return self.display_on
+
+    def getmedia_name(self):
+        return self.media_name
+
+    def getmedia_type(self):
+        return self.media_type
+
+    def gesource(self):
+        return self.source
 
 
 
@@ -86,6 +119,16 @@ class Media(models.Model):
     def __str__(self):
         return self.media_name
 
+    #Functions for testing
+    def getmedia_name(self):
+        return self.media_name
+
+    def getmedia_type(self):
+        return self.media_type
+
+    def getsource(self):
+        return self.source
+
 class Preset(models.Model):
     id = models.AutoField(primary_key=True)
     preset_name = models.CharField(max_length=255, null=True)
@@ -97,3 +140,19 @@ class Preset(models.Model):
     #Function to display preset name as placeholder on admin page
     def __str__(self):
         return self.preset_name
+
+    #Functions for testing
+    def getpreset_name(self):
+        return self.preset_name
+
+    def getlights(self):
+        return self.lights
+
+    def getvideo_Wall(self):
+        return self.video_Wall
+
+    def getworkstations(self):
+        return self.workstations
+
+    def getdisplays(self):
+        return self.displays
