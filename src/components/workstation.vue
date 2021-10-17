@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div v-if="workstationsplayer[0].id != 'undef'">
         <div class="columns is-desktop">
             <div class="column is-7">
-                <div class="workstation" v-for="station in workstations" :key="station" >
+                <div class="workstation" v-for="station in workstationsplayer" :key="station" >
                     <h1 class="is-family-sans-serif has-text-weight-normal" id="heading" v-on:click="toggleSelected(station)"> Workstation {{station.id}} </h1>
                     <div class="item" v-bind:class="[station.selected ? 'selected2' : '']">
                         <div class="player" >
@@ -84,48 +84,8 @@ export default {
             {id:0, label:"Seaside1", type: "video/mp4", src: "http://vjs.zencdn.net/v/oceans.mp4"},
             {id:1, label:"Boat Ride2", type: "video/mp4", src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"},
             ],
-        workstations: [
-            {
-                id: 1,
-                selected: false,
-                // Functionality for the video player 
-                playerOptions: {
-                    height: '360',
-                    width: '540',
-                    autoplay: false,
-                    muted: true,
-                    language: 'en',
-                    playbackRates: [0.7, 1.0, 1.5, 2.0],
-                    sources: [],
-                }
-            },
-            {
-                id: 2,
-                selected: false,
-                playerOptions: {
-                    height: '360',
-                    width: '540',
-                    autoplay: false,
-                    muted: true,
-                    language: 'en',
-                    playbackRates: [0.7, 1.0, 1.5, 2.0],
-                    sources: [],
-                }
-            },
-            {
-                id: 3,
-                selected: false,
-                playerOptions: {
-                    height: '360',
-                    width: '540',
-                    autoplay: false,
-                    muted: true,
-                    language: 'en',
-                    playbackRates: [0.7, 1.0, 1.5, 2.0],
-                    sources: [],
-                }
-            },
-        ],
+        workstations: [],
+        workstationsplayer: [],
         }
     },
     components:{
@@ -138,9 +98,11 @@ export default {
         }
     },
     mounted() {
+        this.getWorkStations()
         setTimeout(() => {
             this.player.muted(false)
         }, 5000)
+        
     },
     created() {
         this.getMedia();
@@ -158,16 +120,72 @@ export default {
         },
         // Load the videos into Source list
         load(id){
-            for(this.element in this.workstations) {
-                if(this.element.selected == true) {
-                    this.element.playerOptions.sources.unshift({
+            for(let i = 0; i < this.workstationsplayer.length; i++){
+                
+                if(this.workstationsplayer[i].selected == true) {
+                    this.workstationsplayer[i].playerOptions.sources.unshift({
                     label: this.media[id].label, 
                     id: this.media[id].id, 
                     type: this.media[id].type, 
                     src: this.media[id].src})
+                    this.workstationsplayer[i].selected = false
+                    //console.log(this.workstationsplayer[i].playerOptions.sources)
+                    this.workstationsplayer[i].source = this.media[id].src
+                    this.workstationsplayer[i].media_name = this.media[id].label
+                    this.workstationsplayer[i].media_type = this.media[id].type
+                    axios({
+                        method:'put',
+                        url: 'http://127.0.0.1:8000/api/workstations/' + this.workstationsplayer[i].id,
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            id: this.workstationsplayer[i].id,
+                            source: this.workstationsplayer[i].source,
+                            media_name: this.workstationsplayer[i].media_name,
+                            media_type: this.workstationsplayer[i].media_type,
+                            station_on: this.workstationsplayer[i].station_on,
+                            workstation_name: this.workstationsplayer[i].workstation_name,
+                        },
+                        auth: {
+                            username: 'admin',
+                            password: 'eccadmin123'
+                        }
+                        })
 
                 }
 
+            }
+        },
+        WorkstationMesh() {
+            for(let i = 0; i < this.workstations.length; i++){
+                var PlayOp = {}
+                console.log("hi")
+                if(this.workstations[i].media_name != 'example') {
+                    PlayOp = {height: '360',
+                    width: '540',
+                    autoplay: false,
+                    muted: true,
+                    language: 'en',
+                    playbackRates: [0.7, 1.0, 1.5, 2.0],
+                    sources: [{label: this.workstations[i].media_name, src: this.workstations[i].source, type: this.workstations[i].media_type}]
+                    }
+                }
+                else {
+                    PlayOp = {height: '360',
+                    width: '540',
+                    autoplay: false,
+                    muted: true,
+                    language: 'en',
+                    playbackRates: [0.7, 1.0, 1.5, 2.0],
+                    sources: []
+                    }
+
+                }
+                
+                console.log(this.workstations[i].source)
+                let station = {'id': this.workstations[i].id, 'media_name': this.workstations[i].media_name, 'media_type': this.workstations[i].media_type, 'source': this.workstations[i].source, 'station_on': this.workstations[i].station_on, 'workstation_name': this.workstations[i].workstation_name, 'selected': false, 'playerOptions': PlayOp}
+                this.workstationsplayer.push(station)
             }
         },
         getWorkStations() {
@@ -188,7 +206,8 @@ export default {
                 if(response.data != 'undefined')
                 {
                     this.workstations = response.data;
-                    // Calls function to update lights values with db values
+                    this.WorkstationMesh()
+                    
                 }
             });
             },
