@@ -2,9 +2,11 @@
     <div>
         <div class="columns is-desktop">
             <div class="column is-7">
+                <!-- A container only for the video wall -->
                 <div class="video-wall">
                     <div class="item">
                         <div class="player">
+                        <!-- Controls the video player options -->
                         <video-player  class="vjs-custom-skin"
                                         ref="videoPlayer"
                                         :options="playerOptions"
@@ -26,11 +28,13 @@
                 </div>
             </div>
 
-
+            <!-- A container for the file browser -->
             <div class="column">
                 <h1 class="title is-size-1 is-family-sans-serif	has-text-weight-medium">File Browser</h1>
+                <!-- Creates an infinite scrollbar to view media files -->
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
+                        <!-- Dynamically creates file buttons in the file browser -->
                         <div class="column is-one-third"
                              v-for="(element) in media" 
                              :key="element">
@@ -159,6 +163,7 @@ export default {
                 }
             });
         },
+        // Update the media selected with the media in the database
         updateMedia() {
             for (this.vuemedia in this.media) {
                 for (this.djangomedia in this.dbmedia) {
@@ -187,7 +192,7 @@ export default {
             })
             this.newPresetName = ''
             },
-            // loops through presets, for preset with inputted name and updates all lights with their preset values
+            // Loops through presets for preset with inputted name and updates the video wall with their preset values
             SyncPresets: function(PresetName){
                 for (this.element in this.presets) {
                     if (this.presets[this.element].name == PresetName) {

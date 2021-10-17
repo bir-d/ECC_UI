@@ -2,6 +2,7 @@
   <div class="overall">
     <div class="columns">
       <div class="column">
+        <!--  Video wall section -->
         <a href="/videowall">
           <figure class="image is-16by9">
             <img src="../assets/home-video-wall.png">
@@ -12,6 +13,7 @@
         </a>
       </div>
       <div class="column">
+        <!--  Workstations section -->
         <a href="/workstation">
           <figure class="image is-16by9">
             <img src="../assets/home-workstation.png">
@@ -22,6 +24,7 @@
         </a>
       </div>
       <div class="column">
+        <!--  Lights section -->
         <a href="/lights">
           <figure class="image is-16by9">
             <img src="../assets/home-lights.png">
@@ -32,6 +35,7 @@
         </a>
       </div>
       <div class="column">
+        <!--  Displays section -->
         <a href="/display">
           <figure class="image is-16by9">
             <img src="../assets/home-displays.png">
@@ -45,6 +49,7 @@
     <hr>
     <div class="recents">
       <div class="content">
+        <!--  Container storing the recently used presets -->
         <h2 class="is-size-3 is-underlined has-text-left">Recently Used</h2>
       </div>
       <!-- aniamtion for presets -->
@@ -115,7 +120,7 @@ export default ({
   name: 'App',
   data() {
     return {
-      // create lists for db data to enter
+      // Create lists for database data to enter
       dblights: [],
       dbvideo: [],
       dbworkstations: [],
@@ -126,7 +131,7 @@ export default ({
 
   },
   created() {
-            // Extracts ECC information stored in db
+            // Extracts ECC information stored in database
             this.getLights();
             this.getVideoWall();
             this.getWorkStations();
@@ -252,7 +257,7 @@ export default ({
           }
       });
     },
-    //Update db when a preset is called
+    //Update database when a preset is called
     UpdateDB(data) {
       for(let i = 0; i < data.lights.length; i++){
         axios({
