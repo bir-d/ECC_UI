@@ -16,7 +16,7 @@
         <template #end>
             <b-navbar-button v-if="$route.name==='home'" tag="div" :to="{ path: '/' }">
                 <a id="power-button">
-                    <img src="../assets/power-button.png" v-on:click="power()"> 
+                    <img id="power-b" src="../assets/power-button.png" v-on:click="power()"> 
                 </a>   
             </b-navbar-button>
             <b-navbar-item tag="div">
@@ -93,12 +93,14 @@ export default ({
             // Check if currently on and load in off preset
             if (localStorage.getItem("state") == 'on'){
                 this.getPreset('Off')
+                document.getElementById('power-b').style.filter="invert(100%)";
                 localStorage.setItem("state", 'off');
             }
             
             // Otherwise load in defualt preset
             else {
                 this.getPreset('Default')
+                document.getElementById('power-b').style.filter="invert(0%)";
                 localStorage.setItem("state", 'on');
 
             }
