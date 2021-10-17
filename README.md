@@ -3,8 +3,8 @@
 <h2>Initialisation</h2>
 <ol>
   <li><code>npm install vue</code></li>
-  <li><code>npm install yarn</code></li>
   <li><code>npm install buefy</code></li>
+  <li><code>npm install vue-sequential-entrance</code></li>
   <li><code> npm install --save vue-router</code></li>
   <li><code> pip install -r requirements.txt</code></li>
 </ol>

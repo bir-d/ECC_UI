@@ -1,10 +1,12 @@
 <template>
     <div>
         <div class="columns is-desktop">
-            <div class="column">
+            <div class="column is-7">
+                <!-- A container only for the video wall -->
                 <div class="video-wall">
                     <div class="item">
                         <div class="player">
+                        <!-- Controls the video player options -->
                         <video-player  class="vjs-custom-skin"
                                         ref="videoPlayer"
                                         :options="playerOptions"
@@ -25,18 +27,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- A container for the file browser -->
             <div class="column">
-                <h1 class="title">File Browser</h1>
+                <h1 class="title is-size-1 is-family-sans-serif	has-text-weight-medium">File Browser</h1>
+                <!-- Creates an infinite scrollbar to view media files -->
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
+                        <!-- Dynamically creates file buttons in the file browser -->
                         <div class="column is-one-third"
-                        v-for="(element) in media" 
-                        :key="element">
+                             v-for="(element) in media" 
+                             :key="element">
                             <button @click="load(element.id)">
-                            <figure class="image is-128x128">
-                            <b-icon pack="fas" icon="file-video" size="is-large"></b-icon>
-                            <p class="filename"> {{ element.name }}</p>
-                            </figure>
+                            <div class="box">
+                                <b-icon pack="fas" icon="play-circle" size="is-large"></b-icon>
+                                <p class="filename is-size-2 is-family-sans-serif"> {{ element.label }}</p>
+                            </div>
                             </button>
                         </div>
                     </div>
@@ -58,10 +64,6 @@
 .filename{
     opacity: 75%;
 }
-/* Controls the video player dimensions */
-.ps {
-  height: 600px;
-}
 </style>
 
 <script>
@@ -75,16 +77,32 @@ export default {
         return {
         // Media information stored here
         media: [
-            {id:0, label:"Seaside1", type: "video/mp4", src: "http://vjs.zencdn.net/v/oceans.mp4"},
-            {id:1, label:"Boat Ride2", type: "video/mp4", src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm"},
-            ],
+            {
+                id:0, 
+                label:"Seaside1", 
+                type: "video/mp4", 
+                src: "http://vjs.zencdn.net/v/oceans.mp4",
+                selected: true
+            },
+            {
+                id:1, 
+                label:"Boat Ride2", 
+                type: "video/mp4", 
+                src: "https://cdn.theguardian.tv/webM/2015/07/20/150716YesMen_synd_768k_vp8.webm",
+                selected: true
+            },
+        ],
         // Functionality for the video player 
         playerOptions: {
             height: '360',
-            autoplay: false,
+            autoplay: true,
             muted: true,
             language: 'en',
             playbackRates: [0.7, 1.0, 1.5, 2.0],
+            notSupportedMessage: 'This video is not able to play',
+            aspectRatio: '16:9',
+            poster: '',
+            nativeControlsForTouch: true,
             sources: [],
             }
         }
@@ -119,18 +137,19 @@ export default {
                 label: this.media[id].label, 
                 id: this.media[id].id, 
                 type: this.media[id].type, 
-                src: this.media[id].src})
+                src: this.media[id].src,
+                selected: this.media[id].selected,
+                })
         },
         getMedia() {
             axios({
                 method:'get',
                 // Url of backend location of data
-                url: 'http://127.0.0.1:8000/api/videowall/',
+                url: 'http://127.0.0.1:8000/api/video_wall/',
                 auth: {
                     username: 'admin',
                     password: 'eccadmin123'
                 }
-            // This section tells code to wait until lights have been rendered to extract db lights info
             }).then((response) => {
 
                 this.isLoaded = true;
@@ -144,14 +163,16 @@ export default {
                 }
             });
         },
+        // Update the media selected with the media in the database
         updateMedia() {
             for (this.vuemedia in this.media) {
                 for (this.djangomedia in this.dbmedia) {
-                    if(this.media[this.vuemedia].label == this.dbmedia[this.djangomedia].name) {
-                        this.media[this.vuemedia].label = this.dbmedia[this.djangomedia].name
+                    if(this.media[this.vuemedia].label == this.dbmedia[this.djangomedia].media_name) {
+                        this.media[this.vuemedia].label = this.dbmedia[this.djangomedia].media_name
                         this.media[this.vuemedia].id = this.dbmedia[this.djangomedia].id
-                        this.media[this.vuemedia].type = this.dbmedia[this.djangomedia].type
-                        this.media[this.vuemedia].src = this.dbmedia[this.djangomedia].src
+                        this.media[this.vuemedia].type = this.dbmedia[this.djangomedia].media_type
+                        this.media[this.vuemedia].src = this.dbmedia[this.djangomedia].source
+                        this.media[this.vuemedia].selected = this.dbmedia[this.djangomedia].selected
                     }
                 }
             }
@@ -165,12 +186,13 @@ export default {
                     id: this.playerOptions.sources[0].id,
                     type: this.playerOptions.sources[0].type,
                     src: this.playerOptions.sources[0].src,
+                    selected: this.playerOptions.sources[0].selected,
                 }
                 ]
             })
             this.newPresetName = ''
             },
-            // loops through presets, for preset with inputted name and updates all lights with their preset values
+            // Loops through presets for preset with inputted name and updates the video wall with their preset values
             SyncPresets: function(PresetName){
                 for (this.element in this.presets) {
                     if (this.presets[this.element].name == PresetName) {
@@ -181,6 +203,7 @@ export default {
                                     this.playerOptions.sources[this.mediaconfig].id = this.presets[this.element].presetinfo[this.presetconfig].id
                                     this.playerOptions.sources[this.mediaconfig].type = this.presets[this.element].presetinfo[this.presetconfig].type
                                     this.playerOptions.sources[this.mediaconfig].src = this.presets[this.element].presetinfo[this.presetconfig].src
+                                    this.playerOptions.sources[this.mediaconfig].selected = this.presets[this.element].presetinfo[this.presetconfig].selected
                                 }
                             }
                         }
