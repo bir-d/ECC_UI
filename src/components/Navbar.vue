@@ -21,9 +21,41 @@
             </b-navbar-button>
             <b-navbar-item tag="div">
                 <div class="buttons">
-                    <a class="button is-large">
+                    <a class="button is-large" @click="modalActive = true">
                         <p id="button-text">+ Preset</p>
                     </a>
+                    <!-- PRESET MODAL / DIALOG HTML STARTS HERE -->
+                    <b-modal v-model="modalActive">
+                        <header class="modal-card-head">
+                            <p class="modal-card-title">Save Preset</p>
+                            <button
+                              type="button"
+                              class="delete"
+                              @click="$emit('close')"/>
+                        </header>
+
+                        <section class="modal-card-body">
+                        <b-field label="Preset name">
+                            <b-input
+                                type="text"
+                                :value="preset_name"
+                                placeholder="Preset name"
+                                required>
+                            </b-input>
+                        </b-field>
+                        </section>
+
+                        <footer class="modal-card-foot">
+                        <b-button
+                            label="Close"
+                            @click="$emit('close')" />
+                        <b-button
+                            label="Save"
+                            type="is-primary" />
+                    </footer>
+
+                    </b-modal>
+                    <!-- PRESET MODAL / DIALOG HTML ENDS HERE -->
                 </div>
             </b-navbar-item>
         </template>
@@ -76,6 +108,7 @@ export default ({
         
         presetnum: 5,
         test:[],
+        modalActive: false
         }
         
     },
