@@ -11,9 +11,14 @@ import navbar from "./components/Navbar.vue"
 
 export default {
   name: 'App',
+  mounted() {
+        //set local storage variable of room state
+        localStorage.setItem("state", 'on');
+  },
   components:{
     navbar,
   }
+  
 }
 </script>
 

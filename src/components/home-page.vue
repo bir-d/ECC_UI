@@ -130,6 +130,7 @@ export default ({
     }
 
   },
+ 
   created() {
             // Extracts ECC information stored in database
             this.getLights();

@@ -15,8 +15,8 @@
         </template>
         <template #end>
             <b-navbar-button v-if="$route.name==='home'" tag="div" :to="{ path: '/' }">
-                <a class="power-button">
-                    <img src="../assets/power-button.png" v-on:click="getPreset('Off')"> 
+                <a id="power-button">
+                    <img src="../assets/power-button.png" v-on:click="power()"> 
                 </a>   
             </b-navbar-button>
             <b-navbar-item tag="div">
@@ -51,13 +51,13 @@ a {
     margin-left: 25px;
     margin-right: 25px;
 }
-.power-button img {
+#power-button img {
     width: 75px;
     height: 75px;
     margin-top: 25px;
     margin-right: 25px;
 }
-.power-button img:active {
+#power-button img:active {
     transform: scale(0.95);
     transition: all 0.2s ease;
 }
@@ -73,18 +73,37 @@ export default ({
     name: 'App',
     data() {
         return {
-
+        
         presetnum: 5,
         test:[],
         }
         
     },
+   
     created() {
             // Extracts ECC information stored in database
             this.getPreset("");
     },
 
     methods: {
+
+        // Change power state of room
+        power() {
+        
+            // Check if currently on and load in off preset
+            if (localStorage.getItem("state") == 'on'){
+                this.getPreset('Off')
+                localStorage.setItem("state", 'off');
+            }
+            
+            // Otherwise load in defualt preset
+            else {
+                this.getPreset('Default')
+                localStorage.setItem("state", 'on');
+
+            }
+
+        },
         pushPreset(PresetName) {
             axios({
                 method:'post',
