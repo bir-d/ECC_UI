@@ -4,7 +4,7 @@
 <ol>
   <li> Install Python 3.x</li>
   <li> Install Node.JS 14.x</li>
-  <li><code> npm install</code></li>
+  <li><code> npm install </code> (Check requirements.txt)</li>
   <li><code> pip install -r requirements.txt</code></li>
 </ol>
 
