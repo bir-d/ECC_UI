@@ -297,7 +297,7 @@ export default {
     // reload the video base on the Id
     loadScreen1() {
 
-      if ((this.screen1Id > this.displayPreset.length) || (this.screen2Id == 0)) {
+      if ((this.screen1Id > this.displayPreset.length) || (this.screen1Id == 0)) {
         // window.alert('please select a valid video Id')
         this.$buefy.notification.open('please select a valid video Id for screen1')
         return
