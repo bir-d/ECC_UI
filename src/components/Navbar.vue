@@ -113,7 +113,7 @@ export default ({
         dbvideo: [],
         dbworkstations: [],
         dbdisplays: [],
-        test:[],
+        presetlist:[],
         modalActive: false,
         PopUpPreset: "",
         powerOverlay: false,
@@ -263,7 +263,7 @@ export default ({
                 }).then((response) => {
                 let newPreset = {'id': response.data.id, 'preset_name': PresetName, 'lights': this.lights, 'video_Wall': this.video_Wall, 'workstations': this.workstations, 'displays': this.displays}
                 
-                this.test.push(newPreset)
+                this.presetlist.push(newPreset)
                 })
                 .catch((error) => {
                 console.log(error.response);
@@ -299,7 +299,7 @@ export default ({
               }
               }
               
-              this.test = response.data;
+              this.presetlist = response.data;
               
           }
       });
