@@ -58,7 +58,7 @@
       <sequential-entrance>
       <div class="columns" id="recent-section">
         <!-- Lists out presets in db in list -->
-        <div class="column is-2" v-for="element in test.slice(0,5)" :key="element">
+        <div class="column is-2" v-for="element in presetlist.slice(0,5)" :key="element">
             <div class="level-item has-text-centered">
               <a>
                 <figure class="image is-128x128">
@@ -127,7 +127,7 @@ export default ({
       dbvideo: [],
       dbworkstations: [],
       dbdisplays: [],
-      test: [],
+      presetlist: [],
       presetnum: 0,
     }
 
@@ -255,7 +255,7 @@ export default ({
               }
               }
               
-              this.test = response.data;
+              this.presetlist = response.data;
               
           }
       });
@@ -379,7 +379,7 @@ export default ({
         }).then((response) => {
         let newPreset = {'id': response.data.id, 'preset_name': PresetName, 'lights': this.dblights, 'video_Wall': this.dbvideo, 'workstations': this.dbworkstations, 'displays': this.dbdisplays}
         this.presetnum = this.presetnum + 1
-        this.test.push(newPreset)
+        this.presetlist.push(newPreset)
         })
         .catch((error) => {
         console.log(error.response);
