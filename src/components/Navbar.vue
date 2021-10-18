@@ -7,10 +7,8 @@
                 <a href="/"><img src="../assets/navbar-thales-logo.png" alt="Thales Logo"></a>
             </figure>
             </b-navbar-brand>
-            <b-navbar-item v-else tag="div">
-                <a href="/">
-                    <b-icon pack="fas" icon="arrow-left" size=is-large></b-icon>
-                </a>
+            <b-navbar-item v-else tag="router-link" :to="{ path: '/' }">
+                <b-icon pack="fas" icon="arrow-left" size=is-large></b-icon>
             </b-navbar-item>
         </template>
         <template #end>
