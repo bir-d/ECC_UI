@@ -3,6 +3,7 @@
     <h1 class="title is-1"> Presets </h1>
     <hr>
     <div class="recents">
+      <sequential-entrance>
       <div class="columns" id="recent-section" v-for="ranger in presetrange" :key="ranger">
         <!-- Lists out presets in db in list -->
 
@@ -21,6 +22,7 @@
         </div>
         <br>
         </div>
+      </sequential-entrance>
     </div>
   </div>
 </template>
