@@ -34,16 +34,9 @@
                             <circle cx="12" cy="12" r="11.25" :fill="colour" />
                         </svg>
                     </div>
-                    <input 
-                        class="input is-rounded is-medium" 
-                        v-model="colour" 
-                        type="text" 
-                        placeholder="Add new light colour" 
-                        v-on:keyup.enter="changeLight(colour)"
-                    >
                     <br>
                     <button 
-                        class="button is-medium is-fullwidth is-rounded" 
+                        class="button is-medium is-fullwidth is-rounded is-family-sans-serif" 
                         v-on:click="changeLight(colour)"
                     >Select Colour</button>
                 </div>
@@ -54,14 +47,14 @@
                     >
                     <!-- Select all Lights -->
                     <button 
-                        class="button is-medium is-fullwidth is-rounded is-success" 
+                        class="button is-medium is-fullwidth is-rounded is-success is-family-sans-serif" 
                         v-on:click="SelectAll()"
                     >
                     Select All Lights</button>
                     <br>
                     <!-- Unselect all Lights -->
                     <button 
-                        class="button is-medium is-fullwidth is-rounded is-danger" 
+                        class="button is-medium is-fullwidth is-rounded is-danger " 
                         v-on:click="UnselectAll()"
                     >
                     Unselect All Lights</button>
@@ -76,7 +69,7 @@
                         v-on:keyup.enter="changeBrightness(newBrightness)"
                     > -->
                     <!-- Sliding Brightness Bar  -->
-                    <b-field label="Brightness">
+                    <b-field class="is-family-sans-serif" label="Brightness">
                         <b-slider size="is-large" type="is-info" v-model="newBrightness" rounded v-on:dragging="changeBrightness(newBrightness)" v-on:input="changeBrightness(newBrightness)">
                         </b-slider>
                     </b-field>
@@ -203,7 +196,7 @@
                 colour: '#000000',
                 roomStateOn: true,
                 newColour: '',
-                newBrightness: '',
+                newBrightness: '100',
                 newPresetName: '',
                 PresetName: '',
                 windowHeight: window.innerHeight,
