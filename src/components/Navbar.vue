@@ -12,11 +12,6 @@
             </b-navbar-item>
         </template>
         <template #end>
-            <b-navbar-button v-if="$route.name==='home'" tag="div" :to="{ path: '/' }">
-                <a id="power-button">
-                    <img id="power-b" src="../assets/power-button.png" v-on:click="power()"> 
-                </a>   
-            </b-navbar-button>
             <b-navbar-item tag="div">
                 <div class="buttons">
                     <a class="button is-large" @click="modalActive = true">
@@ -59,6 +54,11 @@
                     <!-- PRESET MODAL / DIALOG HTML ENDS HERE -->
                 </div>
             </b-navbar-item>
+            <b-navbar-button v-if="$route.name==='home'" tag="div" :to="{ path: '/' }">
+                <a id="power-button">
+                    <b-icon pack="fas" icon="arrow-left" size=is-large @click="power()"></b-icon>
+                </a>   
+            </b-navbar-button>
         </template>
     </b-navbar>
   </div>    
