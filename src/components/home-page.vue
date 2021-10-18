@@ -385,7 +385,7 @@ export default ({
         console.log(error.response);
         console.log(error.request);
         console.log(error.message);
-        });
+        }); // Above is really helpful error debugging for axios
     }
     
 

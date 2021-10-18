@@ -2,10 +2,12 @@
     <div v-if="workstationsplayer[0].id != 'undef'">
         <div class="columns is-desktop">
             <div class="column is-7">
+                <!-- A workstation is rendered for each workstation in db -->
                 <div class="workstation" v-for="station in workstationsplayer" :key="station" >
                     <h1 class="is-family-sans-serif has-text-weight-normal" id="heading" v-on:click="toggleSelected(station)"> Workstation {{station.id}} </h1>
                     <div class="item" v-bind:class="[station.selected ? 'selected2' : '']">
                         <div class="player" >
+                            <!-- Video Player for Workstation -->
                         <video-player  class="vjs-custom-skin"
                                         ref="videoPlayer"
                                         :options="station.playerOptions"
@@ -30,6 +32,7 @@
             </div>
             <div class="column">
                 <div class="file_browser">
+                    <!-- Infinite scroll on media in projewct -->
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
                         <div class="column is-one-third"
@@ -133,10 +136,10 @@ export default {
                     type: this.media[id].type, 
                     src: this.media[id].src})
                     this.workstationsplayer[i].selected = false
-                    //console.log(this.workstationsplayer[i].playerOptions.sources)
                     this.workstationsplayer[i].source = this.media[id].src
                     this.workstationsplayer[i].media_name = this.media[id].label
                     this.workstationsplayer[i].media_type = this.media[id].type
+                    // Update db with selected media
                     axios({
                         method:'put',
                         url: 'http://127.0.0.1:8000/api/workstations/' + this.workstationsplayer[i].id,
@@ -161,10 +164,10 @@ export default {
 
             }
         },
+        //Mesh workstation db values with player option values
         WorkstationMesh() {
             for(let i = 0; i < this.workstations.length; i++){
                 var PlayOp = {}
-                console.log("hi")
                 if(this.workstations[i].media_name != 'example') {
                     PlayOp = {height: '360',
                     width: '540',
@@ -187,11 +190,11 @@ export default {
 
                 }
                 
-                console.log(this.workstations[i].source)
                 let station = {'id': this.workstations[i].id, 'media_name': this.workstations[i].media_name, 'media_type': this.workstations[i].media_type, 'source': this.workstations[i].source, 'station_on': this.workstations[i].station_on, 'workstation_name': this.workstations[i].workstation_name, 'selected': false, 'playerOptions': PlayOp}
                 this.workstationsplayer.push(station)
             }
         },
+        // Load Workstations from db
         getWorkStations() {
             axios({
                 method:'get',
