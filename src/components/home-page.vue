@@ -7,7 +7,7 @@
           <figure class="image is-16by9">
             <img src="../assets/home-video-wall.png">
           </figure>
-          <div class="content" id="title-label">
+          <div class="content is-family-sans-serif" id="title-label">
             <h4>Video Wall</h4>
           </div>
         </a>
@@ -18,7 +18,7 @@
           <figure class="image is-16by9">
             <img src="../assets/home-workstation.png">
           </figure>
-          <div class="content" id="title-label">
+          <div class="content is-family-sans-serif" id="title-label">
             <h4>Workstations</h4>
           </div>
         </a>
@@ -29,7 +29,7 @@
           <figure class="image is-16by9">
             <img src="../assets/home-lights.png">
           </figure>
-          <div class="content" id="title-label">
+          <div class="content is-family-sans-serif" id="title-label">
             <h4>Lights</h4>
           </div>
         </a>
@@ -40,7 +40,7 @@
           <figure class="image is-16by9">
             <img src="../assets/home-displays.png">
           </figure>
-          <div class="content" id="title-label">
+          <div class="content is-family-sans-serif" id="title-label">
             <h4>Displays</h4>
           </div>
         </a>
@@ -51,7 +51,7 @@
       <div class="content">
         <!--  Container storing the recently used presets -->
         <a href="/presets">
-          <h2 class="is-size-3 is-underlined has-text-left">Recently Used</h2>
+          <h2 class="is-size-3 has-text-left is-family-sans-serif">Saved Presets</h2>
         </a>
       </div>
       <!-- aniamtion for presets -->
@@ -65,7 +65,7 @@
                   <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name, true)">
                 </figure>
                 
-                <div class="content has-text-centered is-size-5" id="title-label">
+                <div class="content has-text-centered is-size-5 is-family-sans-serif" id="title-label">
                   <p> {{ element.preset_name }}</p>
                 </div>
               </a>
@@ -78,7 +78,7 @@
                   <img id="recent-image" class="is-rounded" src="../assets/128x128_ellipsis.png">
                 </figure>
                 
-                <div class="content has-text-centered is-size-5" id="title-label">
+                <div class="content has-text-centered is-size-5 is-family-sans-serif" id="title-label">
                   <p> View More</p>
                 </div>
               </a>
