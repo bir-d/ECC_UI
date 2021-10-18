@@ -86,7 +86,7 @@ export default ({
             if(PresetName == "") {
               this.presets = response.data;
               this.presetnum = response.data.length
-              for(let i = 0; i < this.presetnum; i+=5){
+              for(let i = 0; i < this.presetnum; i+=6){
                   this.presetrange.push([i,i+6])
               }
             }
