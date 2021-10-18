@@ -12,7 +12,7 @@
             </b-navbar-item>
         </template>
         <template #end>
-            <b-navbar-item tag="div">
+            <b-navbar-item tag="div" id="offset">
                 <div class="buttons">
                     <a class="button is-large" @click="modalActive = true">
                         <p id="button-text">Save Preset</p>
@@ -91,12 +91,15 @@ a {
     height: 75px;
     margin-top: 25px;
     margin-right: 25px;
+    
 }
 #power-button img:active {
     transform: scale(0.95);
     transition: all 0.2s ease;
 }
-b-model{}
+#offset, #power-button{
+  margin-right: 3em;
+}
 </style>
 
 <script>
