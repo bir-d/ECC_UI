@@ -75,7 +75,7 @@
             <div class="level-item has-text-centered">
               <a href="/presets">
                 <figure class="image is-128x128">
-                  <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name)">
+                  <img id="recent-image" class="is-rounded" src="../assets/128x128_ellipsis.png">
                 </figure>
                 
                 <div class="content has-text-centered is-size-5" id="title-label">
