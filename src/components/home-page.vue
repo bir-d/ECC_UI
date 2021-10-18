@@ -257,6 +257,14 @@ export default ({
               
           }
       });
+
+      this.$buefy.notification.open({
+                    message: 'Preset "' + PresetName +'" was successfully loaded!',
+                    duration: 5000,
+                    position: "is-bottom-right",
+                    type: 'is-success',
+                    hasIcon: true
+      })
     },
     //Update database when a preset is called
     UpdateDB(data) {
