@@ -50,7 +50,9 @@
     <div class="recents">
       <div class="content">
         <!--  Container storing the recently used presets -->
-        <h2 class="is-size-3 is-underlined has-text-left">Recently Used</h2>
+        <a href="/presets">
+          <h2 class="is-size-3 is-underlined has-text-left">Recently Used</h2>
+        </a>
       </div>
       <!-- aniamtion for presets -->
       <sequential-entrance>
