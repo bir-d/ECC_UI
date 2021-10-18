@@ -16,6 +16,18 @@
   <li><code>cd projectsite && python manage.py runserver</code></li>
 </ol>
 
+<h2>Testing</h2>
+<ol>
+  <li><code>cd projectsite</code></li>
+  <li><code>python manage.py test</code></li>
+</ol>
+
+<h2>API Documentation</h2>
+<ol>
+  <li><code>Run Server</code></li>
+  <li><code>http://127.0.0.1:8000</code></li>
+</ol>
+
 <h2>Github Standards of Procedure (SOP)</h2>
 <ol>
   <li>Remote: Before starting <code>git rebase main</code></li>
