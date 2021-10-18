@@ -62,7 +62,7 @@
             <div class="level-item has-text-centered">
               <a>
                 <figure class="image is-128x128">
-                  <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name)">
+                  <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name, true)">
                 </figure>
                 
                 <div class="content has-text-centered is-size-5" id="title-label">
@@ -228,7 +228,7 @@ export default ({
           }
       });
     },
-    getPreset(PresetName) {
+    getPreset(PresetName, launchNotification = false) {
       axios({
           method:'get',
           // Url of backend location of data
@@ -260,14 +260,17 @@ export default ({
           }
       });
 
-      this.$buefy.notification.open({
-                    message: 'Preset "' + PresetName +'" was successfully loaded!',
-                    duration: 5000,
-                    position: "is-bottom-right",
-                    type: 'is-success',
-                    hasIcon: true,
-                    queue: false
+      // only if notification specified
+      if (launchNotification){
+          this.$buefy.notification.open({
+              message: 'Preset "' + PresetName +'" was successfully loaded!',
+              duration: 5000,
+              position: "is-bottom-right",
+              type: 'is-success',
+              hasIcon: true,
+              queue: false
       })
+      }
     },
     //Update database when a preset is called
     UpdateDB(data) {
