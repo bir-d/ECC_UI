@@ -38,7 +38,7 @@
                     <button 
                         class="button is-medium is-fullwidth is-rounded is-family-sans-serif" 
                         v-on:click="changeLight(colour)"
-                    >Select Colour</button>
+                    >Apply Colour</button>
                 </div>
                 <div class="columns">
                     <div 
