@@ -1,5 +1,6 @@
 <template>
   <div class="overall">
+    <h1 class="title is-1"> Presets </h1>
     <hr>
     <div class="recents">
       <div class="columns" id="recent-section" v-for="ranger in presetrange" :key="ranger">
