@@ -265,7 +265,8 @@ export default ({
                     duration: 5000,
                     position: "is-bottom-right",
                     type: 'is-success',
-                    hasIcon: true
+                    hasIcon: true,
+                    queue: false
       })
     },
     //Update database when a preset is called
