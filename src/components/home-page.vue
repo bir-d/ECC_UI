@@ -269,7 +269,7 @@ export default ({
               type: 'is-success',
               hasIcon: true,
               queue: false
-      })
+          })
       }
     },
     //Update database when a preset is called
