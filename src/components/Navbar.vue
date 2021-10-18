@@ -15,7 +15,7 @@
             <b-navbar-item tag="div">
                 <div class="buttons">
                     <a class="button is-large" @click="modalActive = true">
-                        <p id="button-text">+ Preset</p>
+                        <p id="button-text">Save Preset</p>
                     </a>
                     <!-- PRESET MODAL / DIALOG HTML STARTS HERE -->
                     <b-modal v-model="modalActive">
