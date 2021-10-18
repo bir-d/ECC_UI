@@ -1,6 +1,6 @@
 <template>
   <div class="overall">
-    <h1 class="title is-1"> Presets </h1>
+    <h1 class="title is-1 is-family-sans-serif"> Presets </h1>
     <hr>
     <div class="recents">
       <sequential-entrance>
@@ -13,7 +13,7 @@
                   <img id="recent-image" class="is-large is-rounded"  src="https://bulma.io/images/placeholders/480x480.png" v-on:click="getPreset(element.preset_name, true)">
                 </figure>
                 
-                <div class="content has-text-centered is-size-5" id="title-label">
+                <div class="content has-text-centered is-size-5 is-family-sans-serif" id="title-label">
                   <p> {{ element.preset_name }}</p>
                 </div>
               </a>
