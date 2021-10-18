@@ -6,8 +6,7 @@
       <sequential-entrance>
       <div class="columns" id="recent-section" v-for="ranger in presetrange" :key="ranger">
         <!-- Lists out presets in db in list -->
-
-        <div class="column is-2" v-for="element in presets.slice(ranger[0],ranger[1])" :key="element">
+          <div class="column is-2" v-for="element in presets.slice(ranger[0],ranger[1])" :key="element">
             <div class="level-item has-text-centered">
               <a>
                 <figure class="image is-128x128">
@@ -26,7 +25,6 @@
     </div>
   </div>
 </template>
-
 <style scoped>
 .overall{
   margin-top: 6em;
@@ -49,12 +47,9 @@ figure{
 figure:hover{
   transform: scale(1.05);
 }
-
 </style>
-
 <script>
   import axios from 'axios'
-
 export default ({
   name: 'App',
   data() {
@@ -63,9 +58,7 @@ export default ({
       presets: [],
       presetnum: 0,
       presetrange: [],
-      test: [],
     }
-
   },
   created() {
             // Extracts ECC information stored in db
@@ -73,7 +66,53 @@ export default ({
             //this.PresetIndex();
         },
   methods: {
-    //Update database when a preset is called
+    getPreset(PresetName, launchNotification = false) {
+      axios({
+          method:'get',
+          // Url of backend location of data
+          url: 'http://127.0.0.1:8000/api/preset/',
+          auth: {
+              username: 'admin',
+              password: 'eccadmin123'
+          }
+      
+      }).then((response) => {
+
+          this.isLoaded = true;
+
+          // Check the response was a success
+          if(response.data != 'undefined')
+          {
+            if(PresetName == "") {
+              this.presets = response.data;
+              this.presetnum = response.data.length
+              for(let i = 0; i < this.presetnum; i+=5){
+                  this.presetrange.push([i,i+5])
+              }
+            }
+            if (PresetName != ""){
+                for(let i = 0; i < response.data.length; i++){
+                  if(PresetName == response.data[i].preset_name) {
+                    var temp = response.data[i]
+                    this.UpdateDB(temp)
+                  }
+              }
+            }
+            
+          }
+      });
+      // only if notification specified
+      if (launchNotification){
+          this.$buefy.notification.open({
+              message: 'Preset "' + PresetName +'" was successfully loaded!',
+              duration: 5000,
+              position: "is-bottom-right",
+              type: 'is-success',
+              hasIcon: true,
+              queue: false
+          })
+      }
+    },
     UpdateDB(data) {
       for(let i = 0; i < data.lights.length; i++){
         axios({
@@ -116,6 +155,7 @@ export default ({
           }
         })
       }
+      console.log(data.displays)
       for(let i = 0; i < data.displays.length; i++){
         axios({
           method:'put',
@@ -159,52 +199,6 @@ export default ({
         })
       }
       
-    },
-    getPreset(PresetName, launchNotification = false) {
-        console.log(PresetName)
-      axios({
-          method:'get',
-          // Url of backend location of data
-          url: 'http://127.0.0.1:8000/api/preset/',
-          auth: {
-              username: 'admin',
-              password: 'eccadmin123'
-          }
-      
-      }).then((response) => {
-
-          this.isLoaded = true;
-
-          // Check the response was a success
-          if(response.data != 'undefined')
-          {
-              this.presetnum = response.data.length
-              console.log()
-              if (PresetName != ""){
-                for(let i = 0; i < response.data.length; i++){
-                  if(PresetName == response.data[i].preset_name) {
-                    var temp = response.data[i]
-                    this.UpdateDB(temp)
-                  }
-              }
-              }
-              
-              this.test = response.data;
-              
-          }
-      });
-
-      // only if notification specified
-      if (launchNotification){
-          this.$buefy.notification.open({
-              message: 'Preset "' + PresetName +'" was successfully loaded!',
-              duration: 5000,
-              position: "is-bottom-right",
-              type: 'is-success',
-              hasIcon: true,
-              queue: false
-          })
-      }
     },
   },
 })
