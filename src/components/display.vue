@@ -4,7 +4,7 @@
       <div class="column is-three-fifths">
       <div class="screens">
           <!--    the screen 1 at the left side    -->
-          <h1 class="is-size-1">Screen 1</h1>
+          <h1 class="is-size-1 is-family-sans-serif">Screen 1</h1>
           <div class='screen1Left'>
             <video-player class="video-player vjs-custom-skin"
                           ref="videoPlayer"
@@ -14,7 +14,7 @@
           </div>
 
           <!--        the screen two at the left side-->
-          <h1 class="is-size-1">Screen2</h1>
+          <h1 class="is-size-1 is-family-sans-serif">Screen2</h1>
           <div class='screen2Left'>
             <video-player class="video-player vjs-custom-skin"
                           ref="videoPlayer"
@@ -31,7 +31,7 @@
 <!-- a section to store the videos information from  the DB-->
       <section>
         <button
-            class="fontSize button is-info is-light is-fullwidth has-text-weight-bold is-size-3"
+            class="fontSize button is-info is-light is-fullwidth has-text-weight-bold is-size-3 is-family-sans-serif"
             @click="isActive = !isActive"> File Browser</button>
                 <b-notification v-model="isActive" aria-close-label="Close notification">
                   <ul>
@@ -53,7 +53,7 @@
         <div class = 'half'>
         <div class="field is-horizontal" id="url">
             <div class="field-label is-large">
-              <label class="label is-size-3 has-text-left">Screen1: </label>
+              <label class="label is-size-3 has-text-left is-family-sans-serif">Screen1: </label>
             </div>
             <div class="field-body">
               <div class="field">
@@ -64,7 +64,7 @@
                >
               </div>
             <button id="load"
-                  class="button is-large is-rounded is-success is-light has-text-weight-medium"
+                  class="button is-large is-rounded is-success is-light has-text-weight-medium is-family-sans-serif"
                   @click="loadScreen1">Load</button>
             </div>
           </div>
@@ -73,7 +73,7 @@
 <!--       the video to be displayed in Screen2 from DB -->
       <div class="field is-horizontal" id="url">
             <div class="field-label is-large">
-              <label class="label is-size-3 has-text-left">Screen2: </label>
+              <label class="label is-size-3 has-text-left is-family-sans-serif">Screen2: </label>
             </div>
             <div class="field-body">
               <div class="field">
@@ -83,7 +83,7 @@
                  v-model="screen2Id"
                  >
               </div>
-            <button id="load" class="button is-large is-rounded is-danger is-light has-text-weight-medium"
+            <button id="load" class="button is-large is-rounded is-danger is-light has-text-weight-medium is-family-sans-serif"
                   @click="loadScreen2">Load</button>
             </div>
           </div>
@@ -95,7 +95,7 @@
 <!--           Ask the User for the Url of the videl-->
           <div class="field is-horizontal" id="url">
             <div class="field-label is-large">
-              <label class="label is-size-3 has-text-left">URL: </label>
+              <label class="label is-size-3 has-text-left is-family-sans-serif">URL: </label>
             </div>
             <div class="field-body">
               <div class="field">
@@ -110,12 +110,12 @@
 
 <!--two button indicate the two screens, click the button will change the video in the screen with the URl from user-->
         <div class="screen_select">
-          <button class="button is-rounded is-success is-light is-large has-text-weight-medium"
+          <button class="button is-rounded is-success is-light is-large has-text-weight-medium is-family-sans-serif"
                   @click="clickScreen1(); "
                   type="is-primary is-light"
                   id="screen_1">Screen 1
           </button>
-          <button class="button is-rounded is-danger is-light is-large has-text-weight-medium"
+          <button class="button is-rounded is-danger is-light is-large has-text-weight-medium is-family-sans-serif"
                   @click="clickScreen2(); "
                   type="is-success is-light"
                   id="screen_2">Screen 2
