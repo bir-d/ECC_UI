@@ -30,7 +30,6 @@
 
             <!-- A container for the file browser -->
             <div class="column">
-                <h1 class="title is-size-1 is-family-sans-serif	has-text-weight-medium">File Browser</h1>
                 <!-- Creates an infinite scrollbar to view media files -->
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
@@ -41,7 +40,7 @@
                             <button @click="load(element.id)">
                             <figure class="image">
                                 <b-icon pack="fas" icon="play-circle" size="is-large"></b-icon>
-                                <p class="filename is-size-2 is-family-sans-serif"> {{ element.label }}</p>
+                                <p class="filename is-size-3 is-family-sans-serif"> {{ element.label }}</p>
                             </figure>
                             </button>
                         </div>

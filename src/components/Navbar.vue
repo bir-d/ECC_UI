@@ -4,7 +4,7 @@
         <template #brand>
             <b-navbar-brand v-if="$route.name==='home'" tag="router-link" :to="{ path: '/' }" id="brand">
             <figure class="image is-128x128">
-                <a href="/"><img src="../assets/navbar-thales-logo.png" alt="Thales Logo"></a>
+                <a href="/"><img src="../assets/navbar-logo.png" alt="Thales Logo"></a>
             </figure>
             </b-navbar-brand>
             <b-navbar-item v-else tag="router-link" :to="{ path: '/' }">
@@ -96,6 +96,7 @@ a {
     transform: scale(0.95);
     transition: all 0.2s ease;
 }
+b-model{}
 </style>
 
 <script>
