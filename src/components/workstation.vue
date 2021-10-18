@@ -29,7 +29,7 @@
                 
             </div>
             <div class="column">
-                <h1 class="title is-size-1 is-family-sans-serif	has-text-weight-medium" id="browser">File Browser</h1>
+                <div class="file_browser">
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
                         <div class="column is-one-third"
@@ -44,6 +44,7 @@
                         </div>
                     </div>
                 </perfect-scrollbar>
+                </div>
             </div>
         </div>
     </div>
@@ -67,6 +68,9 @@
 }
 .selected2 {
     border: 5px solid red;
+}
+.file_browser{
+    margin-top: 10em;
 }
 </style>
 
