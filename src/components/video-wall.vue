@@ -31,6 +31,7 @@
             <!-- A container for the file browser -->
             <div class="column">
                 <!-- Creates an infinite scrollbar to view media files -->
+                <div class="file_browser">
                 <perfect-scrollbar>
                     <div class="columns is-multiline">
                         <!-- Dynamically creates file buttons in the file browser -->
@@ -46,6 +47,7 @@
                         </div>
                     </div>
                 </perfect-scrollbar>
+                </div>
             </div>
         </div>
     </div>
@@ -62,6 +64,9 @@
 }
 .filename{
     opacity: 75%;
+}
+.file_browser{
+    margin-top: 4em;
 }
 </style>
 
