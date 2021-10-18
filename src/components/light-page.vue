@@ -105,7 +105,7 @@
     /* Style for lights being on when roomStateOn == true */
     .LightOn {
         height: 15%;
-        width: 10%;
+        width: 8.75%;
         background-color: teal;
         border: 3px solid black;
         border-radius: 50%;
@@ -114,7 +114,7 @@
     /* Style for lights being off when roomStateOn == false */
     .LightOff {
         height: 15%;
-        width: 10%;
+        width: 8.75%;
         background-color: white;
         border: 3px solid black;
         border-radius: 50%;
@@ -123,7 +123,7 @@
     /* Style for lights being selected */
     .selected {
         height: 15%;
-        width: 10%;
+        width: 8.75%;
         border-radius: 50%;
         border: 3px solid red;
         display: inline-block;
