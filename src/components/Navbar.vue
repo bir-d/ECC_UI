@@ -53,7 +53,7 @@
                              @click="props.close" />
                         <b-button
                             label="Save"
-                            v-on:click="pushPreset(PopUpPreset)"
+                            v-on:click="submitModal(PopUpPreset)"
                             type="is-primary" />
                     </footer>
                     </template>
@@ -130,6 +130,11 @@ export default ({
     },
 
     methods: {
+        submitModal(PresetName) {
+            this.pushPreset(PresetName);
+            this.modalActive = false;
+        },
+
         getLights() {
         axios({
             method:'get',
