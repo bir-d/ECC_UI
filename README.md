@@ -24,7 +24,7 @@
 
 <h2>API Documentation</h2>
 <ol>
-  <li><code>Run Server</code></li>
+  <li><code>The documentation can be found at the below address when the web-app is running</code></li>
   <li><code>http://127.0.0.1:8000</code></li>
 </ol>
 
