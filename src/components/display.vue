@@ -146,7 +146,6 @@
 /*display the content in the middle*/
 .fontSize{
   font-size:20px;
-  font-width: bold;
 }
 
 </style>

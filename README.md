@@ -2,10 +2,9 @@
 
 <h2>Initialisation</h2>
 <ol>
-  <li><code>npm install vue</code></li>
-  <li><code>npm install buefy</code></li>
-  <li><code>npm install vue-sequential-entrance</code></li>
-  <li><code> npm install --save vue-router</code></li>
+  <li> Install Python 3.x</li>
+  <li> Install Node.JS 14.x</li>
+  <li><code> npm install</code></li>
   <li><code> pip install -r requirements.txt</code></li>
 </ol>
 
@@ -16,12 +15,14 @@
   <li><code>cd projectsite && python manage.py runserver</code></li>
 </ol>
 
-<h2>Github Standards of Procedure (SOP)</h2>
+<h2>Testing</h2>
 <ol>
-  <li>Remote: Before starting <code>git rebase main</code></li>
-  <li>Remote: Commit as much as you like</li>
-  <li>Remote -> Github: Before pushing to main use <code>git rebase -i</code> to clean up youur commit history</li>
-  <li>Remote -> Github: Before pushing <code>git rebase main</code></li>
-  <li>Remote -> Github: <code>git push</code></li>
+  <li><code>cd projectsite</code></li>
+  <li><code>python manage.py test</code></li>
 </ol>
-<p><a href="https://thoughtbot.com/blog/git-interactive-rebase-squash-amend-rewriting-history">Learn more about interactive rebasing</a></p>
+
+<h2>API Documentation</h2>
+<ol>
+  <li><code>The documentation can be found at the below address when the web-app is running</code></li>
+  <li><code>http://127.0.0.1:8000</code></li>
+</ol>

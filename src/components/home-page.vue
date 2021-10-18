@@ -50,17 +50,19 @@
     <div class="recents">
       <div class="content">
         <!--  Container storing the recently used presets -->
-        <h2 class="is-size-3 is-underlined has-text-left">Recently Used</h2>
+        <a href="/presets">
+          <h2 class="is-size-3 is-underlined has-text-left">Recently Used</h2>
+        </a>
       </div>
       <!-- aniamtion for presets -->
       <sequential-entrance>
       <div class="columns" id="recent-section">
         <!-- Lists out presets in db in list -->
-        <div class="column is-2" v-for="element in test.slice(0,5)" :key="element">
+        <div class="column is-2" v-for="element in presetlist.slice(0,5)" :key="element">
             <div class="level-item has-text-centered">
               <a>
                 <figure class="image is-128x128">
-                  <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name)">
+                  <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name, true)">
                 </figure>
                 
                 <div class="content has-text-centered is-size-5" id="title-label">
@@ -73,7 +75,7 @@
             <div class="level-item has-text-centered">
               <a href="/presets">
                 <figure class="image is-128x128">
-                  <img id="recent-image" class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png" v-on:click="getPreset(element.preset_name)">
+                  <img id="recent-image" class="is-rounded" src="../assets/128x128_ellipsis.png">
                 </figure>
                 
                 <div class="content has-text-centered is-size-5" id="title-label">
@@ -125,7 +127,7 @@ export default ({
       dbvideo: [],
       dbworkstations: [],
       dbdisplays: [],
-      test: [],
+      presetlist: [],
       presetnum: 0,
     }
 
@@ -226,7 +228,7 @@ export default ({
           }
       });
     },
-    getPreset(PresetName) {
+    getPreset(PresetName, launchNotification = false) {
       axios({
           method:'get',
           // Url of backend location of data
@@ -253,10 +255,22 @@ export default ({
               }
               }
               
-              this.test = response.data;
+              this.presetlist = response.data;
               
           }
       });
+
+      // only if notification specified
+      if (launchNotification){
+          this.$buefy.notification.open({
+              message: 'Preset "' + PresetName +'" was successfully loaded!',
+              duration: 5000,
+              position: "is-bottom-right",
+              type: 'is-success',
+              hasIcon: true,
+              queue: false
+          })
+      }
     },
     //Update database when a preset is called
     UpdateDB(data) {
@@ -365,7 +379,7 @@ export default ({
         }).then((response) => {
         let newPreset = {'id': response.data.id, 'preset_name': PresetName, 'lights': this.dblights, 'video_Wall': this.dbvideo, 'workstations': this.dbworkstations, 'displays': this.dbdisplays}
         this.presetnum = this.presetnum + 1
-        this.test.push(newPreset)
+        this.presetlist.push(newPreset)
         })
         .catch((error) => {
         console.log(error.response);

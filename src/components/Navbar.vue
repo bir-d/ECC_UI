@@ -7,22 +7,15 @@
                 <a href="/"><img src="../assets/navbar-thales-logo.png" alt="Thales Logo"></a>
             </figure>
             </b-navbar-brand>
-            <b-navbar-item v-else tag="div">
-                <a href="/">
-                    <b-icon pack="fas" icon="arrow-left" size=is-large></b-icon>
-                </a>
+            <b-navbar-item v-else tag="router-link" :to="{ path: '/' }">
+                <b-icon pack="fas" icon="arrow-left" size=is-large></b-icon>
             </b-navbar-item>
         </template>
         <template #end>
-            <b-navbar-button v-if="$route.name==='home'" tag="div" :to="{ path: '/' }">
-                <a id="power-button">
-                    <img id="power-b" src="../assets/power-button.png" v-on:click="power()"> 
-                </a>   
-            </b-navbar-button>
             <b-navbar-item tag="div">
                 <div class="buttons">
                     <a class="button is-large" @click="modalActive = true">
-                        <p id="button-text">+ Preset</p>
+                        <p id="button-text">Save Preset</p>
                     </a>
                     <!-- PRESET MODAL / DIALOG HTML STARTS HERE -->
                     <b-modal v-model="modalActive">
@@ -53,7 +46,7 @@
                              @click="props.close" />
                         <b-button
                             label="Save"
-                            v-on:click="pushPreset(PopUpPreset)"
+                            v-on:click="submitModal(PopUpPreset)"
                             type="is-primary" />
                     </footer>
                     </template>
@@ -61,8 +54,15 @@
                     <!-- PRESET MODAL / DIALOG HTML ENDS HERE -->
                 </div>
             </b-navbar-item>
+            <b-navbar-item v-if="$route.name==='home'" @click="power()" id="power-button">
+                  <b-icon pack="fas" icon="power-off" size=is-large></b-icon>
+            </b-navbar-item>
         </template>
     </b-navbar>
+
+    <b-modal v-model="powerOverlay" can-cancel="['escape', 'outside']" @close="power()">
+            <h1 class="title is-1 has-text-white">Tap to wake up</h1>
+    </b-modal>
   </div>    
 </template>
 
@@ -113,9 +113,10 @@ export default ({
         dbvideo: [],
         dbworkstations: [],
         dbdisplays: [],
-        test:[],
+        presetlist:[],
         modalActive: false,
         PopUpPreset: "",
+        powerOverlay: false,
         }
         
     },
@@ -130,6 +131,15 @@ export default ({
     },
 
     methods: {
+        submitModal(PresetName) {
+            this.pushPreset(PresetName);
+            this.modalActive = false;
+        },
+
+        togglePowerOverlay() {
+            this.powerOverlay = !this.powerOverlay;
+        },
+
         getLights() {
         axios({
             method:'get',
@@ -218,12 +228,13 @@ export default ({
       },
         // Change power state of room
         power() {
-        
+            this.togglePowerOverlay()
             // Check if currently on and load in off preset
             if (localStorage.getItem("state") == 'on'){
                 this.getPreset('Off')
                 document.getElementById('power-b').style.filter="invert(100%)";
                 localStorage.setItem("state", 'off');
+                this.powerOverlay = true;
             }
             
             // Otherwise load in defualt preset
@@ -231,9 +242,7 @@ export default ({
                 this.getPreset('Default')
                 document.getElementById('power-b').style.filter="invert(0%)";
                 localStorage.setItem("state", 'on');
-
             }
-
         },
         pushPreset(PresetName) {
             if(PresetName != '') {
@@ -254,7 +263,7 @@ export default ({
                 }).then((response) => {
                 let newPreset = {'id': response.data.id, 'preset_name': PresetName, 'lights': this.lights, 'video_Wall': this.video_Wall, 'workstations': this.workstations, 'displays': this.displays}
                 
-                this.test.push(newPreset)
+                this.presetlist.push(newPreset)
                 })
                 .catch((error) => {
                 console.log(error.response);
@@ -290,7 +299,7 @@ export default ({
               }
               }
               
-              this.test = response.data;
+              this.presetlist = response.data;
               
           }
       });

@@ -36,10 +36,10 @@
                         v-for="(element) in media" 
                         :key="element">
                             <button @click="load(element.id)">
-                            <div class="box">
+                            <figure class="image">
                                 <b-icon pack="fas" icon="play-circle" size="is-large"></b-icon>
                                 <p class="filename is-size-2 is-family-sans-serif"> {{ element.label }}</p>
-                            </div>
+                            </figure>
                             </button>
                         </div>
                     </div>
