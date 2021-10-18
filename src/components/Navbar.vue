@@ -54,13 +54,15 @@
                     <!-- PRESET MODAL / DIALOG HTML ENDS HERE -->
                 </div>
             </b-navbar-item>
-            <b-navbar-button v-if="$route.name==='home'" tag="div" :to="{ path: '/' }">
-                <a id="power-button">
-                    <b-icon pack="fas" icon="arrow-left" size=is-large @click="power()"></b-icon>
-                </a>   
-            </b-navbar-button>
+            <b-navbar-item v-if="$route.name==='home'" @click="power()" id="power-button">
+                  <b-icon pack="fas" icon="power-off" size=is-large></b-icon>
+            </b-navbar-item>
         </template>
     </b-navbar>
+
+    <b-modal v-model="powerOverlay" can-cancel="['escape', 'outside']" @close="power()">
+            <h1 class="title is-1 has-text-white">Tap to wake up</h1>
+    </b-modal>
   </div>    
 </template>
 
@@ -114,6 +116,7 @@ export default ({
         test:[],
         modalActive: false,
         PopUpPreset: "",
+        powerOverlay: false,
         }
         
     },
@@ -131,6 +134,10 @@ export default ({
         submitModal(PresetName) {
             this.pushPreset(PresetName);
             this.modalActive = false;
+        },
+
+        togglePowerOverlay() {
+            this.powerOverlay = !this.powerOverlay;
         },
 
         getLights() {
@@ -221,12 +228,13 @@ export default ({
       },
         // Change power state of room
         power() {
-        
+            this.togglePowerOverlay()
             // Check if currently on and load in off preset
             if (localStorage.getItem("state") == 'on'){
                 this.getPreset('Off')
                 document.getElementById('power-b').style.filter="invert(100%)";
                 localStorage.setItem("state", 'off');
+                this.powerOverlay = true;
             }
             
             // Otherwise load in defualt preset
@@ -234,9 +242,7 @@ export default ({
                 this.getPreset('Default')
                 document.getElementById('power-b').style.filter="invert(0%)";
                 localStorage.setItem("state", 'on');
-
             }
-
         },
         pushPreset(PresetName) {
             if(PresetName != '') {
